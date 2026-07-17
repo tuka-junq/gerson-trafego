@@ -257,6 +257,31 @@
   .reel .why b{color:var(--texto)}
   .reel .why .tag{color:var(--verde-claro);font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:5px}
 
+  /* ---------- CRIATIVOS EM VÍDEO ---------- */
+  .adgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  @media(max-width:980px){.adgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.adgrid{grid-template-columns:1fr}}
+  .adv{border-radius:18px;overflow:hidden;border:1px solid var(--linha);box-shadow:var(--sombra);
+    background:var(--vidro);display:flex;flex-direction:column}
+  .advid{position:relative;aspect-ratio:9/16;background:#0d0016;overflow:hidden}
+  .advid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0d0016;display:block}
+  .advid .tag{position:absolute;top:11px;left:11px;z-index:3;pointer-events:none;
+    font-family:'IBM Plex Mono';font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    color:#08210f;background:var(--verde-claro);padding:3px 9px;border-radius:7px;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+  .advbody{padding:15px 15px 17px;display:flex;flex-direction:column;gap:12px}
+  .advname{font-family:'Sora';font-weight:700;font-size:15px;letter-spacing:-.01em}
+  .advset{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--texto-dim);margin-top:-6px}
+  .admetrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .am{background:rgba(255,255,255,.04);border:1px solid var(--linha-soft);border-radius:10px;padding:9px 10px}
+  .am .k{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-dim)}
+  .am .v{font-family:'Sora';font-weight:700;font-size:15px;margin-top:3px;letter-spacing:-.01em}
+  .am.star{background:linear-gradient(150deg, rgba(61,177,90,.20), rgba(61,177,90,.05));border-color:rgba(61,177,90,.4)}
+  .am.star .v{color:var(--verde-claro)}
+  .subhead{display:flex;align-items:center;gap:10px;margin:26px 0 4px}
+  .subhead .lbl{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--verde-claro)}
+  .subhead .rule{flex:1;height:1px;background:var(--linha-soft)}
+  .subhead .hint{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--texto-dim)}
+
   .playbook{
     margin-top:20px;border-radius:20px;padding:26px 28px;
     background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
@@ -405,6 +430,13 @@
       </table>
     </div>
   </div>
+
+  <div class="subhead">
+    <span class="lbl">▶ Criativos em vídeo</span>
+    <span class="rule"></span>
+    <span class="hint">clique para dar play</span>
+  </div>
+  <div class="adgrid" id="adgrid"></div>
 
   <!-- ============ BLOCO 4 — VISUALIZAÇÕES NO PERFIL ============ -->
   <div class="section-head">
@@ -615,6 +647,34 @@ document.getElementById('cmpgrid').innerHTML = CMP.map(c=>{
   document.getElementById('f-frq').textContent=ff(2.39);
   document.getElementById('f-cst').textContent=cf.format(tCst);
   document.getElementById('f-cpm').textContent=cf2.format(tCst/tImp*1000);
+
+  /* Criativos em vídeo — mapeados aos 4 anúncios */
+  const ADS=[
+    {nome:'Melhorias na Cidade', set:'08 - Geoloc Osasco 10km',      video:'thumbs/ad-melhorias.mp4',     poster:'thumbs/ad-melhorias-poster.jpg'},
+    {nome:"Ps Jardim d'Abril",   set:"06 - Jardim d'Abril 4km + OZ", video:'thumbs/ad-jardim-dabril.mp4', poster:'thumbs/ad-jardim-dabril-poster.jpg'},
+    {nome:'Vacina',              set:'07 - Geoloc Osasco 11km 25+',  video:'thumbs/ad-vacina.mp4',        poster:'thumbs/ad-vacina-poster.jpg'},
+    {nome:'Horta',               set:'05 - Geoloc Osasco 12km',      video:'thumbs/ad-horta.mp4',         poster:'thumbs/ad-horta-poster.jpg'}
+  ];
+  document.getElementById('adgrid').innerHTML = ADS.map((a,i)=>{
+    const r=ROWS[i], cpm=r.custo/r.impressoes*1000;
+    return `<div class="adv">
+      <div class="advid">
+        <span class="tag">▶ criativo</span>
+        <video src="${a.video}" poster="${a.poster}" controls preload="none" playsinline
+               controlslist="nodownload"></video>
+      </div>
+      <div class="advbody">
+        <div class="advname">${a.nome}</div>
+        <div class="advset">${a.set}</div>
+        <div class="admetrics">
+          <div class="am"><div class="k">Alcance</div><div class="v">${nf.format(r.alcance)}</div></div>
+          <div class="am"><div class="k">Impressões</div><div class="v">${nf.format(r.impressoes)}</div></div>
+          <div class="am"><div class="k">Freq.</div><div class="v">${ff(r.frequencia)}</div></div>
+          <div class="am star"><div class="k">CPM</div><div class="v">${cf2.format(cpm)}</div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 })();
 
 /* ---------------- BLOCO 5: REELS ---------------- */
