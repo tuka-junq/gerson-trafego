@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Relatório Mensal — Gerson Pessoa · Julho 2026 · Meta Ads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --roxo-escuro:#260137;
+    --roxo-medio:#4D0074;
+    --roxo-centro:#5F008E;
+    --verde:#3DB15A;
+    --verde-claro:#47B76D;
+    --branco:#FFFFFF;
+
+    --lilas:#C98BFF;
+    --lilas-2:#9B5DE5;
+    --magenta:#E6B3FF;
+    --roxo-acento:#7A3FB0;
+    --amber:#F2B84B;
+    --coral:#FF6B6B;
+
+    --texto:#FFFFFF;
+    --texto-suave:rgba(255,255,255,.74);
+    --texto-dim:rgba(255,255,255,.52);
+    --linha:rgba(255,255,255,.14);
+    --linha-soft:rgba(255,255,255,.07);
+    --vidro:rgba(255,255,255,.045);
+    --vidro-2:rgba(255,255,255,.07);
+    --sombra:0 30px 70px -34px rgba(0,0,0,.75);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--texto);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding:clamp(16px,4vw,52px);
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 820px at 50% -6%, var(--roxo-centro) 0%, var(--roxo-medio) 38%, var(--roxo-escuro) 78%),
+      var(--roxo-escuro);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1200px;margin:0 auto}
+
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.30em;text-transform:uppercase;
+    color:var(--verde-claro);
+  }
+  .num{font-family:'Sora',sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.015em}
+
+  /* ---------- HEADER ---------- */
+  header{
+    display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;
+    padding-bottom:26px;border-bottom:1px solid var(--linha);margin-bottom:30px;
+  }
+  .crest{display:flex;align-items:center;gap:18px}
+  .crest img{height:64px;width:auto;display:block;filter:drop-shadow(0 8px 22px rgba(0,0,0,.35))}
+  .crest .txt .eyebrow{margin-bottom:7px}
+  header h1{
+    font-family:'Sora';font-weight:700;font-size:clamp(21px,3vw,29px);
+    line-height:1.08;letter-spacing:-.02em;
+  }
+  .period{
+    text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--texto-suave);
+  }
+  .period b{display:block;color:var(--texto);font-size:15px;font-weight:500;letter-spacing:.03em;margin-top:5px}
+  .period .cmp{display:block;color:var(--texto-dim);font-size:11px;margin-top:6px}
+
+  /* ---------- DIVISOR DE PARTES ---------- */
+  .part{display:flex;align-items:center;gap:16px;margin:56px 0 6px}
+  .part .lbl{font-family:'Sora';font-weight:800;font-size:clamp(15px,2.4vw,19px);letter-spacing:-.01em;
+    display:flex;align-items:center;gap:12px}
+  .part .lbl .ic{width:38px;height:38px;flex:none;border-radius:12px;display:grid;place-items:center;font-size:20px;
+    background:linear-gradient(150deg,rgba(61,177,90,.24),rgba(61,177,90,.06));border:1px solid rgba(61,177,90,.4)}
+  .part .lbl small{display:block;font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--verde-claro);font-weight:500}
+  .part .rule{flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--verde),transparent)}
+  .part{scroll-margin-top:86px}
+
+  /* ---------- NAV FIXO ---------- */
+  .topnav{
+    position:sticky;top:12px;z-index:50;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+    padding:11px;margin:0 auto 6px;max-width:720px;border-radius:16px;
+    background:rgba(38,1,55,.85);backdrop-filter:blur(10px);
+    border:1px solid var(--linha);box-shadow:0 18px 40px -22px rgba(0,0,0,.7);
+    transition:background .3s ease, backdrop-filter .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .topnav.floating{
+    background:rgba(38,1,55,.32);backdrop-filter:blur(22px) saturate(1.2);
+    border-color:var(--linha-soft);box-shadow:0 14px 34px -26px rgba(0,0,0,.6);
+  }
+  .topnav a{
+    font-family:'IBM Plex Mono';font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--texto-suave);text-decoration:none;padding:10px 18px;border-radius:999px;
+    border:1px solid var(--linha);display:flex;align-items:center;gap:8px;transition:.2s;white-space:nowrap;
+  }
+  .topnav a:hover{color:#fff;border-color:var(--verde);background:rgba(61,177,90,.14)}
+  .topnav a.active{color:#08210f;background:var(--verde);border-color:var(--verde);font-weight:600;box-shadow:0 6px 16px -6px rgba(61,177,90,.7)}
+  .topnav a .e{font-size:14px}
+
+  /* ---------- EMAIL MARKETING ---------- */
+  .mailgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.mailgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.mailgrid{grid-template-columns:1fr}}
+  .mcard{border-radius:18px;overflow:hidden;border:1px solid var(--linha);box-shadow:var(--sombra);
+    background:var(--vidro);display:flex;flex-direction:column}
+  .mcard .thumb{position:relative;aspect-ratio:4/5;overflow:hidden;background:#0d0016}
+  .mcard .thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .mcard .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(13,0,22,.55))}
+  .mcard .thumb .rate{position:absolute;top:11px;right:11px;z-index:2;font-family:'Sora';font-weight:800;font-size:16px;
+    color:#08210f;background:var(--verde-claro);padding:4px 11px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+  .mcard .thumb .rate.low{background:var(--amber)}
+  .mcard .thumb .rank{position:absolute;top:11px;left:11px;z-index:2;width:26px;height:26px;border-radius:50%;
+    display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:13px;color:#08210f;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+  .mcard .mbody{padding:14px 15px 16px;display:flex;flex-direction:column;gap:11px}
+  .mcard .mname{font-family:'Sora';font-weight:700;font-size:15px;letter-spacing:-.01em;line-height:1.2}
+  .mcard .msub{font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);margin-top:-5px;display:flex;gap:8px;flex-wrap:wrap}
+  .mcard .mrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .mcard .mm{background:rgba(255,255,255,.04);border:1px solid var(--linha-soft);border-radius:10px;padding:8px 10px}
+  .mcard .mm .k{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-dim)}
+  .mcard .mm .v{font-family:'Sora';font-weight:700;font-size:15px;margin-top:3px}
+  .mcard .ratebar{height:6px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden}
+  .mcard .ratebar i{display:block;height:100%;border-radius:4px;width:0;transition:width .9s cubic-bezier(.22,.61,.36,1);
+    background:linear-gradient(90deg,var(--verde),var(--verde-claro))}
+  .mcard .ratebar i.low{background:linear-gradient(90deg,var(--coral),var(--amber))}
+  .mcard.destaque{border-color:rgba(61,177,90,.6);box-shadow:0 0 0 1px rgba(61,177,90,.45), 0 20px 46px -26px rgba(61,177,90,.5)}
+  .mcard.destaque .rate{box-shadow:0 4px 16px rgba(61,177,90,.55)}
+  tbody tr.destaque td{background:rgba(61,177,90,.10)}
+  tbody tr.destaque:hover td{background:rgba(61,177,90,.14)}
+  td.taxa{font-family:'Sora';font-weight:700}
+  td.taxa.hi{color:var(--verde-claro)}
+
+  .mailnote{margin-top:18px;border-radius:16px;padding:20px 24px;
+    background:linear-gradient(150deg,rgba(201,139,255,.10),rgba(255,255,255,.02));border:1px solid rgba(201,139,255,.28)}
+  .mailnote .eyebrow{color:var(--lilas);margin-bottom:9px}
+  .mailnote p{font-size:13.5px;color:var(--texto-suave);line-height:1.62}
+  .mailnote p+p{margin-top:10px}
+  .mailnote b{color:var(--texto)}
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head{display:flex;align-items:center;gap:14px;margin:38px 0 18px}
+  .section-head .pin{
+    width:30px;height:38px;flex:none;position:relative;
+    background:var(--verde);border-radius:50% 50% 50% 50%/55% 55% 45% 45%;
+    clip-path:path('M15 0C6.7 0 0 6.7 0 15c0 10.5 15 23 15 23s15-12.5 15-23C30 6.7 23.3 0 15 0z');
+    display:grid;place-items:center;box-shadow:0 8px 18px -6px rgba(61,177,90,.7);
+  }
+  .section-head .pin span{font-family:'Sora';font-weight:700;font-size:12px;color:#08210f;margin-top:-4px}
+  .section-head h2{font-family:'Sora';font-weight:600;font-size:clamp(16px,2.4vw,20px);letter-spacing:-.01em}
+  .section-head .rule{flex:1;height:1px;background:var(--linha)}
+  .section-head .ix{font-family:'IBM Plex Mono';font-size:12px;color:var(--texto-dim);white-space:nowrap}
+
+  /* ---------- BLOCO TOTAL ---------- */
+  .total-block{
+    border-radius:24px;padding:clamp(22px,3vw,34px);position:relative;overflow:hidden;
+    background:
+      radial-gradient(700px 320px at 88% 0%, rgba(61,177,90,.18), transparent 62%),
+      linear-gradient(160deg, rgba(255,255,255,.085), rgba(255,255,255,.02));
+    border:1px solid var(--linha);box-shadow:var(--sombra);
+  }
+  .total-top{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+  .total-top .lead h3{font-family:'Sora';font-weight:600;font-size:clamp(18px,2.6vw,24px);margin-top:8px;letter-spacing:-.01em}
+  .total-top .lead p{color:var(--texto-suave);font-size:14px;margin-top:6px;max-width:48ch}
+
+  .badge62{
+    display:flex;align-items:center;gap:14px;padding:16px 22px;border-radius:18px;
+    background:linear-gradient(150deg, rgba(61,177,90,.22), rgba(61,177,90,.06));
+    border:1px solid rgba(61,177,90,.42);flex:none;
+  }
+  .badge62 .big{font-family:'Sora';font-weight:800;font-size:clamp(34px,5vw,48px);line-height:.9;color:var(--verde-claro);letter-spacing:-.03em}
+  .badge62 .arrow{font-size:26px;color:var(--verde-claro);line-height:1}
+  .badge62 .cap{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.04em;color:var(--texto-suave);max-width:19ch;line-height:1.45}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.kpis{grid-template-columns:1fr}}
+  .kpi{
+    position:relative;border-radius:16px;padding:20px 20px 18px;overflow:hidden;
+    background:rgba(255,255,255,.05);border:1px solid var(--linha-soft);
+  }
+  .kpi::before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--verde);opacity:.9}
+  .kpi .lbl{font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--texto-dim)}
+  .kpi .v{font-family:'Sora';font-weight:700;font-size:clamp(24px,3.4vw,33px);margin-top:12px;letter-spacing:-.025em;line-height:1}
+  .kpi .sub{font-family:'IBM Plex Mono';font-size:11px;color:var(--texto-dim);margin-top:8px}
+  .kpi .delta{font-family:'IBM Plex Mono';font-size:11.5px;margin-top:9px;font-weight:600;letter-spacing:.02em}
+  .kpi .delta.up{color:var(--verde-claro)}
+  .kpi .delta.down{color:var(--lilas)}
+  .total-foot{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--texto-dim);margin-top:18px;letter-spacing:.03em;line-height:1.7}
+  .total-foot b{color:var(--texto-suave);font-weight:600}
+  .total-foot .hl{color:var(--verde-claro);font-weight:600}
+
+  /* ---------- COMPARATIVO ---------- */
+  .cmpgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:860px){.cmpgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.cmpgrid{grid-template-columns:1fr}}
+  .cmpcard{
+    border-radius:18px;padding:22px 20px;position:relative;overflow:hidden;
+    background:linear-gradient(165deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    border:1px solid var(--linha);box-shadow:var(--sombra);
+  }
+  .cmpcard.win{border-color:rgba(61,177,90,.42);background:linear-gradient(160deg, rgba(61,177,90,.16), rgba(255,255,255,.02))}
+  .cmpcard .metric{font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-dim)}
+  .cmpcard .now{font-family:'Sora';font-weight:700;font-size:clamp(23px,3vw,29px);margin-top:12px;letter-spacing:-.025em;line-height:1}
+  .cmpcard .then{font-family:'IBM Plex Mono';font-size:11.5px;color:var(--texto-dim);margin-top:9px}
+  .cmpcard .then b{color:var(--texto-suave);font-weight:600}
+  .cmpcard .chg{display:inline-flex;align-items:center;gap:5px;margin-top:13px;font-family:'Sora';font-weight:700;font-size:15px}
+  .cmpcard .chg.good{color:var(--verde-claro)}
+  .cmpbar{height:4px;border-radius:3px;background:rgba(255,255,255,.10);margin-top:14px;overflow:hidden}
+  .cmpbar i{display:block;height:100%;background:var(--verde);border-radius:3px}
+
+  /* ---------- TABELA ---------- */
+  .tbl-wrap{border-radius:18px;border:1px solid var(--linha);overflow:hidden;background:var(--vidro);box-shadow:var(--sombra)}
+  .tscroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:820px}
+  thead th{
+    font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--texto-dim);
+    text-align:right;padding:15px 16px;background:rgba(255,255,255,.04);
+    border-bottom:1px solid var(--linha);white-space:nowrap;
+  }
+  thead th:first-child{text-align:left}
+  tbody td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--linha-soft);font-size:14px;white-space:nowrap}
+  tbody td:first-child{text-align:left}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr{transition:background .15s}
+  tbody tr:hover{background:rgba(255,255,255,.05)}
+  .camp{display:flex;flex-direction:column;gap:4px}
+  .camp .nm{font-weight:600;font-size:14px;font-family:'Sora'}
+  .camp .sub{font-family:'IBM Plex Mono';font-size:11px;color:var(--texto-dim)}
+  td.metric{font-family:'Sora';font-variant-numeric:tabular-nums;font-weight:500}
+  td.hi{color:var(--verde-claro);font-weight:700}
+  tbody tr.grp td{background:rgba(255,255,255,.05);border-bottom:1px solid var(--linha)}
+  tbody tr.grp .ghead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  tbody tr.grp .tbadge{
+    display:inline-block;font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.07em;text-transform:uppercase;
+    padding:3px 8px;border-radius:6px;font-weight:600;color:#08210f;background:var(--verde);
+  }
+  tbody tr.grp .gtitle{font-family:'Sora';font-weight:700;font-size:15px;letter-spacing:-.01em}
+  tbody tr.grp .gcount{font-family:'IBM Plex Mono';font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-dim)}
+  tfoot td{padding:16px;font-family:'Sora';font-weight:700;font-size:14px;text-align:right;background:rgba(255,255,255,.05);border-top:1px solid var(--linha)}
+  tfoot td:first-child{text-align:left;font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--texto-dim);font-weight:600}
+
+  /* ---------- CRIATIVOS EM VÍDEO ---------- */
+  .subhead{display:flex;align-items:center;gap:10px;margin:26px 0 4px}
+  .subhead .lbl{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--verde-claro)}
+  .subhead .rule{flex:1;height:1px;background:var(--linha-soft)}
+  .subhead .hint{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--texto-dim)}
+  .adgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:16px}
+  @media(max-width:1080px){.adgrid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:720px){.adgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.adgrid{grid-template-columns:1fr}}
+  .adv{border-radius:18px;overflow:hidden;border:1px solid var(--linha);box-shadow:var(--sombra);
+    background:var(--vidro);display:flex;flex-direction:column}
+  .advid{position:relative;aspect-ratio:9/16;background:#0d0016;overflow:hidden}
+  .advid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0d0016;display:block}
+  .advid .tag{position:absolute;top:11px;left:11px;z-index:3;pointer-events:none;
+    font-family:'IBM Plex Mono';font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    color:#08210f;background:var(--verde-claro);padding:3px 9px;border-radius:7px;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+  .advid .rankpill{position:absolute;top:11px;right:11px;z-index:3;width:26px;height:26px;border-radius:50%;
+    display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:13px;color:#08210f;background:#fff;
+    box-shadow:0 3px 10px rgba(0,0,0,.4)}
+  .advbody{padding:14px 14px 16px;display:flex;flex-direction:column;gap:11px}
+  .advname{font-family:'Sora';font-weight:700;font-size:14.5px;letter-spacing:-.01em;line-height:1.2}
+  .advset{font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);margin-top:-6px}
+  .admetrics{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+  .am{background:rgba(255,255,255,.04);border:1px solid var(--linha-soft);border-radius:10px;padding:8px 9px}
+  .am .k{font-family:'IBM Plex Mono';font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-dim)}
+  .am .v{font-family:'Sora';font-weight:700;font-size:14px;margin-top:3px;letter-spacing:-.01em}
+  .am.star{background:linear-gradient(150deg, rgba(61,177,90,.20), rgba(61,177,90,.05));border-color:rgba(61,177,90,.4)}
+  .am.star .v{color:var(--verde-claro)}
+  .am.warn{background:linear-gradient(150deg, rgba(242,184,75,.18), rgba(242,184,75,.04));border-color:rgba(242,184,75,.38)}
+  .am.warn .v{color:var(--amber)}
+  .advwhy{font-size:12px;color:var(--texto-suave);line-height:1.5;border-top:1px solid var(--linha-soft);padding-top:10px}
+  .advwhy b{color:var(--texto)}
+
+  /* ---------- FUNIL DE RETENÇÃO ---------- */
+  .retwrap{display:grid;grid-template-columns:1fr 1.05fr;gap:18px}
+  @media(max-width:900px){.retwrap{grid-template-columns:1fr}}
+  .card-pad{
+    border-radius:20px;padding:26px 28px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    border:1px solid var(--linha);box-shadow:var(--sombra);
+  }
+  .card-pad h3{font-family:'Sora';font-weight:600;font-size:18px;margin-top:8px;letter-spacing:-.01em}
+  .funnel{display:flex;flex-direction:column;gap:11px;margin-top:20px}
+  .fstep{display:flex;flex-direction:column;gap:6px}
+  .fstep .frow{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .fstep .fk{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-suave)}
+  .fstep .fv{font-family:'Sora';font-weight:700;font-size:15px;letter-spacing:-.01em}
+  .fstep .fv small{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--texto-dim);font-weight:400;margin-left:7px}
+  .ftrack{height:20px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden}
+  .ftrack i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--verde),var(--verde-claro));width:0;transition:width 1s cubic-bezier(.22,.61,.36,1)}
+  .ftrack i.warnbar{background:linear-gradient(90deg,var(--coral),var(--amber))}
+  .cliff{margin-top:18px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,107,107,.34);
+    background:linear-gradient(150deg,rgba(255,107,107,.14),rgba(255,255,255,.02));font-size:13px;color:var(--texto-suave);line-height:1.55}
+  .cliff b{color:#ffb4b4}
+  .rcell small{display:block;font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);font-weight:400;margin-top:3px}
+  .rcell.good{color:var(--verde-claro)} .rcell.good small{color:rgba(71,183,109,.7)}
+  .rcell.bad{color:var(--amber)} .rcell.bad small{color:rgba(242,184,75,.7)}
+
+  .retbars{display:flex;flex-direction:column;gap:15px;margin-top:20px}
+  .rb .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+  .rb .nm{font-family:'Sora';font-weight:600;font-size:14px}
+  .rb .nm .set{font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);display:block;font-weight:400;margin-top:2px}
+  .rb .pc{font-family:'Sora';font-weight:800;font-size:17px;letter-spacing:-.02em}
+  .rb .track{height:9px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden}
+  .rb .track i{display:block;height:100%;border-radius:5px;width:0;transition:width .9s cubic-bezier(.22,.61,.36,1)}
+  .rb.good .pc{color:var(--verde-claro)} .rb.good .track i{background:linear-gradient(90deg,var(--verde),var(--verde-claro))}
+  .rb.mid .pc{color:var(--lilas)}        .rb.mid .track i{background:linear-gradient(90deg,var(--lilas-2),var(--lilas))}
+  .rb.bad .pc{color:var(--amber)}         .rb.bad .track i{background:linear-gradient(90deg,var(--coral),var(--amber))}
+  .rb .sub3{font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);margin-top:5px}
+
+  /* ---------- ANÁLISE (colunas) ---------- */
+  .analysis{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:880px){.analysis{grid-template-columns:1fr}}
+  .acol{
+    border-radius:20px;padding:26px 28px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    border:1px solid var(--linha);box-shadow:var(--sombra);
+  }
+  .acol.good{background:linear-gradient(160deg, rgba(61,177,90,.12), rgba(255,255,255,.02));border-color:rgba(61,177,90,.34)}
+  .acol.warn{background:linear-gradient(160deg, rgba(242,184,75,.11), rgba(255,255,255,.02));border-color:rgba(242,184,75,.32)}
+  .acol .atitle{display:flex;align-items:center;gap:11px;margin-top:9px}
+  .acol .atitle .ic{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;font-size:17px}
+  .acol.good .atitle .ic{background:linear-gradient(150deg,rgba(61,177,90,.24),rgba(61,177,90,.06));border:1px solid rgba(61,177,90,.4)}
+  .acol.warn .atitle .ic{background:linear-gradient(150deg,rgba(242,184,75,.24),rgba(242,184,75,.06));border:1px solid rgba(242,184,75,.4)}
+  .acol .atitle h3{font-family:'Sora';font-weight:600;font-size:17px;letter-spacing:-.01em}
+  .alist{display:flex;flex-direction:column;gap:14px;margin-top:20px}
+  .ai{display:flex;gap:12px;align-items:flex-start}
+  .ai .dot{width:20px;height:20px;flex:none;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;font-family:'Sora';margin-top:1px}
+  .acol.good .ai .dot{background:rgba(61,177,90,.2);color:var(--verde-claro);border:1px solid rgba(61,177,90,.4)}
+  .acol.warn .ai .dot{background:rgba(242,184,75,.16);color:var(--amber);border:1px solid rgba(242,184,75,.4)}
+  .ai .tx{font-size:13.5px;line-height:1.55;color:var(--texto-suave)}
+  .ai .tx b{color:var(--texto);font-weight:600}
+  .ai .tx .g{color:var(--verde-claro);font-weight:600}
+  .ai .tx .a{color:var(--amber);font-weight:600}
+
+  .reco{margin-top:18px;border-radius:16px;padding:20px 22px;
+    background:linear-gradient(150deg,rgba(61,177,90,.16),rgba(255,255,255,.02));border:1px solid rgba(61,177,90,.36)}
+  .reco .eyebrow{margin-bottom:8px}
+  .reco p{font-size:14px;color:var(--texto-suave);line-height:1.62}
+  .reco p b{color:var(--texto)}
+
+  /* ---------- DEMOGRAFIA ---------- */
+  .demo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:880px){.demo{grid-template-columns:1fr}}
+  .dcard{
+    border-radius:20px;padding:26px 28px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    border:1px solid var(--linha);box-shadow:var(--sombra);
+  }
+  .dcard h3{font-family:'Sora';font-weight:600;font-size:18px;margin-top:8px;letter-spacing:-.01em}
+  .dcard .hint{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--texto-dim);margin-top:5px}
+  .genrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 4px}
+  .genchip{border-radius:14px;padding:16px;border:1px solid var(--linha-soft)}
+  .genchip.f{background:linear-gradient(150deg,rgba(201,139,255,.16),rgba(255,255,255,.02));border-color:rgba(201,139,255,.3)}
+  .genchip.m{background:linear-gradient(150deg,rgba(61,177,90,.16),rgba(255,255,255,.02));border-color:rgba(61,177,90,.3)}
+  .genchip .k{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-suave)}
+  .genchip .big{font-family:'Sora';font-weight:800;font-size:30px;letter-spacing:-.03em;margin-top:6px}
+  .genchip.f .big{color:var(--magenta)} .genchip.m .big{color:var(--verde-claro)}
+  .genchip .sub{font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);margin-top:5px}
+  .barlist{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+  .bar .top{display:flex;justify-content:space-between;align-items:baseline}
+  .bar .nm{font-family:'Sora';font-weight:600;font-size:13.5px}
+  .bar .pc{font-family:'Sora';font-weight:700;font-size:14px;color:var(--verde-claro)}
+  .bar .track{height:8px;border-radius:5px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+  .bar .track i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--verde),var(--verde-claro));width:0;transition:width .9s cubic-bezier(.22,.61,.36,1)}
+  .bar .sub{font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);margin-top:5px}
+  .demonote{margin-top:18px;padding:16px 18px;border-radius:13px;border:1px solid var(--linha-soft);
+    background:rgba(255,255,255,.035);font-size:13.5px;color:var(--texto-suave);line-height:1.6}
+  .demonote b{color:var(--texto)} .demonote .hl{color:var(--verde-claro);font-weight:600}
+
+  /* ---------- PERFIL / VISUALIZAÇÕES ---------- */
+  .profile{display:grid;grid-template-columns:1.15fr 1fr;gap:18px}
+  @media(max-width:880px){.profile{grid-template-columns:1fr}}
+  .pcard{
+    border-radius:20px;padding:28px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    border:1px solid var(--linha);box-shadow:var(--sombra);
+  }
+  .pviews{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+  .pv{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:16px 20px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--linha-soft);
+  }
+  .pv.total{background:linear-gradient(150deg, rgba(61,177,90,.20), rgba(61,177,90,.04));border-color:rgba(61,177,90,.4)}
+  .pv.hi{background:linear-gradient(150deg, rgba(61,177,90,.16), rgba(255,255,255,.02));border-color:rgba(61,177,90,.34)}
+  .pv .lbl{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-suave)}
+  .pv .right{display:flex;align-items:baseline;gap:12px}
+  .pv .val{font-family:'Sora';font-weight:700;font-size:clamp(20px,3vw,27px);letter-spacing:-.025em}
+  .pv.total .val{color:#fff}
+  .pv .chg{font-family:'IBM Plex Mono';font-size:12.5px;white-space:nowrap}
+  .pv .chg.up{color:var(--verde-claro)}
+  .pv .chg.down{color:var(--lilas)}
+  .narr h3{font-family:'Sora';font-weight:600;font-size:18px;margin-top:8px;letter-spacing:-.01em}
+  .narr .note{margin-top:16px;padding:18px 20px;border-radius:14px;border:1px solid var(--linha-soft);
+    background:rgba(255,255,255,.035);font-size:14px;color:var(--texto-suave);line-height:1.62}
+  .narr .note b{color:var(--texto)} .narr .note .g{color:var(--verde-claro);font-weight:600}
+  .miniStat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+  .miniStat .ms{background:rgba(255,255,255,.04);border:1px solid var(--linha-soft);border-radius:12px;padding:13px 14px}
+  .miniStat .ms .k{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--texto-dim)}
+  .miniStat .ms .v{font-family:'Sora';font-weight:700;font-size:17px;margin-top:5px;letter-spacing:-.02em}
+  .miniStat .ms .d{font-family:'IBM Plex Mono';font-size:9.5px;margin-top:3px}
+  .miniStat .ms .d.up{color:var(--verde-claro)} .miniStat .ms .d.down{color:var(--lilas)}
+
+  /* ---------- PLAYBOOK ---------- */
+  .playbook{margin-top:20px;border-radius:20px;padding:26px 28px;
+    background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+    border:1px solid var(--linha);box-shadow:var(--sombra);}
+  .playbook h3{font-family:'Sora';font-weight:600;font-size:19px;margin-top:8px;letter-spacing:-.01em}
+  .pblist{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+  @media(max-width:760px){.pblist{grid-template-columns:1fr}}
+  .pb{display:flex;gap:13px;align-items:flex-start;padding:15px 16px;border-radius:13px;
+    background:rgba(255,255,255,.035);border:1px solid var(--linha-soft)}
+  .pb .ic{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;font-size:17px;
+    background:linear-gradient(150deg, rgba(61,177,90,.22), rgba(61,177,90,.06));border:1px solid rgba(61,177,90,.35)}
+  .pb .t{font-family:'Sora';font-weight:600;font-size:14px}
+  .pb .d{font-size:12.5px;color:var(--texto-suave);margin-top:4px;line-height:1.5}
+  .pb .d b{color:var(--texto)}
+  .pb.feature{grid-column:1 / -1;align-items:center;
+    background:linear-gradient(150deg, rgba(61,177,90,.18), rgba(255,255,255,.02));border-color:rgba(61,177,90,.4)}
+  .pb.feature .ic{width:40px;height:40px;font-size:19px}
+
+  footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--linha);
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;
+    font-family:'IBM Plex Mono';font-size:11.5px;color:var(--texto-dim);letter-spacing:.04em}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="crest">
+      <img src="Logo Gerson Podemos.svg" alt="Gerson Pessoa" onerror="this.style.display='none'" />
+      <div class="txt">
+        <div class="eyebrow">Relatório Mensal · Julho 2026 · Meta Ads</div>
+        <h1>Resultados do Mês — Gerson Pessoa</h1>
+      </div>
+    </div>
+    <div class="period">
+      Período de apuração
+      <b>Julho 2026</b>
+      <span class="cmp">Tráfego 01–27 jul · Perfil 29 jun–26 jul · Comparativo: junho</span>
+    </div>
+  </header>
+
+  <!-- NAV FIXO -->
+  <nav class="topnav">
+    <a href="#trafego"><span class="e">🎯</span> Tráfego pago</a>
+    <a href="#organico"><span class="e">📱</span> Orgânico</a>
+    <a href="#email"><span class="e">✉️</span> Email marketing</a>
+  </nav>
+
+  <!-- ==================== PARTE 1 — TRÁFEGO PAGO ==================== -->
+  <div class="part" id="trafego">
+    <div class="lbl"><span class="ic">🎯</span><span>Tráfego pago<small>Parte 1 · Meta Ads</small></span></div>
+    <div class="rule"></div>
+  </div>
+
+  <!-- ===== BLOCO 1 — TOTAL ===== -->
+  <div class="section-head">
+    <div class="pin"><span>01</span></div>
+    <h2>Total de tráfego pago</h2>
+    <div class="rule"></div>
+    <span class="ix">1 campanha · 5 anúncios · 27 dias</span>
+  </div>
+
+  <div class="total-block">
+    <div class="total-top">
+      <div class="lead">
+        <div class="eyebrow">Consolidado do mês</div>
+        <h3>Mais alcance, mais impressões e verba menor que junho</h3>
+        <p>Julho fechou com 727 mil pessoas alcançadas e quase 2 milhões de impressões, gastando 27% menos que junho. A eficiência de custo se consolidou: CPM abaixo de R$ 1,64.</p>
+      </div>
+      <div class="badge62">
+        <div>
+          <span class="big">+65,3%</span>
+          <span class="arrow">↑</span>
+        </div>
+        <div class="cap">de <b style="color:var(--verde-claro)">impressões vs. junho</b> — com 27% menos verba</div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="lbl">Alcance</div>
+        <div class="v num" data-count="727252">0</div>
+        <div class="sub">pessoas únicas (sem duplicidade)</div>
+        <div class="delta up">↑ +43,3% vs junho</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Impressões</div>
+        <div class="v num" data-count="1944376">0</div>
+        <div class="sub">total de exibições</div>
+        <div class="delta up">↑ +65,3% vs junho</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Investimento</div>
+        <div class="v num" data-count="3180.85" data-money="1">R$ 0</div>
+        <div class="sub">verba aplicada no mês</div>
+        <div class="delta up">↓ −27,4% de verba</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">CPM</div>
+        <div class="v num" data-count="1.64" data-money="1" data-dec="2">R$ 0</div>
+        <div class="sub">custo por mil impressões</div>
+        <div class="delta up">↓ −56% vs junho (R$ 3,72)</div>
+      </div>
+    </div>
+    <div class="total-foot">
+      Frequência média: <b>2,67</b> impressões por pessoa · Custo por mil pessoas alcançadas: <span class="hl">R$ 4,37</span> (junho: R$ 8,63 · −49%).<br>
+      A campanha única <b>[RECONHECIMENTO] Máximo Impressões</b> concentrou 100% da verba do mês em 5 criativos.
+    </div>
+  </div>
+
+  <!-- ===== BLOCO 2 — COMPARATIVO ===== -->
+  <div class="section-head">
+    <div class="pin"><span>02</span></div>
+    <h2>Comparativo com junho</h2>
+    <div class="rule"></div>
+    <span class="ix">Julho completo × Junho completo</span>
+  </div>
+  <div class="cmpgrid" id="cmpgrid"></div>
+
+  <!-- ===== BLOCO 3 — DETALHAMENTO POR ANÚNCIO ===== -->
+  <div class="section-head">
+    <div class="pin"><span>03</span></div>
+    <h2>Detalhamento por anúncio</h2>
+    <div class="rule"></div>
+    <span class="ix">[RECONHECIMENTO] Máximo Impressões · 5 criativos</span>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tscroll">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th>Anúncio · Conjunto</th>
+            <th>Alcance</th>
+            <th>Impressões</th>
+            <th>Freq.</th>
+            <th>Investimento</th>
+            <th>CPM</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+        <tfoot>
+          <tr>
+            <td>Total da campanha</td>
+            <td class="num" id="f-alc"></td>
+            <td class="num" id="f-imp"></td>
+            <td class="num" id="f-frq"></td>
+            <td class="num" id="f-cst"></td>
+            <td class="num" id="f-cpm"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="subhead">
+    <span class="lbl">▶ Criativos em vídeo</span>
+    <span class="rule"></span>
+    <span class="hint">clique para dar play</span>
+  </div>
+  <div class="adgrid" id="adgrid"></div>
+
+  <!-- ===== BLOCO 4 — RETENÇÃO DE VÍDEO ===== -->
+  <div class="section-head">
+    <div class="pin"><span>04</span></div>
+    <h2>Retenção de vídeo · onde o engajamento é perdido</h2>
+    <div class="rule"></div>
+    <span class="ix">tempo assistido dos criativos pagos</span>
+  </div>
+
+  <div class="card-pad">
+    <div class="eyebrow">Funil de retenção · mês inteiro · 5 criativos</div>
+    <h3>O caminho do público: 3 segundos → 75% do vídeo</h3>
+    <div class="funnel" id="funnel"></div>
+    <div class="cliff">
+      <b>O gargalo está no início.</b> A maior perda acontece entre os 3 segundos e os 25% do vídeo — <b>85% do público abandona antes de um quarto</b> do conteúdo. Quem passa dos 25% tende a ficar: cerca de <b>40% chega aos 50%</b> e quase metade desses aos 75%. Ou seja, o problema é o <b>gancho de abertura</b>, não o final.
+    </div>
+  </div>
+
+  <div class="subhead">
+    <span class="lbl">▶ Caminho completo por criativo</span>
+    <span class="rule"></span>
+    <span class="hint">% = do público de 3s que permanece</span>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tscroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Anúncio · Conjunto</th>
+            <th>Reprod. 3s+</th>
+            <th>25% do vídeo</th>
+            <th>50% do vídeo</th>
+            <th>75% do vídeo</th>
+          </tr>
+        </thead>
+        <tbody id="rettbody"></tbody>
+        <tfoot>
+          <tr>
+            <td>Total · mês</td>
+            <td class="num">164.246</td>
+            <td class="num">24.326 · 14,8%</td>
+            <td class="num">9.803 · 6,0%</td>
+            <td class="num">4.726 · 2,9%</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top:22px" class="analysis">
+    <div class="acol good">
+      <div class="atitle"><div class="ic">✅</div><h3>Padrão dos que RETÊM</h3></div>
+      <div class="alist">
+        <div class="ai"><div class="dot">1</div><div class="tx"><b>Abertura com movimento.</b> <span class="g">Asfalto (41,5%)</span> e PS Jardim d'Abril (18,7%) abrem com <b>cena em ação</b> — drone sobre a obra, caminhada dentro do posto. Há promessa visual já no 1º segundo.</div></div>
+        <div class="ai"><div class="dot">2</div><div class="tx"><b>Mostrar algo concreto acontecendo.</b> Uma obra sendo executada, um lugar sendo visitado — com o <b>Gerson presente em campo</b>. O olho tem para onde ir e uma história para acompanhar.</div></div>
+        <div class="ai"><div class="dot">3</div><div class="tx"><b>Retenção que se sustenta.</b> No Asfalto, <span class="g">18,7% ainda estão lá aos 50%</span> e 8,3% aos 75% — o dobro/triplo da média. Movimento retém.</div></div>
+      </div>
+    </div>
+    <div class="acol warn">
+      <div class="atitle"><div class="ic">⚠️</div><h3>Padrão dos que PERDEM cedo</h3></div>
+      <div class="alist">
+        <div class="ai"><div class="dot">1</div><div class="tx"><b>Peças de aviso / serviço.</b> <span class="a">Melhorias na Cidade (7,2%)</span>, Vacina (9,4%) e Horta (11,0%) são informativos institucionais — abrem com card, texto ou fala genérica, <b>sem uma cena que prenda</b>.</div></div>
+        <div class="ai"><div class="dot">2</div><div class="tx"><b>O caso Vacina é o mais revelador.</b> Teve o <span class="a">maior nº de plays de 3s do mês (75,4 mil)</span> — o gancho inicial chama atenção — mas <b>despenca para 9,4% aos 25%</b>: depois do gancho vira aviso de serviço, sem desenvolvimento. Atrai o olho, mas não entrega história.</div></div>
+        <div class="ai"><div class="dot">3</div><div class="tx"><b>Informação boa, embalagem fraca.</b> A mensagem é útil, mas entregue como comunicado. Sem narrativa, o público sai antes de absorver.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reco">
+    <div class="eyebrow">Recomendação para os próximos criativos</div>
+    <p>Aplicar a <b>fórmula dos vencedores nas peças informativas</b>: (1) abrir com <b>1 cena de movimento</b> nos primeiros 3 segundos — drone, ação, o Gerson caminhando no local; (2) mostrar o <b>benefício de perto</b> (a obra, o atendimento, a fila andando); (3) deixar o "aviso" — data, local, serviço — para o <b>meio/fim</b>, depois de fisgar. O gancho não pode ser um card estático: precisa ser uma promessa visual que o resto do vídeo cumpre.</p>
+  </div>
+
+  <!-- ===== BLOCO 5 — PERFIL DO PÚBLICO ===== -->
+  <div class="section-head">
+    <div class="pin"><span>05</span></div>
+    <h2>Perfil do público · gênero e faixa etária</h2>
+    <div class="rule"></div>
+    <span class="ix">base: impressões pagas do mês</span>
+  </div>
+
+  <div class="demo">
+    <div class="dcard">
+      <div class="eyebrow">Por gênero · % das impressões</div>
+      <h3>Equilibrado, leve vantagem feminina</h3>
+      <div class="genrow">
+        <div class="genchip f"><div class="k">Feminino</div><div class="big">57,9%</div><div class="sub">1,13 mi impressões</div></div>
+        <div class="genchip m"><div class="k">Masculino</div><div class="big">41,9%</div><div class="sub">814 mil impressões</div></div>
+      </div>
+    </div>
+
+    <div class="dcard">
+      <div class="eyebrow">Por faixa etária · % das impressões</div>
+      <h3>70% do público tem 18–34 anos</h3>
+      <div class="barlist" id="agebars"></div>
+      <div class="demonote"><b>45+ recebe só ~18%</b> — faixa que vota muito e segue subexposta no pago. Vale um conjunto dedicado.</div>
+    </div>
+  </div>
+
+  <!-- ==================== PARTE 2 — CONTEÚDO ORGÂNICO ==================== -->
+  <div class="part" id="organico">
+    <div class="lbl"><span class="ic">📱</span><span>Conteúdo orgânico<small>Parte 2 · Perfil @gersonpessoa</small></span></div>
+    <div class="rule"></div>
+  </div>
+
+  <!-- ===== BLOCO 6 — VISUALIZAÇÕES NO PERFIL ===== -->
+  <div class="section-head">
+    <div class="pin"><span>06</span></div>
+    <h2>Visualizações no perfil</h2>
+    <div class="rule"></div>
+    <span class="ix">29 jun – 26 jul · vs. junho</span>
+  </div>
+
+  <div class="profile">
+    <div class="pcard">
+      <div class="eyebrow">Detalhamento das visualizações</div>
+      <div class="pviews">
+        <div class="pv total">
+          <div class="lbl">Total</div>
+          <div class="right"><div class="val num" data-count="7115158">0</div><div class="chg down">↓ 3%</div></div>
+        </div>
+        <div class="pv">
+          <div class="lbl">De orgânico</div>
+          <div class="right"><div class="val num" data-count="5397496">0</div><div class="chg down">↓ 15,2%</div></div>
+        </div>
+        <div class="pv hi">
+          <div class="lbl">De anúncios</div>
+          <div class="right"><div class="val num" data-count="1717662">0</div><div class="chg up">↑ +77,8%</div></div>
+        </div>
+      </div>
+      <div class="miniStat">
+        <div class="ms"><div class="k">Alcance total</div><div class="v">1,1 mi</div><div class="d down">↓ 3%</div></div>
+        <div class="ms"><div class="k">De não seguidores</div><div class="v">3,12 mi</div><div class="d up">↑ 13,6%</div></div>
+        <div class="ms"><div class="k">De seguidores</div><div class="v">4,00 mi</div><div class="d down">↓ 12,9%</div></div>
+      </div>
+    </div>
+
+    <div class="pcard narr">
+      <div class="eyebrow">Leitura do resultado</div>
+      <h3>O motor pago assumiu o crescimento</h3>
+      <div class="note">
+        O total de visualizações ficou <b>praticamente estável (−3%)</b>, mas a composição mudou: as visualizações vindas de <span class="g">anúncios saltaram +77,8%</span> e compensaram a acomodação do orgânico (−15,2%). Na prática, <b>o tráfego pago virou o principal vetor de crescimento</b> da conta.<br><br>
+        O sinal mais estratégico está no público: as visualizações de <span class="g">não seguidores cresceram +13,6%</span> enquanto as de seguidores caíram — ou seja, a conta está <b>expandindo para fora da base atual</b>, exatamente o que se espera numa fase de construção de reconhecimento.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BLOCO 7 — TOP 4 CONTEÚDOS ===== -->
+  <div class="section-head">
+    <div class="pin"><span>07</span></div>
+    <h2>Top 4 conteúdos · mais visualizados</h2>
+    <div class="rule"></div>
+    <span class="ix">ranking por visualizações no mês</span>
+  </div>
+  <div class="adgrid" id="topgrid" style="grid-template-columns:repeat(4,1fr)"></div>
+
+  <!-- ===== BLOCO 8 — MENÇÕES HONROSAS ===== -->
+  <div class="section-head">
+    <div class="pin"><span>08</span></div>
+    <h2>Menções honrosas · maior engajamento</h2>
+    <div class="rule"></div>
+    <span class="ix">fora do Top 4 de views · maior taxa de interação</span>
+  </div>
+  <div class="adgrid" id="hongrid" style="grid-template-columns:repeat(2,1fr);max-width:640px"></div>
+
+  <!-- ===== BLOCO 9 — TENDÊNCIAS ===== -->
+  <div class="section-head">
+    <div class="pin"><span>09</span></div>
+    <h2>Tendências que deram certo</h2>
+    <div class="rule"></div>
+    <span class="ix">padrões a replicar no orgânico</span>
+  </div>
+
+  <div class="playbook">
+    <div class="eyebrow">Playbook de conteúdo</div>
+    <h3>Os gatilhos que geraram os maiores resultados</h3>
+    <div class="pblist">
+      <div class="pb feature">
+        <div class="ic">❤️</div>
+        <div><div class="t">Causa emocional + ação social real</div><div class="d">O <b>Tampinhas que Curam</b> foi o maior conteúdo do mês em tudo: <b>275 mil views, 30 mil interações e +2.199 seguidores em um único post</b> (14,6% de engajamento). Emoção verdadeira ligada a uma causa concreta é o que mais viraliza — e ainda converte em seguidor.</div></div>
+      </div>
+      <div class="pb">
+        <div class="ic">🎁</div>
+        <div><div class="t">Benefício direto ao cidadão</div><div class="d">O reajuste do <b>Nosso Futuro (+10%)</b> repetiu o topo de engajamento (10,4%): quando o post entrega um ganho palpável, o público comenta, compartilha e salva.</div></div>
+      </div>
+      <div class="pb">
+        <div class="ic">❓</div>
+        <div><div class="t">Pergunta ao morador / enquete</div><div class="d">"Qual rua você quer com câmera?" (<b>1.637 comentários</b>) e o terreno do Portal D'Oeste (765) provam: <b>pedir opinião é a maior alavanca de comentário</b> — funciona até em post de imagem.</div></div>
+      </div>
+      <div class="pb">
+        <div class="ic">📍</div>
+        <div><div class="t">Notícia local em tempo real</div><div class="d">A liberação da <b>Av. Flora</b> foi o reel mais visto do mês (179 mil). Utilidade urgente + informação de bairro = alcance imediato e compartilhamento.</div></div>
+      </div>
+      <div class="pb">
+        <div class="ic">🚀</div>
+        <div><div class="t">Novidade e desenvolvimento</div><div class="d">O <b>novo Burger King</b> na Zona Norte gerou 1.762 compartilhamentos: progresso econômico e "a cidade crescendo" mobilizam orgulho local e repasse.</div></div>
+      </div>
+      <div class="pb">
+        <div class="ic">🎥</div>
+        <div><div class="t">Naturalidade e Gerson de perto</div><div class="d">O fio condutor de sempre: <b>Gerson em campo, falando direto à câmera</b>, mostrando a entrega no local. Humaniza e sustenta o engajamento em todos os formatos.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PARTE 3 — EMAIL MARKETING ==================== -->
+  <div class="part" id="email">
+    <div class="lbl"><span class="ic">✉️</span><span>Email marketing<small>Parte 3 · Disparos 01–27 jul</small></span></div>
+    <div class="rule"></div>
+  </div>
+
+  <!-- ===== BLOCO 10 — TOTAL EMAIL ===== -->
+  <div class="section-head">
+    <div class="pin"><span>10</span></div>
+    <h2>Total de email marketing</h2>
+    <div class="rule"></div>
+    <span class="ix">31 campanhas + envios diários de aniversário</span>
+  </div>
+
+  <div class="total-block">
+    <div class="total-top">
+      <div class="lead">
+        <div class="eyebrow">Consolidado do mês</div>
+        <h3>Comunicação contínua com a base por e-mail</h3>
+        <p>Fluxo diário de disparos cobrindo obras, saúde, segurança e lazer. Quase 400 mil e-mails enviados e uma taxa média de abertura de 36,5% — acima da média de mercado do setor público (~25–30%).</p>
+      </div>
+      <div class="badge62">
+        <div>
+          <span class="big">36,5%</span>
+        </div>
+        <div class="cap">taxa média de <b style="color:var(--verde-claro)">abertura</b> no mês</div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="lbl">Campanhas</div>
+        <div class="v num" data-count="31">0</div>
+        <div class="sub">+ aniversário diário</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">E-mails enviados</div>
+        <div class="v num" data-count="396642">0</div>
+        <div class="sub">total de disparos</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Aberturas</div>
+        <div class="v num" data-count="144938">0</div>
+        <div class="sub">e-mails abertos</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Taxa de abertura</div>
+        <div class="v num" data-count="36.5" data-dec="1">0</div>
+        <div class="sub">média ponderada · %</div>
+      </div>
+    </div>
+    <div class="total-foot">
+      Destaques: <span class="hl">Hortas Comunitárias (59,5%)</span> e <span class="hl">Cidade da Polícia (40,7% em 133 mil envios)</span> puxaram o mês. A campanha de maior volume — <b>Cidade da Polícia</b> — combinou alcance e engajamento.
+    </div>
+  </div>
+
+  <!-- ===== BLOCO 11 — DESEMPENHO POR CATEGORIA ===== -->
+  <div class="section-head">
+    <div class="pin"><span>11</span></div>
+    <h2>Desempenho por categoria</h2>
+    <div class="rule"></div>
+    <span class="ix">criativo + taxa de abertura · maior → menor</span>
+  </div>
+  <div class="mailgrid" id="mailgrid"></div>
+
+  <div class="subhead">
+    <span class="lbl">▦ Resumo em tabela</span>
+    <span class="rule"></span>
+    <span class="hint">envios · aberturas · taxa</span>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tscroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Categoria</th>
+            <th>Campanhas</th>
+            <th>Envios</th>
+            <th>Aberturas</th>
+            <th>Taxa de abertura</th>
+          </tr>
+        </thead>
+        <tbody id="mailtbody"></tbody>
+        <tfoot>
+          <tr>
+            <td>Total · mês</td>
+            <td class="num">31 + diário</td>
+            <td class="num">396.642</td>
+            <td class="num">144.938</td>
+            <td class="num">36,5%</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="mailnote">
+    <div class="eyebrow">Observação metodológica</div>
+    <p>É importante destacar que a <b>taxa de abertura efetiva tende a ser superior</b> aos índices registrados, uma vez que parte da base de contatos contém endereços de e-mail desativados, inexistentes, com caixas de entrada lotadas ou que retornam erro de entrega (bounce).</p>
+    <p>Embora esses endereços permaneçam contabilizados no total de envios pela plataforma, muitos dos e-mails não chegam efetivamente aos destinatários, <b>reduzindo artificialmente o percentual de abertura</b> calculado sobre a base total.</p>
+  </div>
+
+  <!-- ===== BLOCO 12 — LEITURA DOS DISPAROS ===== -->
+  <div class="section-head">
+    <div class="pin"><span>12</span></div>
+    <h2>Leitura dos disparos</h2>
+    <div class="rule"></div>
+    <span class="ix">o que abriu mais × o que ficou abaixo</span>
+  </div>
+
+  <div class="analysis">
+    <div class="acol good">
+      <div class="atitle"><div class="ic">✅</div><h3>O que abriu mais</h3></div>
+      <div class="alist">
+        <div class="ai"><div class="dot">1</div><div class="tx"><b>Utilidade direta lidera.</b> <span class="g">Hortas Comunitárias (59,5%)</span> e <span class="g">Vacina da Gripe (41,7%)</span> tratam de benefício imediato ao cidadão — assunto prático faz abrir.</div></div>
+        <div class="ai"><div class="dot">2</div><div class="tx"><b>Volume com engajamento.</b> <span class="g">Cidade da Polícia</span> foi a maior em envios (133 mil) e ainda manteve <b>40,7%</b> de abertura em 5 disparos — consistência da série.</div></div>
+        <div class="ai"><div class="dot">3</div><div class="tx"><b>Aniversário sustenta o relacionamento.</b> Envio diário automático (28,2%) mantém a base <b>ativa e aquecida</b> todos os dias.</div></div>
+      </div>
+    </div>
+    <div class="acol warn">
+      <div class="atitle"><div class="ic">⚠️</div><h3>O que ficou abaixo</h3></div>
+      <div class="alist">
+        <div class="ai"><div class="dot">1</div><div class="tx"><b>Férias no Parque (11,9%)</b> teve a menor abertura — assunto de <span class="a">evento pontual e datado</span> engaja menos que serviço contínuo. Vale antecipar o envio e reforçar o benefício no assunto.</div></div>
+        <div class="ai"><div class="dot">2</div><div class="tx"><b>Reforma PS d'Abril (24,5%)</b> ficou abaixo do potencial para o tema saúde — testar assuntos mais diretos ("seu posto vai melhorar") pode elevar a abertura.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Fontes: Meta Ads (tráfego 01–27/07) · exportação orgânica @gersonpessoa (29/06–26/07) · plataforma de e-mail (01–27/07)</span>
+    <span>Gerson Pessoa · relatório mensal · julho 2026</span>
+  </footer>
+
+</div>
+
+<script>
+/* ==================== DADOS ==================== */
+
+/* Comparativo tráfego Julho x Junho */
+const CMP = [
+  {metric:'Alcance',     now:727252,  then:507348,  fmt:'int',   pct:43.3, dir:'up',   bar:100, thenBar:70, note:'mais gente'},
+  {metric:'Impressões',  now:1944376, then:1176502, fmt:'int',   pct:65.3, dir:'up',   bar:100, thenBar:61, note:'mais exibições'},
+  {metric:'Investimento',now:3180.85, then:4379.21, fmt:'money', pct:-27.4,dir:'down', bar:73,  thenBar:100,note:'menos verba'},
+  {metric:'CPM',         now:1.64,    then:3.72,    fmt:'money2',pct:-55.9,dir:'down', bar:44,  thenBar:100,note:'mais barato'}
+];
+
+/* Anúncios do mês (Excel 01–27/07) — alcance, impressões, verba, retenção de vídeo */
+const ADS = [
+  {nome:'Melhorias na Cidade', set:'08 - Geoloc Osasco 10km', video:'media/traf-melhorias.webm', poster:'thumbs/traf-melhorias.webp',
+   reach:341597, impr:519138, spend:899.82, v3:30738, v25:2211, v50:685, v75:365, cls:'bad'},
+  {nome:"PS Jardim d'Abril", set:"06 - Jardim d'Abril 4km + OZ", video:'media/traf-jardim.webm', poster:'thumbs/traf-jardim.webp',
+   reach:208187, impr:437052, spend:692.24, v3:26626, v25:4978, v50:1999, v75:1044, cls:'mid'},
+  {nome:'Vacina', set:'07 - Geoloc Osasco 11km 25+', video:'media/traf-vacina.webm', poster:'thumbs/traf-vacina.webp',
+   reach:191000, impr:400336, spend:689.84, v3:75413, v25:7121, v50:2644, v75:1307, cls:'bad'},
+  {nome:'Asfalto', set:'09 - Geoloc Osasco 10km', video:'media/traf-asfalto.webm', poster:'thumbs/traf-asfalto.webp',
+   reach:292759, impr:415534, spend:670.55, v3:21510, v25:8919, v50:4028, v75:1790, cls:'good'},
+  {nome:'Horta', set:'05 - Geoloc Osasco 12km', video:'media/traf-horta.webm', poster:'thumbs/traf-horta.webp',
+   reach:131204, impr:172316, spend:228.40, v3:9959, v25:1097, v50:447, v75:220, cls:'mid'}
+];
+
+/* Funil de retenção — total do mês */
+const FUNNEL = [
+  {k:'Reprod. 3s+',  v:164246, pct:100,  base:true},
+  {k:'25% do vídeo', v:24326,  pct:14.8, warn:true},
+  {k:'50% do vídeo', v:9803,   pct:6.0},
+  {k:'75% do vídeo', v:4726,   pct:2.9}
+];
+
+/* Faixa etária — participação nas impressões */
+const AGE = [
+  {nm:'18–24', pc:35.2, sub:'685,2 mil impr'},
+  {nm:'25–34', pc:35.1, sub:'682,9 mil impr'},
+  {nm:'35–44', pc:11.7, sub:'228,3 mil impr'},
+  {nm:'45–54', pc:7.6,  sub:'148,5 mil impr'},
+  {nm:'55–64', pc:6.1,  sub:'117,8 mil impr'},
+  {nm:'65+',   pc:4.2,  sub:'80,9 mil impr'}
+];
+
+/* Top 4 conteúdos orgânicos por visualização */
+const TOP = [
+  {rank:1, nome:'Tampinhas que Curam', set:'sede em Osasco · 30 jun', video:'media/org-tampinhas.webm', poster:'thumbs/org-tampinhas.webp',
+   views:'275,0 mil', reach:'208,1 mil', likes:'19.216', shares:'7.794', comments:'2.209', saves:'1.230',
+   er:'14,6%', tag:'Causa social', star:'likes',
+   why:'<b>Maior conteúdo do mês em tudo.</b> Emoção real + causa concreta = 30 mil interações e <b>+2.199 seguidores num único post</b>.'},
+  {rank:2, nome:'ATENÇÃO — Av. Flora liberada', set:'notícia local · 14 jul', video:'media/org-avflora.webm', poster:'thumbs/org-avflora.webp',
+   views:'179,2 mil', reach:'104,9 mil', likes:'3.269', shares:'173', comments:'588', saves:'53',
+   er:'3,9%', tag:'Utilidade urgente', star:'views',
+   why:'Reel mais visto do mês. <b>Notícia de trânsito em tempo real</b> — a comunidade consome e repassa o que é útil agora.'},
+  {rank:3, nome:'Novo Burger King na Zona Norte', set:'desenvolvimento · 25 jul', video:'media/org-burgerking.webm', poster:'thumbs/org-burgerking.webp',
+   views:'149,9 mil', reach:'89,2 mil', likes:'3.566', shares:'1.762', comments:'671', saves:'117',
+   er:'6,9%', tag:'Novidade + empregos', star:'shares',
+   why:'"A cidade crescendo" mobiliza orgulho local: <b>1.762 compartilhamentos</b>, o 2º maior do mês.'},
+  {rank:4, nome:'Volta às aulas — rede municipal', set:'calendário · 24 jul', video:'media/org-redemunicipal.webm', poster:'thumbs/org-redemunicipal.webp',
+   views:'148,7 mil', reach:'89,7 mil', likes:'3.137', shares:'459', comments:'393', saves:'52',
+   er:'4,5%', tag:'Serviço + calendário', star:'views',
+   why:'Informação de calendário que <b>toca toda família com filho na rede</b> — alcance amplo e salvamentos.'}
+];
+
+/* Menções honrosas — maior engajamento (fora do Top 4 de views) */
+const HON = [
+  {nome:'Reajuste Nosso Futuro +10%', set:'benefício direto · 14 jul', video:'media/org-nossofuturo.webm', poster:'thumbs/org-nossofuturo.webp',
+   views:'131,2 mil', reach:'72,5 mil', er:'10,4%', likes:'4.239', shares:'2.019', comments:'1.148', saves:'120',
+   tag:'Engajamento 10,4%', star:'er',
+   why:'Fora do Top 4 de views, mas <b>recorde de engajamento (10,4%)</b>: 2.019 compartilhamentos e 1.148 comentários. Benefício palpável ao cidadão move a interação.'},
+  {nome:'MonitoraOZ — "qual rua você quer com câmera?"', set:'pergunta ao morador · 09 jul', img:'thumbs/org-cameras.webp', cover:'linear-gradient(160deg,#2a1246,#0d0016)', glyph:'❓',
+   views:'57,7 mil', reach:'32,4 mil', er:'9,2%', likes:'1.208', shares:'115', comments:'1.637', saves:'20',
+   tag:'1.637 comentários', star:'comments',
+   why:'Um <b>post de imagem</b> (não-reel) que puxou <b>1.637 comentários</b> — o 2º maior do mês — só pedindo a opinião do morador. A pergunta é a maior alavanca de comentário.'}
+];
+
+/* ==================== FORMATTERS ==================== */
+const nf = new Intl.NumberFormat('pt-BR');
+const cf = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
+const cf2 = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const ff = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+/* ==================== COUNT-UP ==================== */
+function countUp(el){
+  const target=parseFloat(el.dataset.count);
+  const dec=el.dataset.dec?parseInt(el.dataset.dec):0;
+  const money=el.dataset.money;
+  const dur=1300, t0=performance.now();
+  function tick(now){
+    const p=Math.min((now-t0)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    const v=target*e;
+    el.textContent = money
+      ? (dec ? cf2.format(v) : cf.format(v))
+      : (dec ? v.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}) : nf.format(Math.round(v)));
+    if(p<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){countUp(e.target);io.unobserve(e.target)}})},{threshold:.4});
+document.querySelectorAll('[data-count]').forEach(el=>io.observe(el));
+
+/* ==================== BLOCO 2: COMPARATIVO ==================== */
+function fmtVal(v,fmt){
+  if(fmt==='money') return cf.format(v);
+  if(fmt==='money2') return cf2.format(v);
+  return nf.format(v);
+}
+document.getElementById('cmpgrid').innerHTML = CMP.map(c=>{
+  const sign = c.pct>0?'+':'';
+  const arrow = c.dir==='up'?'↑':'↓';
+  return `<div class="cmpcard win">
+    <div class="metric">${c.metric}</div>
+    <div class="now">${fmtVal(c.now,c.fmt)}</div>
+    <div class="then">junho: <b>${fmtVal(c.then,c.fmt)}</b></div>
+    <div class="chg good">${arrow} ${sign}${ff(Math.abs(c.pct))}% · ${c.note}</div>
+    <div class="cmpbar"><i style="width:${c.bar}%"></i></div>
+  </div>`;
+}).join('');
+
+/* ==================== BLOCO 3: TABELA + CRIATIVOS ==================== */
+(function(){
+  const tbody=document.getElementById('tbody');
+  const ordered=[...ADS].sort((a,b)=>b.spend-a.spend);
+  let html=`<tr class="grp"><td colspan="6"><div class="ghead">
+    <span class="tbadge">Reconhecimento</span>
+    <span class="gtitle">Máximo Impressões</span>
+    <span class="gcount">5 anúncios · 27 dias</span>
+  </div></td></tr>`;
+  let tImp=0,tCst=0;
+  ordered.forEach(r=>{
+    const cpm=r.spend/r.impr*1000;
+    const freq=r.impr/r.reach;
+    tImp+=r.impr; tCst+=r.spend;
+    html+=`<tr>
+      <td><div class="camp"><span class="nm">${r.nome}</span><span class="sub">${r.set}</span></div></td>
+      <td class="metric">${nf.format(r.reach)}</td>
+      <td class="metric">${nf.format(r.impr)}</td>
+      <td class="metric">${ff(freq)}</td>
+      <td class="metric">${cf.format(r.spend)}</td>
+      <td class="metric hi">${cf2.format(cpm)}</td>
+    </tr>`;
+  });
+  tbody.innerHTML=html;
+  document.getElementById('f-alc').textContent=nf.format(727252);
+  document.getElementById('f-imp').textContent=nf.format(tImp);
+  document.getElementById('f-frq').textContent=ff(2.67);
+  document.getElementById('f-cst').textContent=cf.format(tCst);
+  document.getElementById('f-cpm').textContent=cf2.format(tCst/tImp*1000);
+
+  /* criativos em vídeo (ordenados por investimento) */
+  document.getElementById('adgrid').innerHTML = ordered.map(a=>{
+    const freq=a.impr/a.reach;
+    return `<div class="adv">
+      <div class="advid">
+        <span class="tag">▶ criativo</span>
+        <video src="${a.video}" poster="${a.poster}" controls preload="none" playsinline controlslist="nodownload"></video>
+      </div>
+      <div class="advbody">
+        <div class="advname">${a.nome}</div>
+        <div class="advset">${a.set}</div>
+        <div class="admetrics">
+          <div class="am"><div class="k">Alcance</div><div class="v">${nf.format(a.reach)}</div></div>
+          <div class="am"><div class="k">Impressões</div><div class="v">${nf.format(a.impr)}</div></div>
+          <div class="am"><div class="k">Freq.</div><div class="v">${ff(freq)}</div></div>
+          <div class="am star"><div class="k">Reprod. 3s</div><div class="v">${nf.format(a.v3)}</div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+})();
+
+/* ==================== BLOCO 4: FUNIL + RETENÇÃO ==================== */
+document.getElementById('funnel').innerHTML = FUNNEL.map(f=>`
+  <div class="fstep">
+    <div class="frow">
+      <span class="fk">${f.k}</span>
+      <span class="fv">${nf.format(f.v)}<small>${ff(f.pct)}% dos 3s</small></span>
+    </div>
+    <div class="ftrack"><i class="${f.warn?'warnbar':''}" data-w="${f.pct}"></i></div>
+  </div>`).join('');
+
+const RET=[...ADS].sort((a,b)=>(b.v25/b.v3)-(a.v25/a.v3));
+document.getElementById('rettbody').innerHTML = RET.map(r=>{
+  const p25=r.v25/r.v3*100, p50=r.v50/r.v3*100, p75=r.v75/r.v3*100;
+  const cell=(cnt,pc,tone)=>`<td class="metric rcell ${tone||''}">${nf.format(cnt)}<small>${ff(pc)}% dos 3s</small></td>`;
+  const tone = r.cls==='good'?'good':(r.cls==='bad'?'bad':'');
+  return `<tr>
+    <td><div class="camp"><span class="nm">${r.nome}</span><span class="sub">${r.set}</span></div></td>
+    <td class="metric">${nf.format(r.v3)}<small style="display:block;font-family:'IBM Plex Mono';font-size:10px;color:var(--texto-dim);font-weight:400;margin-top:3px">100%</small></td>
+    ${cell(r.v25,p25,tone)}
+    ${cell(r.v50,p50)}
+    ${cell(r.v75,p75)}
+  </tr>`;
+}).join('');
+
+/* ==================== BLOCO 5: FAIXA ETÁRIA ==================== */
+const AGEMAX=Math.max(...AGE.map(a=>a.pc));
+document.getElementById('agebars').innerHTML = AGE.map(a=>`
+  <div class="bar">
+    <div class="top"><span class="nm">${a.nm}</span><span class="pc">${ff(a.pc)}%</span></div>
+    <div class="track"><i data-w="${(a.pc/AGEMAX*100)}"></i></div>
+    <div class="sub">${a.sub}</div>
+  </div>`).join('');
+
+/* animar barras ao entrar na viewport */
+const bio=new IntersectionObserver((es)=>{es.forEach(e=>{
+  if(e.isIntersecting){
+    e.target.querySelectorAll('i[data-w]').forEach(i=>{i.style.width=parseFloat(i.dataset.w)+'%'});
+    bio.unobserve(e.target);
+  }
+})},{threshold:.25});
+document.querySelectorAll('#funnel,#agebars').forEach(el=>bio.observe(el));
+
+/* ==================== BLOCOS 7 e 8: CONTEÚDO ==================== */
+function contentCard(r, rank){
+  const cover = r.video
+    ? `<video src="${r.video}" poster="${r.poster}" controls preload="none" playsinline controlslist="nodownload"></video>`
+    : (r.img
+      ? `<img src="${r.img}" alt="${r.nome}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />`
+      : `<div style="position:absolute;inset:0;display:grid;place-items:center;font-size:52px;background:${r.cover}">${r.glyph}</div>`);
+  const st = k => r.star===k ? 'star' : '';
+  return `<div class="adv">
+    <div class="advid" ${r.cover?`style="background:${r.cover}"`:''}>
+      <span class="tag">${r.tag}</span>
+      ${rank?`<span class="rankpill">${rank}</span>`:''}
+      ${cover}
+    </div>
+    <div class="advbody">
+      <div class="advname">${r.nome}</div>
+      <div class="advset">${r.set}</div>
+      <div class="admetrics">
+        <div class="am ${st('views')}"><div class="k">Visualizações</div><div class="v">${r.views}</div></div>
+        <div class="am ${st('er')}"><div class="k">Engajamento</div><div class="v">${r.er}</div></div>
+        <div class="am ${st('shares')}"><div class="k">Compart.</div><div class="v">${r.shares}</div></div>
+        <div class="am ${st('comments')}"><div class="k">Comentários</div><div class="v">${r.comments}</div></div>
+      </div>
+      <div class="advwhy">${r.why}</div>
+    </div>
+  </div>`;
+}
+document.getElementById('topgrid').innerHTML = TOP.map(r=>contentCard(r, r.rank)).join('');
+document.getElementById('hongrid').innerHTML = HON.map(r=>contentCard(r, null)).join('');
+
+/* ==================== PARTE 3: EMAIL MARKETING ==================== */
+const EMAIL = [
+  {rank:1, nome:'Hortas Comunitárias',        dates:'01–02/07', camp:1,        envios:33654,  aberturas:20038, taxa:59.5, img:'thumbs/email-hortas.webp'},
+  {rank:2, nome:'Vacina da Gripe',            dates:'06–08/07', camp:2,        envios:74602,  aberturas:31106, taxa:41.7, img:'thumbs/email-vacina.webp'},
+  {rank:3, nome:'Cidade da Polícia',          dates:'20–24/07', camp:5,        envios:133277, aberturas:54274, taxa:40.7, img:'thumbs/email-cidadepolicia.webp'},
+  {rank:4, nome:'Asfalto Novo · Disparo Geral',dates:'27/07',   camp:1,        envios:29998,  aberturas:11228, taxa:37.4, img:'thumbs/email-asfaltogeral.webp'},
+  {rank:5, nome:'Asfalto Novo · Ruas',        dates:'03–16/07', camp:17,       envios:366,    aberturas:134,   taxa:36.6, img:'thumbs/email-asfaltoruas.webp'},
+  {rank:6, nome:'Aniversários',               dates:'diário',   camp:'diário', envios:7408,   aberturas:2089,  taxa:28.2, img:'thumbs/email-aniversarios.webp'},
+  {rank:7, nome:"Reforma PS Jardim d'Abril",  dates:'13–15/07', camp:3,        envios:95637,  aberturas:23389, taxa:24.5, img:'thumbs/email-psjardim.webp'},
+  {rank:8, nome:'Asfalto Novo · Bairro',      dates:'16/07',    camp:1,        envios:913,    aberturas:203,   taxa:22.2, img:'thumbs/email-asfaltobairro.webp'},
+  {rank:9, nome:'Férias no Parque',           dates:'16–17/07', camp:1,        envios:20787,  aberturas:2477,  taxa:11.9, img:'thumbs/email-ferias.webp'}
+];
+
+document.getElementById('mailgrid').innerHTML = EMAIL.map(m=>{
+  const low = m.taxa < 25 ? 'low' : '';
+  const destaque = m.taxa >= 40;
+  return `<div class="mcard ${destaque?'destaque':''}">
+    <div class="thumb">
+      <span class="rank">${m.rank}</span>
+      <span class="rate ${low}">${destaque?'★ ':''}${ff(m.taxa)}%</span>
+      <img src="${m.img}" alt="${m.nome}" loading="lazy" />
+    </div>
+    <div class="mbody">
+      <div class="mname">${m.nome}</div>
+      <div class="msub"><span>${m.dates}</span></div>
+      <div class="mrow">
+        <div class="mm"><div class="k">Envios</div><div class="v">${nf.format(m.envios)}</div></div>
+        <div class="mm"><div class="k">Aberturas</div><div class="v">${nf.format(m.aberturas)}</div></div>
+      </div>
+      <div class="ratebar"><i class="${low}" data-w="${m.taxa}"></i></div>
+    </div>
+  </div>`;
+}).join('');
+
+document.getElementById('mailtbody').innerHTML = EMAIL.map(m=>{
+  const destaque = m.taxa >= 40;
+  const campTxt = m.camp==='diário' ? 'diário' : m.camp;
+  return `<tr class="${destaque?'destaque':''}">
+    <td><div class="camp"><span class="nm">${m.nome}</span><span class="sub">${m.dates}</span></div></td>
+    <td class="metric">${campTxt}</td>
+    <td class="metric">${nf.format(m.envios)}</td>
+    <td class="metric">${nf.format(m.aberturas)}</td>
+    <td class="taxa ${destaque?'hi':''}">${destaque?'★ ':''}${ff(m.taxa)}%</td>
+  </tr>`;
+}).join('');
+
+bio.observe(document.getElementById('mailgrid'));
+
+/* ==================== NAV: translucidez ao rolar + botão ativo ==================== */
+(function(){
+  const nav=document.querySelector('.topnav');
+  const onScroll=()=>nav.classList.toggle('floating', window.scrollY>40);
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  const setActive=id=>{
+    document.querySelectorAll('.topnav a').forEach(a=>
+      a.classList.toggle('active', a.getAttribute('href')==='#'+id));
+  };
+  setActive('trafego');
+  const secObs=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting) setActive(e.target.id); });
+  },{rootMargin:'-42% 0px -52% 0px', threshold:0});
+  ['trafego','organico','email'].forEach(id=>secObs.observe(document.getElementById(id)));
+})();
+</script>
+</body>
+</html>
