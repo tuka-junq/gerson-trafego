@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório Mensal · Gerson Pessoa · Setembro 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    @property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg }
+    @property --spot { syntax: '*'; inherits: false }
+
+    :root {
+      /* identidade da campanha */
+      --roxo-escuro: #260137;
+      --roxo-medio: #4D0074;
+      --roxo-centro: #5F008E;
+      --verde: #3DB15A;
+      --verde-txt: #5CCB7C;
+      /* séries de gráfico (validadas contra #2E0547) */
+      --s-verde: #38AA55;
+      --s-lilas: #A77BE0;
+      --s-neutro: rgba(255, 255, 255, .26);
+      --ambar: #F2B84B;
+
+      --ink: #FFFFFF;
+      --ink-2: rgba(255, 255, 255, .76);
+      --ink-3: rgba(255, 255, 255, .54);
+      --linha: rgba(255, 255, 255, .12);
+      --linha-2: rgba(255, 255, 255, .06);
+      --card: linear-gradient(180deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .03));
+      --card-solid: rgba(46, 5, 71, .72);
+      --spot-off: linear-gradient(transparent, transparent);
+
+      --f-display: 'Bricolage Grotesque', 'Instrument Sans', system-ui, sans-serif;
+      --f-body: 'Instrument Sans', system-ui, sans-serif;
+      --f-mono: 'Martian Mono', ui-monospace, monospace;
+
+      --r: 22px;
+      --ease: cubic-bezier(.2, .7, .15, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100% }
+
+    body {
+      font-family: var(--f-body);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(1100px 760px at 50% -8%, var(--roxo-centro) 0%, var(--roxo-medio) 40%, var(--roxo-escuro) 80%),
+        var(--roxo-escuro);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .07;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) }
+
+    img, video { max-width: 100%; display: block }
+    b, strong { font-weight: 600; color: var(--ink) }
+    .g { color: var(--verde-txt); font-weight: 600 }
+    .tnum { font-variant-numeric: tabular-nums }
+
+    .kicker {
+      font-family: var(--f-mono);
+      font-size: 10.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--verde-txt);
+      font-weight: 500;
+    }
+
+    :focus-visible { outline: 2px solid var(--verde-txt); outline-offset: 3px; border-radius: 6px }
+
+    /* ---------- barra de progresso ---------- */
+    .progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+      transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, var(--s-lilas), var(--verde));
+      z-index: 60;
+    }
+
+    /* ---------- topo ---------- */
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 0 0 }
+    .top .logo { height: 54px; width: auto }
+    .top .meta { text-align: right; font-size: 12.5px; color: var(--ink-3); line-height: 1.6 }
+    .top .meta b { display: block; font-family: var(--f-display); font-size: 17px; font-weight: 700; color: var(--ink) }
+
+    /* ---------- navegação ---------- */
+    .nav {
+      position: sticky; top: 12px; z-index: 50;
+      margin: 26px auto 0; width: fit-content; max-width: 100%;
+      display: flex; gap: 2px; padding: 5px;
+      border-radius: 999px;
+      background: rgba(38, 1, 55, .72);
+      border: 1px solid var(--linha);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none }
+    .nav a {
+      position: relative; z-index: 1;
+      white-space: nowrap; text-decoration: none; color: var(--ink-2);
+      font-size: 13.5px; font-weight: 600; padding: 8px 15px; border-radius: 999px;
+      transition: color .25s, background .25s;
+    }
+    .nav a:hover { color: var(--ink); background: rgba(255, 255, 255, .07) }
+    .nav a.active { color: #fff; background: transparent }
+    .nav .pill {
+      position: absolute; z-index: 0; top: 5px; bottom: 5px; left: 0; width: 0;
+      border-radius: 999px; background: var(--verde);
+      transition: transform .45s var(--ease), width .45s var(--ease);
+    }
+
+    /* ---------- abertura ---------- */
+    .hero { padding: clamp(48px, 7vw, 84px) 0 clamp(30px, 4vw, 50px) }
+    .hero h1 {
+      font-family: var(--f-display);
+      font-weight: 800;
+      font-size: clamp(36px, 5.4vw, 64px);
+      line-height: 1.06;
+      letter-spacing: -.03em;
+      margin: 14px 0 6px;
+    }
+    .hero h1 .ln { display: block; overflow: hidden; padding: .04em 0 .1em }
+    .hero h1 .ln > span { display: inline-block }
+    .hero h1 em { font-style: normal; color: var(--verde-txt) }
+    .hero .sub { font-size: 15px; color: var(--ink-3); margin-bottom: 22px }
+    .hero .lede { max-width: 68ch; font-size: clamp(15.5px, 1.4vw, 17.5px); color: var(--ink-2) }
+    .hero .lede b { color: #fff }
+
+    .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 34px }
+    .fact { padding: 22px 22px 20px; border-radius: var(--r) }
+    .fact .v { font-family: var(--f-display); font-weight: 750; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.05; letter-spacing: -.025em }
+    .fact .k { margin-top: 8px; font-size: 14.5px; color: var(--ink-2) }
+    .fact .d { margin-top: 12px; display: inline-flex; gap: 6px; align-items: center; font-family: var(--f-mono); font-size: 11px; color: var(--verde-txt); background: rgba(61, 177, 90, .13); padding: 4px 9px; border-radius: 999px }
+
+    /* ---------- capítulos ---------- */
+    .chapter { padding-top: clamp(64px, 8vw, 100px); scroll-margin-top: 70px }
+    .chap-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 14px 40px; align-items: end; margin-bottom: 32px }
+    .chap-word {
+      font-family: var(--f-display); font-weight: 800;
+      font-size: clamp(32px, 4.4vw, 52px); line-height: 1.08; letter-spacing: -.03em;
+      color: #fff; padding-bottom: .04em;
+    }
+    .chap-head .kicker { display: block; margin-bottom: 10px }
+    .chap-thesis { font-size: clamp(15px, 1.35vw, 16.5px); color: var(--ink-2); padding-bottom: 6px }
+    .chap-thesis b { color: #fff }
+    .chap-rule { grid-column: 1 / -1; height: 1px; background: linear-gradient(90deg, var(--verde), rgba(255, 255, 255, .1) 45%, transparent); transform-origin: 0 50% }
+
+    .block { margin-top: clamp(40px, 5vw, 60px) }
+    .bhead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; margin-bottom: 16px }
+    .bhead h3 { font-family: var(--f-display); font-weight: 700; font-size: clamp(21px, 2.1vw, 26px); letter-spacing: -.015em; line-height: 1.2 }
+    .bhead .hint { font-size: 13px; color: var(--ink-3) }
+
+    .card { border-radius: var(--r); padding: clamp(20px, 2.6vw, 30px) }
+    .card h4, .h4 { font-family: var(--f-display); font-weight: 700; font-size: 19px; letter-spacing: -.01em; line-height: 1.25 }
+    .note { font-size: 13px; color: var(--ink-3); line-height: 1.6; margin-top: 14px }
+    .note b { color: var(--ink-2) }
+    .read { font-size: 15.5px; color: var(--ink-2); line-height: 1.65 }
+    .read p + p { margin-top: 12px }
+
+    .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px }
+
+    /* ---------- superfícies interativas ---------- */
+    .card, .fact, .cmpc, .pb, .sy, .acao, .vcol, .ins {
+      position: relative;
+      background: var(--spot, var(--spot-off)), var(--card);
+      border: 1px solid var(--linha);
+      transition: transform .45s var(--ease), border-color .35s, box-shadow .45s var(--ease);
+    }
+    .vcard, .mcard, .wa, .kpi { position: relative }
+    .hov:hover {
+      --spot: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .09), transparent 62%);
+      border-color: rgba(92, 203, 124, .42);
+      box-shadow: 0 26px 60px -34px rgba(0, 0, 0, .85), 0 0 0 1px rgba(92, 203, 124, .12);
+    }
+    .lift:hover { transform: translateY(-4px) }
+
+    /* destaque: borda animada em verde/lilás */
+    .key { border-color: transparent !important; box-shadow: 0 0 40px -18px rgba(61, 177, 90, .55) }
+    .key::after {
+      content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 3;
+      background: conic-gradient(from var(--ang), rgba(92, 203, 124, .15) 0deg, var(--verde) 80deg, #D8B9FF 150deg, rgba(92, 203, 124, .15) 230deg, rgba(92, 203, 124, .15) 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      animation: spin 7s linear infinite;
+    }
+    @keyframes spin { to { --ang: 360deg } }
+
+    .dim { opacity: .2 !important; transition: opacity .3s }
+    .legend span[data-s] { cursor: pointer; padding: 2px 6px; margin: -2px -6px; border-radius: 6px; transition: background .2s }
+    .legend span[data-s]:hover { background: rgba(255, 255, 255, .08) }
+
+    /* ---------- KPIs ---------- */
+    .kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--linha); border: 1px solid var(--linha); border-radius: var(--r); overflow: hidden }
+    .kpis.k4 { grid-template-columns: repeat(4, minmax(0, 1fr)) }
+    .kpi { background: var(--spot, var(--spot-off)), var(--card-solid); padding: 22px 22px 20px }
+    .kpi:hover { --spot: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(92, 203, 124, .16), transparent 65%) }
+    .kpi .k { font-size: 13px; color: var(--ink-3); font-weight: 500 }
+    .kpi .v { font-family: var(--f-display); font-weight: 750; font-size: clamp(26px, 2.8vw, 34px); letter-spacing: -.025em; line-height: 1.15; margin-top: 6px; transition: color .3s }
+    .kpi:hover .v { color: var(--verde-txt) }
+    .kpi .d { margin-top: 8px; font-size: 12.5px; color: var(--ink-2) }
+    .kpi .d .up { color: var(--verde-txt); font-weight: 600 }
+    .kpi.hl { background: var(--spot, var(--spot-off)), linear-gradient(160deg, rgba(61, 177, 90, .22), rgba(46, 5, 71, .72) 70%) }
+    .kpi.hl .v { color: var(--verde-txt) }
+    .kpi.key::after { inset: 0; border-radius: 0 }
+
+    /* ---------- legenda ---------- */
+    .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: var(--ink-2) }
+    .legend span { display: inline-flex; align-items: center; gap: 7px }
+    .legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block }
+    .c-verde { background: var(--s-verde) }
+    .c-lilas { background: var(--s-lilas) }
+    .c-neutro { background: var(--s-neutro) }
+
+    /* ---------- FUNIL ---------- */
+    .funnel-card { padding: clamp(20px, 3vw, 34px); overflow: hidden }
+    .funnel-card::before {
+      content: ""; position: absolute; right: -120px; bottom: -160px; width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(61, 177, 90, .2), transparent 65%); pointer-events: none;
+    }
+    .tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(0, 0, 0, .22); border: 1px solid var(--linha); flex-wrap: wrap }
+    .tabs button {
+      font: 600 13px var(--f-body); color: var(--ink-2); background: transparent; border: 0;
+      padding: 8px 15px; border-radius: 999px; cursor: pointer; transition: background .3s, color .3s;
+    }
+    .tabs button:hover { color: #fff; background: rgba(255, 255, 255, .08) }
+    .tabs button[aria-selected="true"], .tabs button[aria-pressed="true"] { background: #fff; color: var(--roxo-escuro) }
+    .fdesc { font-size: 13.5px; color: var(--ink-2); margin: 14px 0 22px; min-height: 2.8em; max-width: 62ch }
+    .funnel { --band: 104px; --neck: 44px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0 clamp(16px, 3vw, 44px); position: relative; z-index: 1 }
+    .fviz { position: relative; height: calc(3 * var(--band) + 2 * var(--neck)); cursor: crosshair }
+    .fviz canvas { position: absolute; inset: 0; width: 100%; height: 100% }
+    .fnums { display: grid; grid-template-rows: var(--band) var(--neck) var(--band) var(--neck) var(--band) }
+    .fstage { display: flex; flex-direction: column; justify-content: center; border-radius: 14px; padding: 0 12px; margin: 0 -12px; transition: background .3s; cursor: default }
+    .fstage.on { background: rgba(255, 255, 255, .06) }
+    .fstage .lbl { font-size: 13px; color: var(--ink-3); font-weight: 500 }
+    .fstage .num { font-family: var(--f-display); font-weight: 800; font-size: clamp(26px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.03em; transition: color .3s }
+    .fstage.on .num, .fstage.last .num { color: var(--verde-txt) }
+    .fneck { display: flex; align-items: center }
+    .fneck span { font-family: var(--f-mono); font-size: 11px; color: var(--ink-2); border: 1px dashed rgba(255, 255, 255, .28); padding: 4px 9px; border-radius: 999px; white-space: nowrap }
+    .fneck span b { color: #fff; font-weight: 500 }
+    .ffoot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 24px; position: relative; z-index: 1 }
+    .ffoot > div { border-top: 1px solid var(--linha); padding-top: 12px }
+    .ffoot .k { font-size: 12.5px; color: var(--ink-3) }
+    .ffoot .v { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -.02em }
+    .fscale { font-family: var(--f-mono); font-size: 10px; color: var(--ink-3); letter-spacing: .04em; margin-top: 8px }
+
+    /* ---------- barras ---------- */
+    .stack { display: flex; gap: 2px; height: 42px; border-radius: 10px; overflow: hidden }
+    .stack i { display: flex; align-items: center; padding: 0 12px; font-style: normal; font-size: 13px; font-weight: 600; color: #fff; min-width: 0; white-space: nowrap; overflow: hidden; transition: flex-basis 1.2s var(--ease), filter .25s, opacity .3s; flex: 0 0 0; cursor: default }
+    .stack i:hover { filter: brightness(1.18) }
+    .stack i.c-neutro { color: var(--ink-2) }
+    .stack i:first-child { border-radius: 10px 4px 4px 10px }
+    .stack i:last-child { border-radius: 4px 10px 10px 4px }
+    .srow + .srow { margin-top: 16px }
+    .srow .sk { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-3); margin-bottom: 7px }
+    .srow .sk b { color: var(--ink-2); font-weight: 600 }
+
+    .pair + .pair { margin-top: 16px }
+    .pair .ph { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; margin-bottom: 7px }
+    .pair .ph span { color: var(--ink-2); font-weight: 600 }
+    .pair .ph .chg { font-family: var(--f-mono); font-size: 11px; color: var(--verde-txt); background: rgba(61, 177, 90, .14); padding: 2px 8px; border-radius: 999px; font-weight: 500 }
+    .pair .pb2 { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--ink-3) }
+    .pair .pb2 + .pb2 { margin-top: 4px }
+    .pair .pb2 i { display: block; height: 12px; width: 0; border-radius: 0 4px 4px 0; transition: width 1.3s var(--ease), opacity .3s }
+    .pair .pb2 b { color: #fff; font-variant-numeric: tabular-nums }
+
+    .origem .big { font-family: var(--f-display); font-weight: 800; font-size: clamp(42px, 5vw, 60px); letter-spacing: -.035em; line-height: 1.05 }
+    .origem .big small { display: block; font-size: 15px; font-weight: 600; color: var(--ink-3); letter-spacing: 0; margin-top: 6px }
+    .ostats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px }
+    .ostats > div { border-top: 1px solid var(--linha); padding-top: 10px }
+    .ostats .v { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -.02em }
+    .ostats .k { font-size: 12.5px; color: var(--ink-3); line-height: 1.4 }
+
+    /* ---------- investimento ---------- */
+    .virada .stack { height: 56px; margin: 20px 0 14px }
+    .virada .stack i { font-size: 15px }
+    .vcols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px }
+    .vcol { border-radius: 16px; padding: 18px; background: var(--spot, var(--spot-off)), rgba(0, 0, 0, .14) }
+    .vcol .tag { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: #fff; font-weight: 700; font-family: var(--f-display) }
+    .vcol .tag i { width: 11px; height: 11px; border-radius: 3px }
+    .vcol .desc { font-size: 13.5px; color: var(--ink-2); margin: 6px 0 14px }
+    .vmet { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px }
+    .vmet .k { font-size: 11.5px; color: var(--ink-3) }
+    .vmet .v { font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: -.01em }
+    .vmet .v.g { color: var(--verde-txt) }
+
+    /* ---------- comparativo ---------- */
+    .cmp { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px }
+    .cmpc { border-radius: 18px; padding: 18px }
+    .cmpc .m { font-size: 12.5px; color: var(--ink-3) }
+    .cmpc .now { font-family: var(--f-display); font-weight: 750; font-size: 26px; letter-spacing: -.02em; margin-top: 4px; transition: color .3s }
+    .cmpc:hover .now { color: var(--verde-txt) }
+    .cmpc .then { font-size: 12.5px; color: var(--ink-3) }
+    .cmpc .chg { display: inline-block; margin-top: 10px; font-family: var(--f-mono); font-size: 11px; padding: 3px 8px; border-radius: 999px; background: rgba(61, 177, 90, .15); color: var(--verde-txt) }
+
+    /* ---------- cards de vídeo ---------- */
+    .vgroup { display: flex; align-items: center; gap: 10px; margin: 26px 0 12px; font-size: 13.5px; color: var(--ink-2); font-weight: 600 }
+    .vgroup i { width: 10px; height: 10px; border-radius: 3px; flex: none }
+    .vgroup small { font-weight: 400; color: var(--ink-3) }
+    .vgroup::after { content: ""; flex: 1; height: 1px; background: var(--linha) }
+    .vgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px }
+    .vgrid.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 50% }
+    .vgrid.g5 { grid-template-columns: repeat(5, minmax(0, 1fr)) }
+    .vcard {
+      border-radius: 20px; overflow: hidden; background: var(--card-solid); border: 1px solid var(--linha);
+      display: flex; flex-direction: column; transition: transform .45s var(--ease), border-color .3s, box-shadow .45s var(--ease);
+    }
+    .vcard:hover { border-color: rgba(92, 203, 124, .45); box-shadow: 0 28px 56px -30px rgba(0, 0, 0, .85) }
+    .vcard.key { overflow: visible }
+    .vcard.key .vmedia { border-radius: 19px 19px 0 0 }
+    .vmedia { position: relative; aspect-ratio: 9 / 14; background: #1a0026; overflow: hidden }
+    .vmedia video { width: 100%; height: 100%; object-fit: cover }
+    .vmedia .badge {
+      position: absolute; top: 10px; left: 10px; z-index: 2; pointer-events: none;
+      font-size: 11.5px; font-weight: 600; padding: 4px 9px; border-radius: 999px;
+      background: rgba(38, 1, 55, .78); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, .16);
+    }
+    .vmedia .rank {
+      position: absolute; top: 8px; right: 10px; z-index: 2; pointer-events: none;
+      font-family: var(--f-display); font-weight: 800; font-size: 30px; line-height: 1.1; letter-spacing: -.03em;
+      color: #fff; text-shadow: 0 2px 16px rgba(0, 0, 0, .6);
+    }
+    .vmedia .prev {
+      position: absolute; right: 10px; bottom: 44px; z-index: 2; pointer-events: none; font-family: var(--f-mono); font-size: 10px;
+      background: rgba(38, 1, 55, .8); padding: 3px 8px; border-radius: 999px; opacity: 0; transition: opacity .3s
+    }
+    .vcard.previewing .prev { opacity: 1 }
+    .vbody { padding: 14px 15px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1 }
+    .vname { font-family: var(--f-display); font-weight: 700; font-size: 16px; line-height: 1.25; letter-spacing: -.01em }
+    .vset { font-size: 12px; color: var(--ink-3); margin-top: 2px }
+    .vmets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+    .vmets > div { border-top: 1px solid var(--linha-2); padding-top: 6px }
+    .vmets .k { font-size: 11px; color: var(--ink-3) }
+    .vmets .v { font-family: var(--f-display); font-weight: 700; font-size: 16px }
+    .vmets .star .v { color: var(--verde-txt) }
+    .vwhy { font-size: 13px; color: var(--ink-2); line-height: 1.5 }
+
+    /* ---------- tabela compacta ---------- */
+    details.tbl { border-radius: var(--r); border: 1px solid var(--linha); background: var(--card); overflow: hidden; transition: border-color .3s }
+    details.tbl:hover { border-color: rgba(92, 203, 124, .4) }
+    details.tbl summary {
+      list-style: none; cursor: pointer; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      font-weight: 600; font-size: 14.5px;
+    }
+    details.tbl summary::-webkit-details-marker { display: none }
+    details.tbl summary .chev { transition: transform .35s var(--ease); font-family: var(--f-mono); color: var(--ink-3) }
+    details.tbl[open] summary .chev { transform: rotate(180deg) }
+    details.tbl summary small { font-weight: 400; color: var(--ink-3); font-size: 12.5px; margin-left: 8px }
+    .tscroll { overflow-x: auto; border-top: 1px solid var(--linha) }
+    table.mini { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 640px }
+    table.mini th { text-align: right; font-weight: 500; color: var(--ink-3); padding: 9px 12px; font-size: 11.5px; white-space: nowrap; border-bottom: 1px solid var(--linha) }
+    table.mini th:first-child, table.mini td:first-child { text-align: left }
+    table.mini td { padding: 7px 12px; text-align: right; font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--linha-2); white-space: nowrap; color: var(--ink-2); transition: background .2s }
+    table.mini td:first-child { color: #fff; white-space: normal }
+    table.mini td small { color: var(--ink-3); margin-left: 6px }
+    table.mini tbody tr:not(.grp):hover td { background: rgba(255, 255, 255, .06) }
+    table.mini tbody tr:not(.grp):hover td:first-child { color: var(--verde-txt); box-shadow: inset 3px 0 0 var(--verde) }
+    table.mini tr.grp td { background: rgba(0, 0, 0, .18); font-weight: 600; font-size: 12px; color: var(--ink-2); padding: 8px 12px }
+    table.mini tr.grp td i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 8px }
+    table.mini td.hi { color: var(--verde-txt); font-weight: 600 }
+    table.mini tfoot td { font-weight: 600; color: #fff; border-bottom: 0; background: rgba(0, 0, 0, .14) }
+
+    /* ---------- retenção ---------- */
+    .ret { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 16px }
+    .rb + .rb { margin-top: 18px }
+    .rb .rtop { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 7px }
+    .rb .rtop span:first-child { color: var(--ink-2); font-weight: 600 }
+    .rb .rtrack { height: 12px; background: rgba(255, 255, 255, .05); border-radius: 4px; overflow: hidden }
+    .rb .rtrack + .rtrack { margin-top: 4px }
+    .rb .rtrack i { display: block; height: 100%; width: 0; border-radius: 0 4px 4px 0; transition: width 1.3s var(--ease), opacity .3s }
+    .rb .rvals { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-3); margin-top: 5px }
+    .rb .rvals b { color: #fff; font-weight: 600 }
+
+    .scatter { position: relative }
+    .scatter svg { width: 100%; height: auto; display: block; overflow: visible }
+    .scatter .ax { stroke: rgba(255, 255, 255, .1); stroke-width: 1 }
+    .scatter .axt { fill: var(--ink-3); font: 10.5px var(--f-mono) }
+    .scatter .dot { stroke: #2E0547; stroke-width: 2; cursor: pointer; transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .6s var(--ease), opacity .3s, stroke .2s }
+    .scatter.in .dot, .settled .scatter .dot { transform: scale(1) }
+    .scatter .dot.on { stroke: #fff; transform: scale(1.35) }
+    .scatter.focus .dot:not(.on), .scatter.focus .dl { opacity: .25 }
+    .scatter .dl { fill: var(--ink-2); font: 600 11.5px var(--f-body); transition: opacity .3s; pointer-events: none }
+    .scatter .trend { stroke: rgba(255, 255, 255, .35); stroke-width: 1.5; stroke-dasharray: 5 5; fill: none }
+    .tip {
+      position: absolute; pointer-events: none; z-index: 5; opacity: 0; transform: translate(-50%, -115%);
+      background: #140020; border: 1px solid rgba(255, 255, 255, .2); border-radius: 10px; padding: 8px 10px; font-size: 12px; white-space: nowrap; transition: opacity .15s;
+    }
+    .tip b { display: block; font-size: 12.5px }
+
+    .col ul { list-style: none }
+    .col li { position: relative; padding-left: 18px; font-size: 14px; color: var(--ink-2); line-height: 1.55 }
+    .col li + li { margin-top: 10px }
+    .col li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 2px; background: var(--s-verde) }
+    .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+    .ins { border-radius: 18px; padding: 18px 20px }
+    .ins .t { font-family: var(--f-display); font-weight: 700; font-size: 16.5px; line-height: 1.25; margin-bottom: 6px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap }
+    .ins .t .n { font-size: 25px; color: var(--verde-txt); letter-spacing: -.02em; flex: none }
+    .ins .d { font-size: 13.5px; color: var(--ink-2) }
+
+    /* ---------- idade ---------- */
+    .ages .arow { display: grid; grid-template-columns: 62px minmax(0, 1fr) 96px; gap: 14px; align-items: center; padding: 9px 10px; margin: 0 -10px; border-bottom: 1px solid var(--linha-2); border-radius: 10px; transition: background .25s }
+    .ages .arow:hover { background: rgba(255, 255, 255, .06) }
+    .ages .arow:last-child { border-bottom: 0 }
+    .ages .an { font-family: var(--f-display); font-weight: 700; font-size: 16px }
+    .ages .abars div { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2) }
+    .ages .abars div + div { margin-top: 4px }
+    .ages .abars i { display: block; height: 10px; border-radius: 0 3px 3px 0; width: 0; transition: width 1.2s var(--ease), opacity .3s }
+    .ages .ac { text-align: right; font-size: 12px; color: var(--ink-3); line-height: 1.3 }
+    .ages .ac b { display: block; font-family: var(--f-display); font-size: 16px; color: #fff }
+    .ages .ac b.g { color: var(--verde-txt) }
+    .ages .arow.best { background: rgba(61, 177, 90, .12); box-shadow: inset 3px 0 0 var(--verde) }
+    .ahead { display: grid; grid-template-columns: 62px minmax(0, 1fr) 96px; gap: 14px; font-size: 11px; color: var(--ink-3); padding-bottom: 6px; border-bottom: 1px solid var(--linha) }
+    .ahead span:last-child { text-align: right }
+
+    /* ---------- orgânico ---------- */
+    .views { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px }
+    .vw .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--linha-2) }
+    .vw .row:last-child { border-bottom: 0 }
+    .vw .row .l { font-size: 14px; color: var(--ink-2) }
+    .vw .row .r { text-align: right; white-space: nowrap }
+    .vw .row .n { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -.02em }
+    .vw .row .c { font-family: var(--f-mono); font-size: 10.5px; margin-left: 8px; color: var(--verde-txt) }
+    .vw .row.hl .n { color: var(--verde-txt) }
+
+    .themes .th { display: grid; grid-template-columns: minmax(150px, 1.1fr) minmax(0, 2fr) 70px 72px; gap: 14px; align-items: center; padding: 10px 10px; margin: 0 -10px; border-bottom: 1px solid var(--linha-2); border-radius: 10px; font-size: 13.5px; transition: background .25s }
+    .themes .th:not(.thh):hover { background: rgba(255, 255, 255, .06) }
+    .themes .th:not(.thh):hover .tbar i { background: var(--s-verde) }
+    .themes .th:last-child { border-bottom: 0 }
+    .themes .th .n { font-weight: 600 }
+    .themes .th .n small { display: block; font-weight: 400; color: var(--ink-3); font-size: 11.5px }
+    .themes .tbar { position: relative; height: 22px }
+    .themes .tbar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 0 4px 4px 0; background: var(--s-lilas); transition: width 1.2s var(--ease), background .3s }
+    .themes .tbar span { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 11.5px; font-weight: 600; white-space: nowrap }
+    .themes .th .er, .themes .th .sg { text-align: right; font-variant-numeric: tabular-nums }
+    .themes .th .er.hi, .themes .th .sg.hi { color: var(--verde-txt); font-weight: 700 }
+    .themes .thh { font-size: 11px; color: var(--ink-3); border-bottom: 1px solid var(--linha) }
+    .themes .thh span:nth-child(n+3) { text-align: right }
+
+    .playbook { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+    .pb { border-radius: 18px; padding: 20px }
+    .pb.feature { grid-column: span 2; background: var(--spot, var(--spot-off)), linear-gradient(150deg, rgba(61, 177, 90, .2), rgba(255, 255, 255, .03) 60%) }
+    .pb .t { font-family: var(--f-display); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -.01em; margin-bottom: 8px }
+    .pb .d { font-size: 14px; color: var(--ink-2) }
+
+    /* ---------- e-mail ---------- */
+    .sys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+    .sy { border-radius: 18px; padding: 20px; overflow: hidden }
+    .sy .nm { font-weight: 700; font-size: 15px }
+    .sy .fn { font-size: 12.5px; color: var(--ink-3) }
+    .sy .rate { font-family: var(--f-display); font-weight: 800; font-size: 36px; letter-spacing: -.03em; line-height: 1.1; margin: 14px 0 6px }
+    .sy .rtrack { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .06); overflow: hidden }
+    .sy .rtrack i { display: block; height: 100%; width: 0; background: var(--s-verde); border-radius: 0 4px 4px 0; transition: width 1.3s var(--ease) }
+    .sy.reg .rtrack i { background: var(--s-lilas) }
+    .sy .mm { display: flex; gap: 18px; margin-top: 14px; font-size: 12.5px; color: var(--ink-3) }
+    .sy .mm b { display: block; font-family: var(--f-display); font-size: 17px; color: #fff }
+    .sy .desc { font-size: 13px; color: var(--ink-2); margin-top: 12px; border-top: 1px solid var(--linha-2); padding-top: 10px }
+    .sy .was { position: absolute; top: 18px; right: 18px; font-family: var(--f-mono); font-size: 10.5px; padding: 3px 8px; border-radius: 999px; background: rgba(61, 177, 90, .16); color: var(--verde-txt) }
+
+    .mgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px }
+    .mcard { border-radius: 20px; overflow: hidden; background: var(--card-solid); border: 1px solid var(--linha); display: flex; flex-direction: column; transition: transform .45s var(--ease), border-color .3s, box-shadow .45s var(--ease) }
+    .mcard:hover { border-color: rgba(92, 203, 124, .45); box-shadow: 0 28px 56px -30px rgba(0, 0, 0, .85) }
+    .mcard.key { overflow: visible }
+    .mcard.key .mthumb { border-radius: 19px 19px 0 0 }
+    .mcard.wide { grid-column: span 2 }
+    .mthumb { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #1a0026; display: flex; gap: 2px }
+    .mcard.wide .mthumb { aspect-ratio: 8 / 5 }
+    .mthumb img { flex: 1; min-width: 0; height: 100%; object-fit: cover; object-position: 50% 0%; transition: object-position 3.2s var(--ease) }
+    .mcard:hover .mthumb img { object-position: 50% 100% }
+    .mthumb .tot {
+      position: absolute; left: 10px; bottom: 10px; font-family: var(--f-display); font-weight: 800; font-size: 24px; letter-spacing: -.02em;
+      padding: 2px 10px; border-radius: 10px; background: rgba(38, 1, 55, .85); backdrop-filter: blur(6px)
+    }
+    .mthumb .tot.star { color: var(--verde-txt) }
+    .mthumb .scrollhint { position: absolute; right: 10px; bottom: 12px; font-family: var(--f-mono); font-size: 10px; background: rgba(38, 1, 55, .8); padding: 3px 8px; border-radius: 999px; transition: opacity .3s }
+    .mcard:hover .scrollhint { opacity: 0 }
+    .mbody { padding: 14px 15px 16px }
+    .mname { font-family: var(--f-display); font-weight: 700; font-size: 16px; line-height: 1.25 }
+    .msub { font-size: 12px; color: var(--ink-3); margin-top: 2px }
+    .mlines { margin-top: 12px }
+    .ml { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; font-size: 12px; color: var(--ink-2) }
+    .ml + .ml { margin-top: 8px }
+    .ml b { font-variant-numeric: tabular-nums }
+    .ml .tr { grid-column: 1 / -1; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .06); overflow: hidden }
+    .ml .tr i { display: block; height: 100%; width: 0; border-radius: 0 3px 3px 0; background: var(--s-verde); transition: width 1.2s var(--ease) }
+    .mfoot { font-size: 11.5px; color: var(--ink-3); margin-top: 12px; border-top: 1px solid var(--linha-2); padding-top: 8px }
+
+    .muni .mu { display: grid; grid-template-columns: minmax(130px, 1fr) minmax(0, 2fr) 70px; gap: 16px; align-items: center; padding: 14px 10px; margin: 0 -10px; border-bottom: 1px solid var(--linha-2); border-radius: 12px; transition: background .25s }
+    .muni .mu:hover { background: rgba(255, 255, 255, .06) }
+    .muni .mu:last-child { border-bottom: 0 }
+    .muni .mu .n { font-weight: 700; font-size: 15px }
+    .muni .mu .n small { display: block; font-weight: 400; color: var(--ink-3); font-size: 12px }
+    .muni .mu .bars div { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2) }
+    .muni .mu .bars div + div { margin-top: 5px }
+    .muni .mu .bars i { display: block; height: 9px; border-radius: 0 3px 3px 0; width: 0; transition: width 1.2s var(--ease), opacity .3s }
+    .muni .mu .rt { text-align: right; font-family: var(--f-display); font-weight: 800; font-size: 21px; letter-spacing: -.02em }
+    .muni .mu .rt small { display: block; font-family: var(--f-body); font-weight: 400; font-size: 11px; color: var(--ink-3); letter-spacing: 0 }
+
+    /* ---------- resumo em três partes ---------- */
+    .brief { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: hidden }
+    .brief > div { padding: 22px 24px; border-right: 1px solid var(--linha); transition: background .3s }
+    .brief > div:last-child { border-right: 0 }
+    .brief > div:hover { background: rgba(255, 255, 255, .045) }
+    .brief .kicker { display: block; margin-bottom: 8px }
+    .brief p { font-size: 14.5px; color: var(--ink-2); line-height: 1.6 }
+    .brief p b { color: #fff }
+
+    /* ---------- WhatsApp ---------- */
+    .acoes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px }
+    .acao { border-radius: var(--r); padding: 22px }
+    .acao .when { font-family: var(--f-mono); font-size: 10.5px; color: var(--verde-txt); letter-spacing: .08em; text-transform: uppercase }
+    .acao h4 { margin: 8px 0 10px }
+    .acao .q { font-size: 14px; color: var(--ink-2); border-left: 2px solid var(--verde); padding: 4px 0 4px 14px; font-style: italic }
+    .acao .res { margin-top: 12px; font-size: 13.5px; color: var(--ink-2) }
+
+    .wagrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px }
+    .wa { border-radius: 20px; overflow: hidden; background: var(--card-solid); border: 1px solid var(--linha); display: flex; flex-direction: column; transition: transform .45s var(--ease), border-color .3s, box-shadow .45s var(--ease) }
+    .wa:hover { border-color: rgba(92, 203, 124, .45); box-shadow: 0 28px 56px -30px rgba(0, 0, 0, .85) }
+    .wa .shot { position: relative; height: 380px; overflow: hidden; background: #efe7dc }
+    .wa .shot img { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; transition: transform 2.8s var(--ease) }
+    .wa .shot::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46px; background: linear-gradient(rgba(46, 5, 71, .7), transparent); z-index: 1 }
+    .wa .shot .tag { position: absolute; top: 10px; left: 10px; z-index: 2; font-size: 11.5px; font-weight: 600; padding: 4px 9px; border-radius: 999px; background: rgba(38, 1, 55, .85); color: #fff }
+    .wa .shot .up { position: absolute; right: 10px; top: 10px; z-index: 2; font-family: var(--f-mono); font-size: 10px; padding: 3px 8px; border-radius: 999px; background: rgba(38, 1, 55, .85); transition: opacity .3s }
+    .wa:hover .shot .up { opacity: 0 }
+    .wa .cap { padding: 14px 16px 16px }
+    .wa .cap .quote { font-family: var(--f-display); font-weight: 600; font-size: 16px; line-height: 1.35 }
+    .wa .cap .meta { font-size: 12px; color: var(--ink-3); margin-top: 8px }
+
+    .marquee { overflow: hidden; padding: 6px 0; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent) }
+    .mtrack { display: flex; gap: 14px; width: max-content; animation: slide 60s linear infinite }
+    .marquee:hover .mtrack { animation-play-state: paused }
+    .mq { flex: 0 0 auto; max-width: 340px; border-radius: 18px 18px 18px 4px; padding: 14px 16px; background: rgba(255, 255, 255, .92); color: #1b1b1b; font-size: 14px; line-height: 1.45; transition: transform .35s var(--ease), box-shadow .35s }
+    .mq:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .8) }
+    .mq small { display: block; color: #6c5a78; font-size: 11.5px; margin-top: 6px; font-weight: 600 }
+    @keyframes slide { to { transform: translateX(-50%) } }
+    footer { margin: 90px 0 40px; padding-top: 22px; border-top: 1px solid var(--linha); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--ink-3) }
+    footer span:first-child { max-width: 75ch }
+
+    /* ---------- entrada ao rolar ---------- */
+    .js .rv { opacity: 0; transform: translateY(22px); transition: opacity .9s var(--ease) var(--d, 0s), transform .9s var(--ease) var(--d, 0s), border-color .35s, box-shadow .45s var(--ease) }
+    .js .rv.in { opacity: 1; transform: none }
+    .js .rv.in.lift:hover, .js .rv.in.vcard:hover, .js .rv.in.mcard:hover, .js .rv.in.wa:hover { transform: translateY(-5px); transition-delay: 0s }
+    .lift:hover, .vcard:hover, .mcard:hover, .wa:hover { transform: translateY(-5px) }
+    .js .chap-rule { transform: scaleX(0); transition: transform 1.4s var(--ease) .15s }
+    .js .chap-head.in .chap-rule { transform: scaleX(1) }
+    .js .hero h1 .ln > span { transform: translateY(110%); transition: transform 1s var(--ease) }
+    .js .hero.go h1 .ln > span { transform: none }
+
+    .settled .rv { opacity: 1 !important; transform: none !important }
+    .settled .chap-rule { transform: none !important }
+
+    /* ---------- responsivo ---------- */
+    @media (max-width: 1020px) {
+      .vgrid, .vgrid.g5 { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+      .vgrid.g2 { max-width: 66% }
+      .mgrid { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+      .cmp, .kpis.k4 { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+      .ret, .views { grid-template-columns: 1fr }
+      .playbook, .trio { grid-template-columns: 1fr 1fr }
+      .pb.feature { grid-column: span 2 }
+    }
+    @media (max-width: 760px) {
+      .chap-head { grid-template-columns: 1fr }
+      .facts, .kpis, .sys, .brief { grid-template-columns: 1fr }
+      .brief > div { border-right: 0; border-bottom: 1px solid var(--linha) }
+      .brief > div:last-child { border-bottom: 0 }
+      .grid2, .acoes, .vcols { grid-template-columns: 1fr }
+      .vgrid, .vgrid.g5, .mgrid, .wagrid { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+      .vgrid.g2 { max-width: none }
+      .mcard.wide { grid-column: span 2 }
+      .playbook, .trio { grid-template-columns: 1fr }
+      .pb.feature { grid-column: auto }
+      .funnel { --band: 84px; --neck: 46px; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) }
+      .fneck span { white-space: normal; font-size: 9.5px; line-height: 1.35; padding: 3px 8px; border-radius: 10px }
+      .virada .stack i { font-size: 12.5px; padding: 0 8px }
+      .ffoot, .ostats { grid-template-columns: 1fr 1fr }
+      .themes .th { grid-template-columns: minmax(0, 1fr) 58px 58px }
+      .themes .tbar { grid-column: 1 / -1; grid-row: 2 }
+      .themes .thh .tb { display: none }
+      .muni .mu { grid-template-columns: minmax(0, 1fr) 64px }
+      .muni .mu .bars { grid-column: 1 / -1; grid-row: 2 }
+      .top .logo { height: 42px }
+      .wa .shot { height: 300px }
+    }
+    @media (max-width: 440px) {
+      .vgrid, .vgrid.g5, .mgrid, .wagrid, .kpis.k4 { grid-template-columns: 1fr }
+      .mcard.wide { grid-column: auto }
+      .vmedia { aspect-ratio: 4 / 5 }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto }
+      *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important }
+      .mtrack { animation: none; flex-wrap: wrap; width: auto }
+      .marquee { mask-image: none; -webkit-mask-image: none }
+      .mq[aria-hidden] { display: none }
+    }
+
+    @media print {
+      body { background: var(--roxo-escuro); -webkit-print-color-adjust: exact; print-color-adjust: exact }
+      body::before, .progress, .nav { display: none }
+      .rv { opacity: 1 !important; transform: none !important }
+      .vcard, .mcard, .wa, .card, .pb, .ins { break-inside: avoid }
+      .mtrack { animation: none; flex-wrap: wrap; width: auto }
+      .marquee { mask-image: none; -webkit-mask-image: none }
+      .mq[aria-hidden] { display: none }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress"></div>
+
+  <div class="wrap">
+
+    <!-- TOPO -->
+    <div class="top">
+      <img class="logo" src="Logo Gerson Podemos.svg" alt="Gerson Pessoa" onerror="this.style.display='none'" />
+      <div class="meta">
+        <b>Setembro 2026</b>
+        Tráfego 01–29/09 · Perfil 01–28/09 · E-mail 28/08–28/09<br>Comparativo: agosto 2026
+      </div>
+    </div>
+
+    <nav class="nav" id="nav" aria-label="Seções do relatório">
+      <span class="pill" aria-hidden="true"></span>
+      <a href="#foco">Seguidores e alcance</a>
+      <a href="#trafego">Tráfego pago</a>
+      <a href="#organico">Orgânico</a>
+      <a href="#email">E-mail</a>
+      <a href="#whatsapp">WhatsApp</a>
+    </nav>
+
+    <!-- ABERTURA -->
+    <header class="hero" id="hero">
+      <span class="kicker">Relatório mensal · Gerson Pessoa</span>
+      <h1><span class="ln"><span>Resultados de <em>setembro</em></span></span></h1>
+      <p class="sub">Tráfego pago · Conteúdo orgânico · E-mail marketing · WhatsApp</p>
+      <p class="lede">Em setembro, a maior parte do investimento em tráfego pago foi direcionada à <b>campanha de
+          seguidores</b>. No período, o perfil somou <b>4,9 mil novos seguidores (+67,8%)</b> e as visualizações de origem
+        orgânica cresceram <b>10,5%</b> em relação ao período anterior.</p>
+
+      <div class="facts">
+        <div class="fact rv hov lift key" style="--d:.3s">
+          <div class="v"><span data-count="4.9" data-dec="1">0</span> mil</div>
+          <div class="k">novos seguidores no perfil</div>
+          <span class="d">↑ 67,8% vs agosto</span>
+        </div>
+        <div class="fact rv hov lift" style="--d:.4s">
+          <div class="v"><span data-count="6.33" data-dec="2">0</span> mi</div>
+          <div class="k">visualizações de origem orgânica</div>
+          <span class="d">↑ 10,5% vs período anterior</span>
+        </div>
+        <div class="fact rv hov lift" style="--d:.5s">
+          <div class="v"><span data-count="5.70" data-money="1" data-dec="2">R$ 0</span></div>
+          <div class="k">custo por novo seguidor no tráfego pago</div>
+          <span class="d">agosto: R$ 36,62 · ↓ 84%</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== SEGUIDORES E ALCANCE ==================== -->
+    <section class="chapter" id="foco">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Foco do mês</span>
+          <h2 class="chap-word">Seguidores e alcance</h2>
+        </div>
+        <p class="chap-thesis">Visão consolidada dos dois objetivos de setembro: <b>converter o público alcançado em
+            seguidores</b> e <b>ampliar o alcance do conteúdo orgânico</b>.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <!-- FUNIL -->
+      <div class="card funnel-card rv hov key" id="fcard">
+        <div class="bhead" style="margin-bottom:14px">
+          <h3>Funil de conversão do tráfego pago</h3>
+          <span class="hint">pessoas alcançadas › visitas ao perfil › novos seguidores · 01–29 set</span>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Recorte do funil">
+          <button role="tab" aria-selected="true" data-f="geral">Total</button>
+          <button role="tab" aria-selected="false" data-f="eng">Campanha de seguidores</button>
+          <button role="tab" aria-selected="false" data-f="reco">Campanha de alcance</button>
+        </div>
+        <p class="fdesc" id="fdesc">Soma das duas campanhas do mês: a de seguidores e a de alcance.</p>
+
+        <div class="funnel">
+          <div class="fviz" id="fviz" role="img" aria-label="Funil: pessoas alcançadas, visitas ao perfil e novos seguidores">
+            <canvas></canvas>
+          </div>
+          <div class="fnums">
+            <div class="fstage" data-i="0"><span class="lbl">Pessoas alcançadas</span><span class="num tnum" id="f-reach">592.195</span></div>
+            <div class="fneck"><span><b id="f-r1">1,91%</b> visitaram o perfil</span></div>
+            <div class="fstage" data-i="1"><span class="lbl">Visitas ao perfil</span><span class="num tnum" id="f-vis">11.298</span></div>
+            <div class="fneck"><span><b id="f-r2">6,56%</b> das visitas viraram seguidor</span></div>
+            <div class="fstage last" data-i="2"><span class="lbl">Novos seguidores</span><span class="num tnum" id="f-seg">741</span></div>
+          </div>
+        </div>
+        <div class="fscale">Largura das faixas em escala logarítmica · passe o mouse nas etapas</div>
+
+        <div class="ffoot">
+          <div><div class="k">1 novo seguidor a cada</div><div class="v tnum" id="f-each">799 pessoas</div></div>
+          <div><div class="k">Custo por seguidor</div><div class="v tnum" id="f-cost">R$ 5,70</div></div>
+          <div><div class="k">Custo por visita ao perfil</div><div class="v tnum" id="f-cvis">R$ 0,37</div></div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:16px">
+        <!-- ORIGEM DOS SEGUIDORES -->
+        <div class="card origem rv hov">
+          <span class="kicker">Perfil @gersonpessoa · 01–28 set</span>
+          <div class="big" style="margin-top:12px">4,9 mil<small>novos seguidores no mês · <span class="g">↑ 67,8%</span></small></div>
+          <div style="margin-top:22px">
+            <div class="srow">
+              <div class="sk"><span>Origem dos novos seguidores</span><b>atribuição da Meta</b></div>
+              <div class="stack" data-stack>
+                <i class="c-verde" data-b="43.8" title="Publicações orgânicas: 2.146 seguidores">2.146</i>
+                <i class="c-lilas" data-b="15.1" title="Anúncios: 741 seguidores">741</i>
+                <i class="c-neutro" data-b="41.1" title="Outras origens: cerca de 2 mil seguidores">≈ 2 mil</i>
+              </div>
+            </div>
+            <div class="legend" style="margin-top:12px">
+              <span data-s="c-verde"><i class="c-verde"></i>publicações orgânicas</span>
+              <span data-s="c-lilas"><i class="c-lilas"></i>anúncios</span>
+              <span data-s="c-neutro"><i class="c-neutro"></i>perfil, stories e busca</span>
+            </div>
+          </div>
+          <div class="ostats">
+            <div><div class="v">+313%</div><div class="k">seguidores vindos das publicações vs agosto</div></div>
+            <div><div class="v">+422%</div><div class="k">seguidores vindos dos anúncios vs agosto</div></div>
+            <div><div class="v">↓ 5,1%</div><div class="k">pessoas que deixaram de seguir</div></div>
+          </div>
+          <p class="note">Os dois canais contribuíram para o crescimento da base. As atribuições de publicações e anúncios
+            podem se sobrepor em parte; o total de 4,9 mil vem do painel do perfil.</p>
+        </div>
+
+        <!-- ALCANCE ORGÂNICO -->
+        <div class="card rv hov" style="--d:.1s">
+          <span class="kicker">Alcance orgânico · 58 publicações</span>
+          <h4 style="margin-top:12px">Crescimento das publicações</h4>
+          <p class="read" style="margin-top:6px;font-size:14.5px">Com o mesmo número de publicações de agosto, setembro teve
+            mais visualizações, mais alcance e mais interações.</p>
+          <div style="margin-top:20px">
+            <div class="pair">
+              <div class="ph"><span>Visualizações das publicações</span><span class="chg">↑ 34,8%</span></div>
+              <div class="pb2"><i class="c-lilas" data-w="61.3"></i><b>3,26 mi</b> ago</div>
+              <div class="pb2"><i class="c-verde" data-w="82.6"></i><b>4,39 mi</b> set</div>
+            </div>
+            <div class="pair">
+              <div class="ph"><span>Alcance somado das publicações</span><span class="chg">↑ 28,0%</span></div>
+              <div class="pb2"><i class="c-lilas" data-w="39"></i><b>2,07 mi</b> ago</div>
+              <div class="pb2"><i class="c-verde" data-w="49.9"></i><b>2,65 mi</b> set</div>
+            </div>
+            <div class="pair">
+              <div class="ph"><span>Interações nas publicações</span><span class="chg">↑ 51,1%</span></div>
+              <div class="pb2"><i class="c-lilas" data-w="44.9"></i><b>111,6 mil</b> ago</div>
+              <div class="pb2"><i class="c-verde" data-w="67.9"></i><b>168,6 mil</b> set</div>
+            </div>
+          </div>
+          <div class="legend" style="margin-top:14px">
+            <span data-s="c-lilas"><i class="c-lilas"></i>agosto</span>
+            <span data-s="c-verde"><i class="c-verde"></i>setembro</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rv hov" style="margin-top:16px">
+        <span class="kicker">Análise</span>
+        <div class="read" style="margin-top:10px">
+          <p>Em setembro, <b>87% do investimento do tráfego pago foi para a campanha de seguidores</b>, cujo objetivo é
+            levar pessoas ao perfil e convertê-las em seguidores. Em agosto, 80% estava na campanha de alcance. Com essa
+            mudança, os anúncios trouxeram <span class="g">741 novos seguidores</span>, contra 142 em agosto, a R$ 5,70 por
+            seguidor.</p>
+          <p>Os dois canais atuaram de forma complementar: o tráfego pago ampliou a base de seguidores e o conteúdo
+            orgânico manteve o engajamento. As visualizações de origem orgânica cresceram 10,5%, o alcance somado das
+            publicações cresceu 28% e as interações com o conteúdo subiram 32,4%. <b>76% das interações vieram de
+              seguidores</b>, o que indica uma base ativa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TRÁFEGO PAGO ==================== -->
+    <section class="chapter" id="trafego">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 1 · Meta Ads · 01–29 set</span>
+          <h2 class="chap-word">Tráfego pago</h2>
+        </div>
+        <p class="chap-thesis">Anúncios no Facebook e no Instagram da conta Gerson Pessoa: <b>20 anúncios em duas
+            campanhas</b>, uma para ganhar seguidores e outra para ampliar o alcance na cidade.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="kpis rv">
+        <div class="kpi hl">
+          <div class="k">Novos seguidores</div>
+          <div class="v" data-count="741">0</div>
+          <div class="d"><span class="up">↑ 422%</span> · agosto: 142</div>
+        </div>
+        <div class="kpi hl key">
+          <div class="k">Custo por seguidor</div>
+          <div class="v" data-count="5.70" data-money="1" data-dec="2">R$ 0</div>
+          <div class="d"><span class="up">↓ 84%</span> · agosto: R$ 36,62</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Visitas ao perfil</div>
+          <div class="v" data-count="11298">0</div>
+          <div class="d"><span class="up">↑ 90%</span> · agosto: 5.944</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Investimento</div>
+          <div class="v" data-count="4222.33" data-money="1" data-dec="2">R$ 0</div>
+          <div class="d">agosto: R$ 5.200,70</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Pessoas alcançadas</div>
+          <div class="v" data-count="592195">0</div>
+          <div class="d">soma do alcance de cada anúncio</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Interações com os anúncios</div>
+          <div class="v" data-count="128247">0</div>
+          <div class="d">curtidas, comentários, compartilhamentos e cliques</div>
+        </div>
+      </div>
+      <p class="note rv">Comparativo com a conta Gerson Pessoa em agosto. O alcance é exato por anúncio; o total é a soma dos
+        anúncios, sem desduplicar pessoas que viram mais de um.</p>
+
+      <!-- INVESTIMENTO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Distribuição do investimento</h3>
+          <span class="hint">participação de cada campanha na verba · agosto × setembro</span>
+        </div>
+        <div class="card virada rv hov" id="virada">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div class="tabs" role="group" aria-label="Mês">
+              <button aria-pressed="false" data-m="ago">Agosto</button>
+              <button aria-pressed="true" data-m="set">Setembro</button>
+            </div>
+            <div class="legend">
+              <span data-s="c-lilas"><i class="c-lilas"></i>Campanha de alcance</span>
+              <span data-s="c-verde"><i class="c-verde"></i>Campanha de seguidores</span>
+            </div>
+          </div>
+          <div class="stack" id="vstack">
+            <i class="c-lilas" id="v-rec">80,3%</i>
+            <i class="c-verde" id="v-eng">19,7%</i>
+          </div>
+
+          <div class="vcols">
+            <div class="vcol hov" data-s="c-verde">
+              <span class="tag"><i class="c-verde"></i>Campanha de seguidores</span>
+              <p class="desc"><b>Objetivo:</b> levar pessoas ao perfil do Gerson e convertê-las em seguidores. 18 anúncios.</p>
+              <div class="vmet">
+                <div><div class="k">Investimento</div><div class="v">R$ 3.681,66</div></div>
+                <div><div class="k">Novos seguidores</div><div class="v g">731</div></div>
+                <div><div class="k">Custo por seguidor</div><div class="v g">R$ 5,04</div></div>
+                <div><div class="k">Visitas ao perfil</div><div class="v">10.835</div></div>
+                <div><div class="k">Pessoas alcançadas</div><div class="v">353.903</div></div>
+                <div><div class="k">Assistiram até 75%</div><div class="v">4,09%</div></div>
+              </div>
+              <p class="note" style="margin-top:12px">Agosto: 112 seguidores a R$ 9,13 cada. <b>6,5 vezes mais seguidores, com
+                  custo 45% menor.</b></p>
+            </div>
+            <div class="vcol hov" data-s="c-lilas">
+              <span class="tag"><i class="c-lilas"></i>Campanha de alcance</span>
+              <p class="desc"><b>Objetivo:</b> mostrar os conteúdos para o maior número de pessoas da cidade, ao menor custo.
+                2 anúncios.</p>
+              <div class="vmet">
+                <div><div class="k">Investimento</div><div class="v">R$ 540,67</div></div>
+                <div><div class="k">Pessoas alcançadas</div><div class="v g">238.292</div></div>
+                <div><div class="k">Custo por mil exibições</div><div class="v g">R$ 1,92</div></div>
+                <div><div class="k">Exibições</div><div class="v">281.794</div></div>
+                <div><div class="k">Por mil pessoas</div><div class="v">R$ 2,27</div></div>
+                <div><div class="k">Vezes que cada um viu</div><div class="v">1,18</div></div>
+              </div>
+              <p class="note" style="margin-top:12px">Com 12,8% da verba, respondeu por <b>40% das exibições do mês</b>,
+                praticamente só para pessoas novas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESTAQUES EM VÍDEO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Anúncios em destaque</h3>
+          <span class="hint">passe o mouse para uma prévia · clique para assistir com som</span>
+        </div>
+        <div class="vgroup rv"><i class="c-verde"></i>Campanha de seguidores <small>· os anúncios que mais trouxeram seguidores e visitas ao perfil</small></div>
+        <div class="vgrid" id="adv-eng"></div>
+        <div class="vgroup rv"><i class="c-lilas"></i>Campanha de alcance <small>· o maior alcance pelo menor custo</small></div>
+        <div class="vgrid g2" id="adv-rec"></div>
+      </div>
+
+      <!-- TABELA -->
+      <div class="block rv">
+        <details class="tbl">
+          <summary><span>Todos os 20 anúncios<small>clique para abrir · ordenados por investimento</small></span><span class="chev">▾</span></summary>
+          <div class="tscroll">
+            <table class="mini">
+              <thead>
+                <tr>
+                  <th>Anúncio · duração</th>
+                  <th>Investimento</th>
+                  <th>Alcance</th>
+                  <th>Visitas ao perfil</th>
+                  <th>Seguidores</th>
+                  <th>R$ / seguidor</th>
+                  <th>Assistiram até 75%</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+              <tfoot>
+                <tr>
+                  <td>Total · 2 campanhas</td>
+                  <td>R$ 4.222,33</td>
+                  <td>592.195</td>
+                  <td>11.298</td>
+                  <td>741</td>
+                  <td>R$ 5,70</td>
+                  <td>2,62%</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </details>
+        <p class="note">Assistiram até 75% = reproduções de 75% do vídeo sobre as exibições. Em verde, os melhores resultados
+          de cada coluna.</p>
+      </div>
+
+      <!-- RETENÇÃO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Retenção dos vídeos</h3>
+          <span class="hint">parcela das exibições que assistiu até cada ponto do vídeo</span>
+        </div>
+        <div class="ret">
+          <div class="card rv hov">
+            <span class="kicker">Total do mês · setembro × agosto</span>
+            <div style="margin-top:18px">
+              <div class="rb">
+                <div class="rtop"><span>Assistiram até 25%</span><span class="tnum">48.995 pessoas</span></div>
+                <div class="rtrack"><i class="c-verde" data-w="36.5"></i></div>
+                <div class="rvals"><span>setembro <b>6,99%</b></span><span>agosto: métrica não exportada</span></div>
+              </div>
+              <div class="rb">
+                <div class="rtop"><span>Assistiram até 50%</span><span class="tnum">32.106 pessoas</span></div>
+                <div class="rtrack"><i class="c-verde" data-w="23.9"></i></div>
+                <div class="rtrack"><i class="c-lilas" data-w="5.2"></i></div>
+                <div class="rvals"><span>setembro <b>4,58%</b></span><span>agosto <b>0,99%</b></span></div>
+              </div>
+              <div class="rb">
+                <div class="rtop"><span>Assistiram até 75%</span><span class="tnum">18.358 pessoas</span></div>
+                <div class="rtrack"><i class="c-verde" data-w="13.7"></i></div>
+                <div class="rtrack"><i class="c-lilas" data-w="3.1"></i></div>
+                <div class="rvals"><span>setembro <b>2,62%</b></span><span>agosto <b>0,60%</b></span></div>
+              </div>
+            </div>
+            <div class="legend" style="margin-top:16px"><span data-s="c-verde"><i class="c-verde"></i>setembro</span><span data-s="c-lilas"><i class="c-lilas"></i>agosto</span></div>
+            <p class="note"><b>Retenção 4,4 vezes maior.</b> 18.358 pessoas assistiram até 75% do vídeo, contra 14.135 em
+              agosto (+30%), com um público mais qualificado.</p>
+          </div>
+
+          <div class="card rv hov" style="--d:.1s">
+            <span class="kicker">Duração × retenção · 20 anúncios</span>
+            <div class="scatter" id="scatter" style="margin-top:14px">
+              <svg viewBox="0 0 560 300" id="scsvg" role="img" aria-label="Gráfico de dispersão: duração do vídeo em segundos e porcentagem que assistiu até 75%"></svg>
+              <div class="tip" id="sctip"></div>
+            </div>
+            <div class="legend" style="margin-top:10px"><span data-s="c-verde"><i class="c-verde"></i>Campanha de seguidores</span><span data-s="c-lilas"><i class="c-lilas"></i>Campanha de alcance</span><span style="color:var(--ink-3)">passe o mouse nos pontos</span></div>
+            <p class="note">Eixo horizontal: duração do vídeo. Vertical: parcela que assistiu até 75%. <b>Os vídeos mais
+                curtos retêm mais público</b>; as três maiores retenções têm entre 17 e 41 segundos.</p>
+          </div>
+        </div>
+
+        <div class="trio" style="margin-top:16px">
+          <div class="ins rv hov lift">
+            <div class="t"><span class="n">18,1%</span>Registro real e curto</div>
+            <div class="d">“Mulher presa” (17s), flagrante das câmeras do Monitora OZ, teve a maior retenção da conta.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t"><span class="n">10,3%</span>Serviço explicado passo a passo</div>
+            <div class="d">Carreta de exames (29s): 63% de quem assistiu 25% do vídeo chegou aos 75%.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t"><span class="n">7,9%</span>Benefício direto ao morador</div>
+            <div class="d">Troca de geladeira (41s): o público assiste até o fim para saber se tem direito.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PÚBLICO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Perfil do público</h3>
+          <span class="hint">quem recebeu os anúncios × quem passou a seguir · as duas campanhas</span>
+        </div>
+        <div class="grid2" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)">
+          <div class="card ages rv hov">
+            <div class="legend" style="margin-bottom:14px"><span data-s="c-lilas"><i class="c-lilas"></i>% das exibições</span><span data-s="c-verde"><i class="c-verde"></i>% dos novos seguidores</span></div>
+            <div class="ahead"><span>Idade</span><span>distribuição</span><span>custo · seguidores</span></div>
+            <div id="agerows"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="card rv hov" style="--d:.1s">
+              <span class="kicker">Gênero</span>
+              <div class="srow" style="margin-top:14px">
+                <div class="sk"><span>Exibições</span><b>700.467</b></div>
+                <div class="stack" data-stack>
+                  <i class="c-verde" data-b="60.2">60% mulheres</i>
+                  <i class="c-lilas" data-b="39.8">40%</i>
+                </div>
+              </div>
+              <div class="srow">
+                <div class="sk"><span>Novos seguidores</span><b>741</b></div>
+                <div class="stack" data-stack>
+                  <i class="c-verde" data-b="83.5">84% mulheres</i>
+                  <i class="c-lilas" data-b="16.5">17%</i>
+                </div>
+              </div>
+              <div class="legend" style="margin-top:12px"><span data-s="c-verde"><i class="c-verde"></i>feminino</span><span data-s="c-lilas"><i class="c-lilas"></i>masculino e não informado</span></div>
+              <p class="note">Mulheres: <b>619 seguidores a R$ 4,41 cada</b>. Homens: 121 seguidores a R$ 12,08.</p>
+            </div>
+            <div class="card rv hov" style="--d:.2s">
+              <span class="kicker">Análise</span>
+              <p class="read" style="margin-top:10px;font-size:15px">A faixa de <b>35 a 64 anos</b> recebeu 37% das
+                exibições e respondeu por <span class="g">68% dos novos seguidores</span>. O público de 45 a 54 anos teve o
+                menor custo por seguidor do mês (<span class="g">R$ 3,86</span>). Os temas com melhor conversão (Carreta da
+                Saúde da Mulher, geladeiras, Censo Animal e Delegacia da Mulher) dialogam diretamente com o público feminino,
+                que representa 84% dos novos seguidores.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ORGÂNICO ==================== -->
+    <section class="chapter" id="organico">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 2 · Perfil @gersonpessoa · 01–28 set</span>
+          <h2 class="chap-word">Conteúdo orgânico</h2>
+        </div>
+        <p class="chap-thesis"><b>58 Reels</b> publicados, com <b>4,39 milhões de visualizações (+34,8%)</b> e <b>2.146
+            novos seguidores</b> atribuídos às publicações.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="bhead rv"><h3>Visão geral do perfil</h3><span class="hint">01–28 set · vs. período anterior</span></div>
+      <div class="views">
+        <div class="card vw rv hov">
+          <span class="kicker">Visualizações</span>
+          <div class="row hl"><span class="l">De origem orgânica</span><span class="r"><span class="n tnum" data-count="6331048">0</span><span class="c">↑ 10,5%</span></span></div>
+          <div class="row"><span class="l">De anúncios</span><span class="r"><span class="n tnum" data-count="649194">0</span></span></div>
+          <div class="row"><span class="l">Total no perfil</span><span class="r"><span class="n tnum" data-count="6980242">0</span></span></div>
+        </div>
+        <div class="card vw rv hov" style="--d:.08s">
+          <span class="kicker">Público e interação</span>
+          <div class="row hl"><span class="l">Novos seguidores</span><span class="r"><span class="n">4,9 mil</span><span class="c">↑ 67,8%</span></span></div>
+          <div class="row hl"><span class="l">Interações com o conteúdo</span><span class="r"><span class="n">262,4 mil</span><span class="c">↑ 32,4%</span></span></div>
+          <div class="row"><span class="l">Pessoas alcançadas</span><span class="r"><span class="n">800,9 mil</span></span></div>
+        </div>
+        <div class="card rv hov" style="--d:.16s">
+          <span class="kicker">Análise</span>
+          <p class="read" style="margin-top:10px;font-size:15px">As visualizações de origem orgânica, os novos seguidores e as
+            interações cresceram em relação ao período anterior. <b>9 em cada 10 visualizações</b> do perfil vieram do
+            conteúdo orgânico, e 76% das interações partiram de seguidores.</p>
+        </div>
+      </div>
+
+      <!-- PANORAMA -->
+      <div class="block">
+        <div class="bhead rv"><h3>Panorama das publicações</h3><span class="hint">58 Reels · setembro × agosto</span></div>
+        <div class="cmp rv">
+          <div class="cmpc hov lift"><div class="m">Visualizações</div><div class="now" data-count="4392359">0</div><div class="then">agosto: 3.258.665</div><span class="chg">↑ 34,8%</span></div>
+          <div class="cmpc hov lift"><div class="m">Alcance somado</div><div class="now" data-count="2651331">0</div><div class="then">agosto: 2.071.279</div><span class="chg">↑ 28,0%</span></div>
+          <div class="cmpc hov lift key"><div class="m">Novos seguidores</div><div class="now" data-count="2146">0</div><div class="then">agosto: 519</div><span class="chg">↑ 313%</span></div>
+          <div class="cmpc hov lift"><div class="m">Taxa de engajamento</div><div class="now"><span data-count="6.36" data-dec="2">0</span>%</div><div class="then">agosto: 5,39%</div><span class="chg">↑ 0,97 pp</span></div>
+          <div class="cmpc hov lift"><div class="m">Compartilhamentos</div><div class="now" data-count="44099">0</div><div class="then">agosto: 15.567</div><span class="chg">↑ 183%</span></div>
+          <div class="cmpc hov lift"><div class="m">Comentários</div><div class="now" data-count="22846">0</div><div class="then">agosto: 19.644</div><span class="chg">↑ 16,3%</span></div>
+          <div class="cmpc hov lift"><div class="m">Salvamentos</div><div class="now" data-count="4020">0</div><div class="then">agosto: 1.300</div><span class="chg">↑ 209%</span></div>
+          <div class="cmpc hov lift"><div class="m">Visualizações por post</div><div class="now" data-count="75730">0</div><div class="then">agosto: 56.184</div><span class="chg">↑ 34,8%</span></div>
+        </div>
+        <p class="note rv">Taxa de engajamento = curtidas, comentários, compartilhamentos e salvamentos sobre o alcance.</p>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Top 5 do mês</h3><span class="hint">ranking por visualizações · passe o mouse para uma prévia</span></div>
+        <div class="vgrid g5" id="topgrid"></div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Menções honrosas</h3><span class="hint">fora do Top 5 · engajamento e novos seguidores</span></div>
+        <div class="vgrid g2" id="hongrid"></div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Desempenho por tema</h3><span class="hint">58 publicações em 10 temas</span></div>
+        <div class="card themes rv hov">
+          <div class="th thh"><span>Tema</span><span class="tb">visualizações</span><span>engaj.</span><span>seguid.</span></div>
+          <div id="themerows"></div>
+        </div>
+        <div class="trio" style="margin-top:16px">
+          <div class="ins rv hov lift">
+            <div class="t"><span class="n">1.209</span>Benefício direto</div>
+            <div class="d">Os 2 posts da ação das geladeiras trouxeram 56% dos seguidores do orgânico, com 21,4 mil
+              compartilhamentos e 13,9% de engajamento.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t"><span class="n">26%</span>Segurança</div>
+            <div class="d">12 posts somaram 1,15 milhão de visualizações, um quarto do mês, com destaque para o Monitora OZ.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t"><span class="n">10,0%</span>Causa animal</div>
+            <div class="d">Censo Animal e Pet Day tiveram a segunda maior taxa de engajamento do mês e 4,9 mil
+              compartilhamentos.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Tendências</h3><span class="hint">padrões dos conteúdos de melhor resultado</span></div>
+        <div class="playbook">
+          <div class="pb feature rv hov">
+            <div class="t">Serviço com orientação clara converte em seguidor</div>
+            <div class="d">Geladeira, Censo Animal, Carreta de exames e vagas de emprego: quando o vídeo explica <b>o que
+                fazer, onde e até quando</b>, o morador passa a seguir o perfil para acompanhar as próximas informações.
+              O padrão aparece no orgânico (999 seguidores em um post) e no pago (seguidor entre R$ 1,92 e R$ 3,41).</div>
+          </div>
+          <div class="pb rv hov lift" style="--d:.08s">
+            <div class="t">Registros reais de segurança têm o maior alcance</div>
+            <div class="d">O Monitora OZ fez o post mais visto do mês (523,5 mil) com 17 segundos de câmera. Os 5 posts do
+              sistema somaram 792 mil visualizações.</div>
+          </div>
+          <div class="pb rv hov lift">
+            <div class="t">Mesmo conteúdo, bom resultado nos dois canais</div>
+            <div class="d">Geladeira, Carreta, Censo Animal e Assaí foram destaque no orgânico e ficaram entre os anúncios
+              com menor custo por seguidor.</div>
+          </div>
+          <div class="pb rv hov lift" style="--d:.08s">
+            <div class="t">Datas cívicas mobilizam o público</div>
+            <div class="d">Os 6 posts do 7 de Setembro somaram 543,8 mil visualizações e 169 novos seguidores.</div>
+          </div>
+          <div class="pb rv hov lift" style="--d:.16s">
+            <div class="t">Informação preventiva gera confiança</div>
+            <div class="d">Chuvas, queda de muro e zeladoria: 4 posts da Defesa Civil com média de 84,9 mil visualizações e
+              127 novos seguidores.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== E-MAIL ==================== -->
+    <section class="chapter" id="email">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 3 · Disparos de 28/08 a 28/09</span>
+          <h2 class="chap-word">E-mail marketing</h2>
+        </div>
+        <p class="chap-thesis"><b>1.110.676 envios</b> em três sistemas de disparo, com <b>223.925 aberturas</b> e taxa
+          média de <b>20,2%</b>.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="card brief rv" style="padding:0">
+        <div>
+          <span class="kicker">Base de Osasco</span>
+          <p>Os Sistemas 1 e 2, que se comunicam com a base de Osasco, somaram <b>654.149 envios</b> e
+            <b>202.606 aberturas</b>, com taxa de <b>31,0%</b>. A newsletter Acontece em Osasco foi o destaque.</p>
+        </div>
+        <div>
+          <span class="kicker">Novidade</span>
+          <p>Entrou em operação o <b>Sistema 3</b>, dedicado à divulgação da Cidade da Polícia em <b>Carapicuíba, Santana
+              de Parnaíba e Barueri</b>, com foco no impacto regional da iniciativa para a segurança pública.</p>
+        </div>
+        <div>
+          <span class="kicker">Evolução</span>
+          <p>Mesmo com o Sistema 3, que trabalha com bases externas, o volume cresceu <b>2,6%</b>, as aberturas
+            <b>3,5%</b> e a taxa média se manteve estável (20,0% para 20,2%).</p>
+        </div>
+      </div>
+
+      <div class="kpis rv" style="margin-top:16px">
+        <div class="kpi"><div class="k">E-mails enviados</div><div class="v" data-count="1110676">0</div><div class="d"><span class="up">↑ 2,6%</span> vs período anterior</div></div>
+        <div class="kpi"><div class="k">Aberturas</div><div class="v" data-count="223925">0</div><div class="d"><span class="up">↑ 3,5%</span> vs período anterior</div></div>
+        <div class="kpi"><div class="k">Taxa média geral</div><div class="v"><span data-count="20.2" data-dec="1">0</span>%</div><div class="d"><span class="up">+0,2 pp</span> com a entrada do Sistema 3</div></div>
+        <div class="kpi hl"><div class="k">Taxa na base de Osasco</div><div class="v"><span data-count="31.0" data-dec="1">0</span>%</div><div class="d">Sistemas 1 e 2 · 654 mil envios</div></div>
+        <div class="kpi hl key"><div class="k">Newsletter Acontece em Osasco</div><div class="v"><span data-count="50.7" data-dec="1">0</span>%</div><div class="d">40% de todas as aberturas do mês</div></div>
+        <div class="kpi"><div class="k">Municípios alcançados</div><div class="v">Osasco + 3</div><div class="d">Carapicuíba, Santana de Parnaíba e Barueri</div></div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Desempenho por sistema</h3><span class="hint">bases de Osasco · comunicação regional</span></div>
+        <div class="sys">
+          <div class="sy rv hov lift">
+            <div class="nm">Sistema 1</div><div class="fn">base de Osasco · relacionamento</div>
+            <div class="rate">33,2%</div>
+            <div class="rtrack"><i data-w="33.2"></i></div>
+            <div class="mm"><div><b>400.051</b>envios</div><div><b>132.955</b>aberturas</div></div>
+            <p class="desc">Destaques: newsletter Acontece em Osasco com 47,0% e Delegacia da Mulher 24h com 38,8%.</p>
+          </div>
+          <div class="sy rv hov lift" style="--d:.08s">
+            <span class="was">agosto: 6,6%</span>
+            <div class="nm">Sistema 2</div><div class="fn">base de Osasco · higienizada em agosto</div>
+            <div class="rate">27,4%</div>
+            <div class="rtrack"><i data-w="27.4"></i></div>
+            <div class="mm"><div><b>254.098</b>envios</div><div><b>69.651</b>aberturas</div></div>
+            <p class="desc">Com a base limpa, a abertura subiu de 6,6% para 27,4%. Newsletter com 60,1%, e 68,8% na edição
+              de 28/09.</p>
+          </div>
+          <div class="sy reg rv hov lift" style="--d:.16s">
+            <span class="was" style="background:rgba(167,123,224,.18);color:#D8B9FF">novo</span>
+            <div class="nm">Sistema 3</div><div class="fn">comunicação regional · Cidade da Polícia</div>
+            <div class="rate">4,7%</div>
+            <div class="rtrack"><i data-w="4.7"></i></div>
+            <div class="mm"><div><b>456.527</b>envios</div><div><b>21.319</b>aberturas</div></div>
+            <p class="desc">41% dos envios do mês. Trabalha com bases externas, em outras cidades, e está em fase de
+              consolidação.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Campanhas do mês</h3><span class="hint">passe o mouse para ver o e-mail inteiro · * edição com menos de 24h de coleta</span></div>
+        <div class="mgrid" id="mailgrid"></div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Sistema 3 · comunicação regional</h3><span class="hint">Cidade da Polícia · população estimada IBGE 2026</span></div>
+        <div class="card muni rv hov">
+          <div class="legend" style="margin-bottom:6px"><span data-s="c-lilas"><i class="c-lilas"></i>envios em relação à população</span><span data-s="c-verde"><i class="c-verde"></i>taxa de abertura</span></div>
+          <div id="munirows"></div>
+          <p class="note">Somando os três municípios, foram 456.527 envios, equivalentes em volume bruto a cerca de 50,7% da
+            população somada (relação entre envios e população, não percentual de moradores alcançados). Carapicuíba teve
+            cinco ciclos de disparo entre 4 e 17/09. Os números de Barueri são preliminares: os disparos seguem em
+            andamento.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Principais pontos do período</h3><span class="hint">análise da equipe de e-mail marketing</span></div>
+        <div class="trio">
+          <div class="ins rv hov lift">
+            <div class="t">Comunicação regional</div>
+            <div class="d">Com o Sistema 3, o e-mail deixou de ser uma ferramenta exclusiva de Osasco e passou a comunicar
+              também com a região oeste da Grande São Paulo.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t">Newsletter é o formato de maior abertura</div>
+            <div class="d">Acontece em Osasco abriu 47,0% no Sistema 1, 60,1% no Sistema 2 e 68,8% na edição de 28/09. Reúne
+              várias notícias em um produto editorial recorrente.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t">Saúde e serviços mantêm bom desempenho</div>
+            <div class="d">Delegacia da Mulher 24h abriu 38,8% e 35,8%, e Osasco Avança na Saúde, 27,6% e 21,6%, mantendo o
+              padrão dos meses anteriores.</div>
+          </div>
+          <div class="ins rv hov lift">
+            <div class="t">Qualidade da base pesa mais que volume</div>
+            <div class="d">Santana de Parnaíba recebeu 118,7 mil e-mails e teve 10.900 aberturas, o dobro de Carapicuíba, que
+              recebeu 287,7 mil.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t">Sistema 3 em consolidação</div>
+            <div class="d">A diferença entre os municípios (1,9%, 9,2% e 9,9%) orienta a avaliação de cada lista
+              separadamente nos próximos ciclos.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t">Taxa real tende a ser maior</div>
+            <div class="d">Endereços inativos ou com caixa cheia seguem no total de envios e reduzem artificialmente o
+              percentual de abertura.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHATSAPP ==================== -->
+    <section class="chapter" id="whatsapp">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 4 · Conversas individuais · setembro</span>
+          <h2 class="chap-word">WhatsApp</h2>
+        </div>
+        <p class="chap-thesis">Mensagens individuais do prefeito para <b>acompanhar a experiência</b> de quem usou os
+          serviços da Prefeitura.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="card brief rv" style="padding:0">
+        <div>
+          <span class="kicker">Público</span>
+          <p>Mensagens enviadas a dois grupos: <b>participantes do Curso de Cuidador de Idosos</b>, realizado em Osasco, e
+            <b>cidadãos atendidos na Carreta da Saúde</b>.</p>
+        </div>
+        <div>
+          <span class="kicker">Objetivo</span>
+          <p>Acompanhar a experiência dos participantes, <b>verificar a satisfação</b> com os serviços oferecidos e abrir
+            um <b>canal direto</b> para sugestões e feedbacks.</p>
+        </div>
+        <div>
+          <span class="kicker">Resultado</span>
+          <p>Retornos <b>amplamente positivos</b>. Os participantes destacaram a qualidade do atendimento, a organização
+            das ações e a importância das iniciativas para a população. Não houve reclamações relevantes no período.</p>
+        </div>
+      </div>
+
+      <div class="kpis k4 rv" style="margin-top:16px">
+        <div class="kpi"><div class="k">Públicos atendidos</div><div class="v">2</div><div class="d">Cuidador de Idosos e Carreta da Saúde</div></div>
+        <div class="kpi"><div class="k">Formato</div><div class="v">1:1</div><div class="d">mensagem individual, assinada pelo prefeito</div></div>
+        <div class="kpi hl"><div class="k">Retorno</div><div class="v">Positivo</div><div class="d">gratidão e elogios (❤️ 🙏 👏)</div></div>
+        <div class="kpi"><div class="k">Mais elogiado</div><div class="v" style="font-size:clamp(20px,2vw,24px)">Atendimento</div><div class="d">equipe, organização e importância das ações</div></div>
+      </div>
+
+      <div class="block acoes">
+        <div class="acao rv hov lift">
+          <span class="when">15 e 16 de setembro</span>
+          <h4>Curso de Cuidador de Idosos</h4>
+          <p class="q">“Vi que você está fazendo o curso de Cuidador de Idosos e queria saber como está sendo essa
+            experiência. Está gostando das aulas?”</p>
+          <p class="res">Os alunos responderam com relatos detalhados, elogiando o conteúdo, a professora e a oportunidade
+            de capacitação.</p>
+        </div>
+        <div class="acao rv hov lift" style="--d:.08s">
+          <span class="when">18 a 21 de setembro</span>
+          <h4>Carreta da Saúde e Carreta da Oftalmologia</h4>
+          <p class="q">“Vi que você passou hoje pela Carreta da Saúde e queria saber como foi o atendimento. Este é o meu
+            contato. Se precisar de alguma coisa, estou à disposição.”</p>
+          <p class="res">Os pacientes avaliaram o atendimento no mesmo dia, e cada resposta recebeu um agradecimento do
+            prefeito.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Respostas dos moradores</h3><span class="hint">6 conversas reais · telefones e fotos removidos · passe o mouse para ver a conversa inteira</span></div>
+        <div class="wagrid" id="wagrid"></div>
+      </div>
+
+      <div class="block rv">
+        <div class="bhead"><h3>Outras respostas recebidas</h3><span class="hint">trechos das conversas registradas · passe o mouse para pausar</span></div>
+        <div class="marquee" aria-label="Trechos das respostas dos moradores">
+          <div class="mtrack" id="mtrack"></div>
+        </div>
+      </div>
+
+      <div class="card block rv hov">
+        <span class="kicker">Análise das conversas</span>
+        <div class="grid2 col" style="margin-top:14px">
+          <ul>
+            <li><b>Satisfação com as equipes.</b> Os elogios citam diretamente quem atendeu: “profissional super
+              atenciosa”, “a professora é maravilhosa”, “parabenizar a professora Akila”.</li>
+            <li><b>Valor percebido das ações.</b> “Superando minhas expectativas”, “há tempo queria fazer esse curso”. O
+              curso é visto como ganho profissional e pessoal.</li>
+          </ul>
+          <ul>
+            <li><b>Proximidade com o prefeito.</b> A mensagem pessoal e o contato direto aparecem nas respostas: “Boa noite,
+              Sr. prefeito”, “está de parabéns”. A maioria respondeu em poucos minutos.</li>
+            <li><b>Canal de escuta.</b> Uma paciente atendida na Carreta informou que aguarda a ultrassonografia das mamas,
+              o que permite à equipe acompanhar o caso e dar retorno.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Fontes: Gerenciador de Anúncios Meta, conta Gerson Pessoa (01–29/09/2026) · Meta Business Suite, visão geral e
+        exportação de publicações @gersonpessoa (01–28/09) · Relatório de Desempenho de E-mail Marketing (28/08 a 28/09) ·
+        registros de conversas WhatsApp (set/2026). Comparativos com o relatório mensal de agosto de 2026.</span>
+      <span>Gerson Pessoa · relatório mensal · setembro 2026</span>
+    </footer>
+  </div>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ==================== DADOS ==================== */
+
+    /* Anúncios — CSV 01–29/09. alcance = soma das faixas idade × gênero (exclusivas) = alcance real do anúncio.
+       c: 'eng' = campanha de seguidores ([ENGAJAMENTO] Seguidores) · 'rec' = campanha de alcance ([RECONHECIMENTO] Máximo alcance) */
+    const ADS = [
+      { c: 'eng', n: 'Hospital Municipal', d: 57, reach: 45666, impr: 52747, spend: 451.89, vis: 891, seg: 34, p25: 3615, p75: 1008 },
+      { c: 'eng', n: 'Nova UBS Rochdale', d: 77, reach: 29449, impr: 32802, spend: 300.00, vis: 539, seg: 16, p25: 1759, p75: 287 },
+      { c: 'eng', n: 'Censo Animal 2', d: 59, reach: 19933, impr: 27412, spend: 299.84, vis: 811, seg: 126, p25: 2115, p75: 638 },
+      { c: 'eng', n: 'Delegacia da Mulher 24h', d: 31, reach: 30903, impr: 36872, spend: 296.71, vis: 883, seg: 34, p25: 2400, p75: 1043 },
+      { c: 'eng', n: 'Centro de Segurança', d: 48, reach: 29078, impr: 34574, spend: 250.00, vis: 525, seg: 14, p25: 1650, p75: 301 },
+      { c: 'eng', n: 'Carreta de exames', d: 29, reach: 18710, impr: 23428, spend: 199.80, vis: 666, seg: 104, p25: 3852, p75: 2415 },
+      { c: 'eng', n: 'Censo Animal', d: 53, reach: 13768, impr: 17622, spend: 199.61, vis: 419, seg: 76, p25: 2122, p75: 560 },
+      { c: 'eng', n: 'Creche Miguel Costa', d: 37, reach: 20160, impr: 23428, spend: 199.54, vis: 504, seg: 16, p25: 2022, p75: 953 },
+      { c: 'eng', n: 'Mulher presa · Monitora OZ', d: 17, reach: 25189, impr: 25951, spend: 198.66, vis: 1588, seg: 18, p25: 9540, p75: 4708 },
+      { c: 'eng', n: 'Troca de geladeira', d: 41, reach: 15696, impr: 19773, spend: 196.89, vis: 666, seg: 95, p25: 2681, p75: 1565 },
+      { c: 'eng', n: 'Vagas Assaí', d: 38, reach: 15253, impr: 18209, spend: 149.83, vis: 460, seg: 44, p25: 2575, p75: 825 },
+      { c: 'eng', n: '7 de Setembro', d: 46, reach: 14422, impr: 17219, spend: 149.51, vis: 592, seg: 15, p25: 1968, p75: 336 },
+      { c: 'eng', n: 'Pet Day', d: 41, reach: 12919, impr: 15650, spend: 149.48, vis: 424, seg: 22, p25: 1568, p75: 458 },
+      { c: 'eng', n: 'Sala de Transição', d: 31, reach: 17253, impr: 20325, spend: 148.84, vis: 300, seg: 12, p25: 1643, p75: 577 },
+      { c: 'eng', n: 'Caminhos da Capacitação', d: 47, reach: 10925, impr: 13458, spend: 145.10, vis: 404, seg: 56, p25: 1459, p75: 590 },
+      { c: 'eng', n: 'Areninha Miguel Costa', d: 39, reach: 13715, impr: 15561, spend: 143.70, vis: 337, seg: 8, p25: 1471, p75: 607 },
+      { c: 'eng', n: 'Dança no Parque', d: 86, reach: 10057, impr: 10779, spend: 103.25, vis: 424, seg: 20, p25: 953, p75: 67 },
+      { c: 'eng', n: 'Fase II Hospital', d: 51, reach: 10807, impr: 12863, spend: 99.01, vis: 402, seg: 21, p25: 1411, p75: 193 },
+      { c: 'rec', n: 'Geladeiras Enel', d: 57, reach: 146047, impr: 183709, spend: 382.85, vis: 386, seg: 9, p25: 3516, p75: 1125 },
+      { c: 'rec', n: 'Avaliações Digitais', d: 60, reach: 92245, impr: 98085, spend: 157.82, vis: 77, seg: 1, p25: 675, p75: 102 }
+    ];
+
+    const HILITE = [
+      {
+        ad: 'Censo Animal 2', grp: 'eng', badge: 'Mais seguidores', video: 'assets/media/traf-censo2.webm', poster: 'assets/thumbs/traf-censo2.jpg',
+        m: [['Novos seguidores', '126', 1], ['Custo por seguidor', 'R$ 2,38', 1], ['Visitas ao perfil', '811'], ['Investimento', 'R$ 299,84']],
+        why: 'O convite para cadastrar o pet deu motivo para seguir: <b>15,5% de quem visitou o perfil passou a seguir</b>. Com o primeiro anúncio do Censo, foram 202 seguidores.'
+      },
+      {
+        ad: 'Carreta de exames', grp: 'eng', badge: 'Menor custo por seguidor', key: true, video: 'assets/media/traf-carreta.webm', poster: 'assets/thumbs/traf-carreta.jpg',
+        m: [['Novos seguidores', '104', 1], ['Custo por seguidor', 'R$ 1,92', 1], ['Assistiram até 75%', '10,3%', 1], ['Investimento', 'R$ 199,80']],
+        why: 'Vídeo de 29 segundos sobre a Carreta da Saúde da Mulher, com <b>o menor custo por seguidor do mês</b> e a segunda maior retenção.'
+      },
+      {
+        ad: 'Troca de geladeira', grp: 'eng', badge: 'Benefício direto', video: 'assets/media/traf-troca-geladeira.webm', poster: 'assets/thumbs/traf-troca-geladeira.jpg',
+        m: [['Novos seguidores', '95', 1], ['Custo por seguidor', 'R$ 2,07', 1], ['Assistiram até 75%', '7,9%', 1], ['Investimento', 'R$ 196,89']],
+        why: 'Mesmo tema do post orgânico que trouxe 999 seguidores. <b>No pago, seguidor a R$ 2,07</b> e a terceira maior retenção.'
+      },
+      {
+        ad: 'Mulher presa · Monitora OZ', grp: 'eng', badge: 'Mais visitas ao perfil', video: 'assets/media/traf-mulher-presa.webm', poster: 'assets/thumbs/traf-mulher-presa.jpg',
+        m: [['Visitas ao perfil', '1.588', 1], ['Visitas / mil exibições', '61,2', 1], ['Assistiram até 75%', '18,1%', 1], ['Investimento', 'R$ 198,66']],
+        why: '17 segundos de câmera e <b>a maior retenção do mês</b>. Gerou 61,2 visitas ao perfil a cada mil exibições, 2,4 vezes a média da campanha.'
+      },
+      {
+        ad: 'Geladeiras Enel', grp: 'rec', badge: 'Maior alcance do mês', video: 'assets/media/traf-geladeiras-enel.webm', poster: 'assets/thumbs/traf-geladeiras-enel.jpg',
+        m: [['Pessoas alcançadas', '146.047', 1], ['Custo por mil exibições', 'R$ 2,08', 1], ['Exibições', '183.709'], ['Investimento', 'R$ 382,85']],
+        why: '<b>146 mil pessoas alcançadas com R$ 382,85</b> (R$ 2,62 por mil pessoas). Levou à cidade inteira a ação de maior resultado no orgânico.'
+      },
+      {
+        ad: 'Avaliações Digitais', grp: 'rec', badge: 'Menor custo de exibição', video: 'assets/media/traf-avaliacoes.webm', poster: 'assets/thumbs/traf-avaliacoes.jpg',
+        m: [['Pessoas alcançadas', '92.245', 1], ['Custo por mil exibições', 'R$ 1,61', 1], ['Vezes que cada um viu', '1,06'], ['Investimento', 'R$ 157,82']],
+        why: '<b>O menor custo por exibição do mês</b>. Com 1,06 exibição por pessoa, praticamente todo o investimento chegou a pessoas diferentes.'
+      }
+    ];
+
+    const AGE = [
+      { nm: '18–24', imp: 25.48, seg: 42, sp: 5.67, cps: 14.79 },
+      { nm: '25–34', imp: 33.70, seg: 169, sp: 22.81, cps: 6.77 },
+      { nm: '35–44', imp: 19.07, seg: 197, sp: 26.59, cps: 5.08 },
+      { nm: '45–54', imp: 11.66, seg: 201, sp: 27.13, cps: 3.86, best: true },
+      { nm: '55–64', imp: 6.52, seg: 103, sp: 13.90, cps: 4.28 },
+      { nm: '65+', imp: 3.57, seg: 28, sp: 3.78, cps: 8.55 }
+    ];
+
+    const TOP = [
+      {
+        rank: 1, nome: 'Monitora OZ ajuda em prisão', set: 'segurança · 16 set · 17s', badge: 'Mais visto do mês',
+        video: 'assets/media/org-monitora.webm', poster: 'assets/thumbs/org-monitora.jpg',
+        m: [['Visualizações', '523,5 mil', 1], ['Engajamento', '3,41%'], ['Compartilhamentos', '2.323'], ['Novos seguidores', '54']],
+        why: '<b>O post mais visto do mês</b>, com 283 mil pessoas alcançadas. O mesmo registro foi o anúncio de maior retenção.'
+      },
+      {
+        rank: 2, nome: 'Ação da geladeira', set: 'benefício · 09 set · 56s', badge: 'Recorde de seguidores', key: true,
+        video: 'assets/media/org-geladeira-0909.webm', poster: 'assets/thumbs/org-geladeira-0909.jpg',
+        m: [['Visualizações', '325,4 mil'], ['Engajamento', '15,93%', 1], ['Compartilhamentos', '14.836', 1], ['Novos seguidores', '999', 1]],
+        why: '<b>999 seguidores em um único post</b>, 47% dos seguidores do orgânico no mês, e um terço de todos os compartilhamentos.'
+      },
+      {
+        rank: 3, nome: 'Famílias no 7 de Setembro', set: 'cívico · 07 set · 24s', badge: 'Data cívica',
+        video: 'assets/media/org-desfile.webm', poster: 'assets/thumbs/org-desfile.jpg',
+        m: [['Visualizações', '219,6 mil', 1], ['Engajamento', '5,60%'], ['Compartilhamentos', '491'], ['Novos seguidores', '94']],
+        why: 'O Gerson no desfile cívico-militar, com a cidade reunida. 94 novos seguidores.'
+      },
+      {
+        rank: 4, nome: 'Ação da geladeira · 2ª chamada', set: 'benefício · 15 set · 40s', badge: 'Reforço da ação',
+        video: 'assets/media/org-geladeira-1509.webm', poster: 'assets/thumbs/org-geladeira-1509.jpg',
+        m: [['Visualizações', '205,8 mil'], ['Engajamento', '10,90%', 1], ['Compartilhamentos', '6.592', 1], ['Novos seguidores', '210', 1]],
+        why: 'A segunda chamada, seis dias depois, manteve o interesse: <b>10,9% de engajamento e 210 seguidores</b>.'
+      },
+      {
+        rank: 5, nome: 'Carreta da Saúde da Mulher', set: 'saúde · 16 set · 29s', badge: 'Serviço',
+        video: 'assets/media/org-carreta.webm', poster: 'assets/thumbs/org-carreta.jpg',
+        m: [['Visualizações', '149,5 mil', 1], ['Engajamento', '5,32%'], ['Compartilhamentos', '1.314'], ['Comentários', '617']],
+        why: 'A mesma peça foi o anúncio com menor custo por seguidor do mês (R$ 1,92), e a ação foi acompanhada no WhatsApp.'
+      }
+    ];
+    const HON = [
+      {
+        nome: 'Censo Animal de Osasco', set: 'causa animal · 14 set · 52s', badge: '1.074 comentários',
+        video: 'assets/media/org-censo.webm', poster: 'assets/thumbs/org-censo.jpg',
+        m: [['Visualizações', '143,8 mil'], ['Engajamento', '10,36%', 1], ['Compartilhamentos', '2.759', 1], ['Comentários', '1.074', 1]],
+        why: 'O segundo post mais comentado do mês. No pago, os dois anúncios do Censo trouxeram <b>202 seguidores a R$ 2,47</b>.'
+      },
+      {
+        nome: 'Vagas no Assaí', set: 'empregos · 01 set · 38s', badge: 'Oportunidade de emprego',
+        video: 'assets/media/org-assai.webm', poster: 'assets/thumbs/org-assai.jpg',
+        m: [['Visualizações', '69,5 mil'], ['Engajamento', '7,48%', 1], ['Compartilhamentos', '673'], ['Novos seguidores', '48', 1]],
+        why: 'Pauta de utilidade: 48 seguidores no orgânico e <b>44 no pago, a R$ 3,41 cada</b>.'
+      }
+    ];
+
+    const TEMAS = [
+      { nm: 'Segurança', n: 12, v: 1151077, er: 3.85, sg: 105 },
+      { nm: '7 de Setembro', n: 6, v: 543841, er: 5.55, sg: 169 },
+      { nm: 'Benefício · Geladeiras', n: 2, v: 531175, er: 13.92, sg: 1209 },
+      { nm: 'Saúde', n: 8, v: 470532, er: 5.96, sg: 171 },
+      { nm: 'Obras · Esporte', n: 7, v: 345356, er: 4.62, sg: 57 },
+      { nm: 'Defesa Civil · Zeladoria', n: 4, v: 339544, er: 5.88, sg: 127 },
+      { nm: 'Educação · Qualificação', n: 8, v: 328691, er: 5.76, sg: 83 },
+      { nm: 'Causa animal', n: 3, v: 257824, er: 9.98, sg: 119 },
+      { nm: 'Economia · Empregos', n: 4, v: 216251, er: 6.57, sg: 75 },
+      { nm: 'Pessoal · Fé · Política', n: 4, v: 208068, er: 5.29, sg: 31 }
+    ];
+
+    const MAIL = [
+      {
+        nome: 'Acontece em Osasco', sub: 'newsletter · 21, 22, 23 e 28/09', imgs: ['email-acontece-a', 'email-acontece-b'], wide: true, key: true, env: 176923, ab: 89642,
+        l: [['Sistema 1', 47.0], ['Sistema 1 · 28/09*', 40.1], ['Sistema 2', 60.1], ['Sistema 2 · 28/09*', 68.8]]
+      },
+      { nome: 'Delegacia da Mulher 24h', sub: 'serviço · segurança', imgs: ['email-delegacia'], env: 136680, ab: 51664, l: [['Sistema 1', 38.8], ['Sistema 2', 35.8]] },
+      { nome: 'Osasco Avança na Saúde', sub: 'obras e serviços de saúde', imgs: ['email-saude'], env: 112287, ab: 28801, l: [['Sistema 1', 27.6], ['Sistema 2', 21.6]] },
+      { nome: 'Transversal Norte', sub: 'entrega de obra', imgs: ['email-transversal'], env: 144771, ab: 28058, l: [['Sistema 1', 19.1], ['Sistema 2', 20.1]] },
+      { nome: 'Aniversários', sub: 'envio diário automático', imgs: ['email-aniversario'], env: 9065, ab: 2320, l: [['Sistema 1', 25.6]] },
+      { nome: 'Cidade da Polícia', sub: 'Osasco e região oeste', imgs: ['email-cidadepolicia'], env: 530822, ab: 23436, l: [['Sistema 2', 2.8], ['Sistema 3 · regional', 4.7]] },
+      { nome: 'Asfalto Novo · 6 ruas', sub: 'lista de ruas específicas', imgs: ['email-asfalto'], env: 128, ab: 4, l: [['Sistema 1', 3.1]] }
+    ];
+
+    const MUNI = [
+      { nm: 'Carapicuíba', env: 287692, ab: 5447, rt: 1.9, pop: 398772, cov: 72.1 },
+      { nm: 'Santana de Parnaíba', env: 118721, ab: 10900, rt: 9.2, pop: 165193, cov: 71.9 },
+      { nm: 'Barueri', env: 50114, ab: 4972, rt: 9.9, pop: 336015, cov: 14.9, parcial: true }
+    ];
+
+    const WA = [
+      { img: 'assets/thumbs/wa-1.webp', tag: 'Cuidador de Idosos', quote: '“Está indo além do que eu imaginava. Esse curso não é só para a área profissional, e sim pessoal.”', meta: 'Aluna · 15/09' },
+      { img: 'assets/thumbs/wa-2.webp', tag: 'Cuidador de Idosos', quote: '“Muito bom, superando minhas expectativas. Há tempo queria fazer esse curso.”', meta: 'Aluna · 16/09 · elogio à professora' },
+      { img: 'assets/thumbs/wa-3.webp', tag: 'Cuidador de Idosos', quote: '“Estou amando essa oportunidade que vocês trouxeram para nós, Osasco.”', meta: 'Aluna · 15/09' },
+      { img: 'assets/thumbs/wa-4.webp', tag: 'Carreta da Saúde', quote: '“Passei sim, foi excelente, está de parabéns.”', meta: 'Paciente · 18/09' },
+      { img: 'assets/thumbs/wa-5.webp', tag: 'Carreta da Oftalmologia', quote: '“Boa tarde! Ótimo atendimento 👍”', meta: 'Paciente · 21/09' },
+      { img: 'assets/thumbs/wa-6.webp', tag: 'Carreta da Saúde', quote: '“Foi bem bacana. Estava aguardando desde abril. Agradeço a atenção.”', meta: 'Paciente · 21/09' }
+    ];
+
+    /* ==================== FORMATOS ==================== */
+    const nf = new Intl.NumberFormat('pt-BR');
+    const ff = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+    const money = (v, d = 2) => 'R$ ' + ff(v, d);
+
+    /* ==================== RENDER: VÍDEOS ==================== */
+    function vcard(o, rank) {
+      const mets = o.m.map(([k, v, s]) => `<div class="${s ? 'star' : ''}"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+      return `<article class="vcard rv ${o.key ? 'key' : ''}">
+        <div class="vmedia">
+          <span class="badge">${o.badge}</span>
+          ${rank ? `<span class="rank">${rank}</span>` : ''}
+          <span class="prev">prévia sem som</span>
+          <video src="${o.video}" poster="${o.poster}" controls preload="none" playsinline controlslist="nodownload"></video>
+        </div>
+        <div class="vbody">
+          <div><div class="vname">${o.nome || o.ad}</div>${o.set ? `<div class="vset">${o.set}</div>` : ''}</div>
+          <div class="vmets">${mets}</div>
+          <div class="vwhy">${o.why}</div>
+        </div>
+      </article>`;
+    }
+    HILITE.forEach(h => {
+      const a = ADS.find(x => x.n === h.ad);
+      h.set = `${h.grp === 'eng' ? 'Campanha de seguidores' : 'Campanha de alcance'} · ${a.d}s`;
+    });
+    document.getElementById('adv-eng').innerHTML = HILITE.filter(h => h.grp === 'eng').map(h => vcard(h)).join('');
+    document.getElementById('adv-rec').innerHTML = HILITE.filter(h => h.grp === 'rec').map(h => vcard(h)).join('');
+    document.getElementById('topgrid').innerHTML = TOP.map(t => vcard(t, t.rank)).join('');
+    document.getElementById('hongrid').innerHTML = HON.map(t => vcard(t)).join('');
+
+    /* ==================== RENDER: TABELA ==================== */
+    (function () {
+      const bestReach = Math.max(...ADS.map(a => a.reach)), bestVis = Math.max(...ADS.map(a => a.vis));
+      let html = '';
+      [['eng', 'Campanha de seguidores', 'c-verde', '18 anúncios · R$ 3.681,66'], ['rec', 'Campanha de alcance', 'c-lilas', '2 anúncios · R$ 540,67']].forEach(([id, t, c, s]) => {
+        html += `<tr class="grp"><td colspan="7"><i class="${c}"></i>${t} <span style="color:var(--ink-3);font-weight:400;margin-left:6px">${s}</span></td></tr>`;
+        ADS.filter(a => a.c === id).sort((a, b) => b.spend - a.spend).forEach(a => {
+          const cps = a.seg ? a.spend / a.seg : null, p75 = a.p75 / a.impr;
+          html += `<tr>
+            <td>${a.n}<small>${a.d}s</small></td>
+            <td>${money(a.spend)}</td>
+            <td class="${a.reach === bestReach ? 'hi' : ''}">${nf.format(a.reach)}</td>
+            <td class="${a.vis === bestVis ? 'hi' : ''}">${nf.format(a.vis)}</td>
+            <td class="${a.seg >= 95 ? 'hi' : ''}">${a.seg}</td>
+            <td class="${cps && cps < 3 ? 'hi' : ''}">${cps ? money(cps) : '–'}</td>
+            <td class="${p75 > .07 ? 'hi' : ''}">${ff(p75 * 100)}%</td>
+          </tr>`;
+        });
+      });
+      document.getElementById('tbody').innerHTML = html;
+    })();
+
+    /* ==================== RENDER: DISPERSÃO ==================== */
+    (function () {
+      const svg = document.getElementById('scsvg'), tip = document.getElementById('sctip'), box = document.getElementById('scatter');
+      const W = 560, H = 300, L = 40, R = 14, T = 14, B = 34;
+      const x = s => L + (s - 10) / (90 - 10) * (W - L - R);
+      const y = p => T + (1 - p / 20) * (H - T - B);
+      let g = '';
+      [0, 5, 10, 15, 20].forEach(p => { g += `<line class="ax" x1="${L}" x2="${W - R}" y1="${y(p)}" y2="${y(p)}"/><text class="axt" x="${L - 8}" y="${y(p) + 4}" text-anchor="end">${p}%</text>`; });
+      [15, 30, 45, 60, 75, 90].forEach(s => { g += `<text class="axt" x="${x(s)}" y="${H - 12}" text-anchor="middle">${s}s</text>`; });
+      const pts = ADS.map(a => [a.d, a.p75 / a.impr * 100]);
+      const n = pts.length, mx = pts.reduce((s, p) => s + p[0], 0) / n, my = pts.reduce((s, p) => s + p[1], 0) / n;
+      const b = pts.reduce((s, p) => s + (p[0] - mx) * (p[1] - my), 0) / pts.reduce((s, p) => s + (p[0] - mx) ** 2, 0), a0 = my - b * mx;
+      const yl = v => Math.max(0, a0 + b * v);
+      g += `<path class="trend" d="M${x(15)} ${y(yl(15))} L${x(88)} ${y(yl(88))}"/>`;
+      const label = { 'Mulher presa · Monitora OZ': 'Mulher presa', 'Carreta de exames': 'Carreta', 'Troca de geladeira': 'Geladeira' };
+      ADS.forEach((a, i) => {
+        const p = a.p75 / a.impr * 100;
+        g += `<circle class="dot ${a.c === 'eng' ? 'c-verde' : 'c-lilas'}" cx="${x(a.d)}" cy="${y(p)}" r="6.5" fill="${a.c === 'eng' ? 'var(--s-verde)' : 'var(--s-lilas)'}" style="transition-delay:${(i * 0.035).toFixed(2)}s" data-i="${i}" tabindex="0"/>`;
+        if (label[a.n]) g += `<text class="dl" x="${x(a.d) + 10}" y="${y(p) + 4}">${label[a.n]}</text>`;
+      });
+      svg.innerHTML = g;
+      const show = el => {
+        const a = ADS[+el.dataset.i], r = box.getBoundingClientRect(), c = el.getBoundingClientRect();
+        tip.innerHTML = `<b>${a.n}</b>${a.d}s · ${ff(a.p75 / a.impr * 100)}% assistiram até 75%<br>${a.seg} seguidores · ${money(a.spend)}`;
+        tip.style.left = (c.left - r.left + c.width / 2) + 'px'; tip.style.top = (c.top - r.top) + 'px'; tip.style.opacity = 1;
+        el.style.transitionDelay = '0s'; el.classList.add('on'); box.classList.add('focus');
+      };
+      const hide = el => { tip.style.opacity = 0; el.classList.remove('on'); box.classList.remove('focus') };
+      svg.querySelectorAll('.dot').forEach(d => {
+        d.addEventListener('mouseenter', () => show(d)); d.addEventListener('focus', () => show(d));
+        d.addEventListener('mouseleave', () => hide(d)); d.addEventListener('blur', () => hide(d));
+      });
+    })();
+
+    /* ==================== RENDER: IDADE ==================== */
+    document.getElementById('agerows').innerHTML = AGE.map(a => `
+      <div class="arow ${a.best ? 'best' : ''}" title="${a.best ? 'Menor custo por seguidor do mês' : ''}">
+        <span class="an">${a.nm}</span>
+        <div class="abars">
+          <div><i class="c-lilas" data-w="${a.imp / 34 * 88}"></i>${ff(a.imp, 1)}%</div>
+          <div><i class="c-verde" data-w="${a.sp / 34 * 88}"></i>${ff(a.sp, 1)}%</div>
+        </div>
+        <div class="ac"><b class="${a.cps < 5.5 ? 'g' : ''}">${money(a.cps)}</b>${a.seg} seguidores</div>
+      </div>`).join('');
+
+    /* ==================== RENDER: TEMAS ==================== */
+    (function () {
+      const MAX = Math.max(...TEMAS.map(t => t.v)), TOT = TEMAS.reduce((s, t) => s + t.v, 0);
+      document.getElementById('themerows').innerHTML = TEMAS.map(t => `
+        <div class="th">
+          <span class="n">${t.nm}<small>${t.n} posts · ${nf.format(Math.round(t.v / t.n / 100) * 100)} por post</small></span>
+          <div class="tbar"><i data-w="${t.v / MAX * 100}"></i><span>${nf.format(t.v)} · ${ff(t.v / TOT * 100, 1)}%</span></div>
+          <span class="er ${t.er >= 6.36 ? 'hi' : ''}">${ff(t.er)}%</span>
+          <span class="sg ${t.sg >= 150 ? 'hi' : ''}">${nf.format(t.sg)}</span>
+        </div>`).join('');
+    })();
+
+    /* ==================== RENDER: E-MAIL ==================== */
+    document.getElementById('mailgrid').innerHTML = MAIL.map(m => {
+      const tot = m.ab / m.env * 100;
+      const lines = m.l.map(([k, v]) => `<div class="ml"><span>${k}</span><b>${ff(v, 1)}%</b><span class="tr"><i data-w="${v / 70 * 100}"></i></span></div>`).join('');
+      return `<article class="mcard rv ${m.wide ? 'wide' : ''} ${m.key ? 'key' : ''}">
+        <div class="mthumb">${m.imgs.map(i => `<img src="assets/thumbs/${i}.webp" alt="Criativo ${m.nome}" loading="lazy" onerror="this.remove()"/>`).join('')}
+          <span class="tot ${tot >= 35 ? 'star' : ''}">${ff(tot, 1)}%</span><span class="scrollhint">↕ e-mail inteiro</span></div>
+        <div class="mbody">
+          <div class="mname">${m.nome}</div><div class="msub">${m.sub}</div>
+          <div class="mlines">${lines}</div>
+          <div class="mfoot">${nf.format(m.env)} envios · ${nf.format(m.ab)} aberturas</div>
+        </div>
+      </article>`;
+    }).join('');
+
+    document.getElementById('munirows').innerHTML = MUNI.map(u => `
+      <div class="mu">
+        <span class="n">${u.nm}<small>${nf.format(u.env)} envios · ${nf.format(u.ab)} aberturas${u.parcial ? ' · parcial' : ''}</small></span>
+        <div class="bars">
+          <div><i class="c-lilas" data-w="${u.cov * .85}"></i>${ff(u.cov, 1)}% da população (${nf.format(u.pop)})</div>
+          <div><i class="c-verde" data-w="${u.rt / 10 * 85}"></i>${ff(u.rt, 1)}% de abertura</div>
+        </div>
+        <span class="rt">${ff(u.rt, 1)}%<small>abertura</small></span>
+      </div>`).join('');
+
+    /* ==================== RENDER: WHATSAPP ==================== */
+    document.getElementById('wagrid').innerHTML = WA.map(w => `
+      <article class="wa rv">
+        <div class="shot"><span class="tag">${w.tag}</span><span class="up">↑ conversa</span><img src="${w.img}" alt="Conversa de WhatsApp: ${w.tag}" loading="lazy"/></div>
+        <div class="cap"><div class="quote">${w.quote}</div><div class="meta">${w.meta}</div></div>
+      </article>`).join('');
+    document.querySelectorAll('.wa').forEach(w => {
+      const img = w.querySelector('img'), shot = w.querySelector('.shot');
+      w.addEventListener('mouseenter', () => { const d = img.offsetHeight - shot.offsetHeight; if (d > 0) img.style.transform = `translateY(${d}px)` });
+      w.addEventListener('mouseleave', () => img.style.transform = '');
+    });
+
+    const QUOTES = [
+      ['Minha experiência no curso tem sido muito enriquecedora. Só gratidão a todos os envolvidos 🙏', 'aluna · Cuidador de Idosos'],
+      ['Deu sim e fui bem atendida. Profissional super atenciosa.', 'paciente · Carreta da Saúde'],
+      ['A equipe que dá aula para nós são pessoas maravilhosas, atenciosas. Parabéns!', 'aluna · Cuidador de Idosos'],
+      ['Deu tudo certo sim, fui bem atendida. Só tenho que agradecer, muito obrigada 🙏', 'paciente · Carreta da Saúde'],
+      ['Obrigado pela iniciativa do estado junto com a prefeitura. Gratidão.', 'aluna · Cuidador de Idosos'],
+      ['Boa noite, Sr. prefeito. Passei sim, foi excelente.', 'paciente · Carreta da Saúde'],
+      ['Deu tudo certo sim, obrigado.', 'paciente · Carreta da Saúde'],
+      ['Ótimo atendimento 👍', 'paciente · Carreta da Oftalmologia']
+    ];
+    (function () {
+      const q = QUOTES.map(([t, s]) => `<div class="mq">“${t}”<small>${s}</small></div>`).join('');
+      document.getElementById('mtrack').innerHTML = q + q.replace(/<div class="mq">/g, '<div class="mq" aria-hidden="true">');
+    })();
+
+    /* atraso escalonado nos grids */
+    document.querySelectorAll('.vgrid, .mgrid, .wagrid').forEach(g => {
+      [...g.children].forEach((c, i) => c.style.setProperty('--d', (i % 5) * 0.07 + 's'));
+    });
+
+    /* ==================== LUZ QUE SEGUE O MOUSE ==================== */
+    document.addEventListener('pointermove', e => {
+      const el = e.target.closest && e.target.closest('.hov, .kpi');
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+
+    /* ==================== LEGENDA DESTACA A SÉRIE ==================== */
+    const SERIES = ['c-verde', 'c-lilas', 'c-neutro'];
+    const seriesSel = s => `.stack i.${s}, .abars i.${s}, .rtrack i.${s}, .pb2 i.${s}, .bars i.${s}, .dot.${s}, .vcol[data-s="${s}"]`;
+    document.querySelectorAll('.legend span[data-s]').forEach(sp => {
+      const box = sp.closest('.card') || sp.parentElement;
+      sp.addEventListener('mouseenter', () => SERIES.filter(s => s !== sp.dataset.s).forEach(s => box.querySelectorAll(seriesSel(s)).forEach(el => el.classList.add('dim'))));
+      sp.addEventListener('mouseleave', () => box.querySelectorAll('.dim').forEach(el => el.classList.remove('dim')));
+    });
+    /* coluna da campanha destaca a própria cor na barra de investimento */
+    document.querySelectorAll('.vcol[data-s]').forEach(c => {
+      const other = c.dataset.s === 'c-verde' ? 'c-lilas' : 'c-verde';
+      c.addEventListener('mouseenter', () => document.querySelectorAll('#vstack i.' + other).forEach(i => i.classList.add('dim')));
+      c.addEventListener('mouseleave', () => document.querySelectorAll('#vstack .dim').forEach(i => i.classList.remove('dim')));
+    });
+
+    /* ==================== PRÉVIA DOS VÍDEOS NO HOVER ==================== */
+    if (!REDUCED && window.matchMedia('(hover: hover)').matches) {
+      document.querySelectorAll('.vcard').forEach(card => {
+        const v = card.querySelector('video');
+        let timer = null, byUser = false;
+        v.addEventListener('volumechange', () => { if (!v.muted) { byUser = true; card.classList.remove('previewing') } });
+        v.addEventListener('click', () => { byUser = true; card.classList.remove('previewing') });
+        card.addEventListener('mouseenter', () => {
+          if (!v.paused) return;
+          timer = setTimeout(() => {
+            v.muted = true; byUser = false;
+            v.play().then(() => card.classList.add('previewing')).catch(() => { });
+          }, 350);
+        });
+        card.addEventListener('mouseleave', () => {
+          clearTimeout(timer);
+          if (!byUser && !v.paused) { v.pause(); card.classList.remove('previewing') }
+        });
+      });
+    }
+    /* só um vídeo com som por vez */
+    document.addEventListener('play', e => {
+      document.querySelectorAll('video').forEach(v => { if (v !== e.target && !v.muted) v.pause() });
+    }, true);
+
+    /* ==================== CONTADORES ==================== */
+    let SETTLED = false;
+    function fmtCount(el, v) {
+      const dec = el.dataset.dec ? parseInt(el.dataset.dec) : 0;
+      const s = dec ? ff(v, dec) : nf.format(Math.round(v));
+      return el.dataset.money ? 'R$ ' + s : s;
+    }
+    function countUp(el) {
+      const target = parseFloat(el.dataset.count), dur = 1400, t0 = performance.now();
+      if (REDUCED) { el.textContent = fmtCount(el, target); return }
+      (function tick(now) {
+        if (SETTLED) return;
+        const p = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmtCount(el, target * e);
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+
+    /* ==================== ENTRADA AO ROLAR ==================== */
+    function fillBars(root) {
+      root.querySelectorAll('i[data-w]').forEach(i => i.style.width = Math.min(parseFloat(i.dataset.w), 100) + '%');
+      root.querySelectorAll('[data-stack] i[data-b]').forEach(i => i.style.flexBasis = i.dataset.b + '%');
+    }
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        el.classList.add('in');
+        el.querySelectorAll('[data-count]').forEach(countUp);
+        fillBars(el);
+        if (el.id === 'virada') playVirada();
+        io.unobserve(el);
+      });
+    }, { threshold: .16, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.rv, .scatter').forEach(el => io.observe(el));
+
+    /* ==================== INVESTIMENTO: AGOSTO → SETEMBRO ==================== */
+    const VIR = { ago: { rec: 80.3, eng: 19.7 }, set: { rec: 12.8, eng: 87.2 } };
+    function setVirada(m) {
+      const d = VIR[m], r = document.getElementById('v-rec'), g = document.getElementById('v-eng');
+      r.style.flexBasis = d.rec + '%'; g.style.flexBasis = d.eng + '%';
+      r.textContent = ff(d.rec, 1) + '%'; g.textContent = ff(d.eng, 1) + '%';
+      r.title = 'Campanha de alcance: ' + ff(d.rec, 1) + '%'; g.title = 'Campanha de seguidores: ' + ff(d.eng, 1) + '%';
+      document.querySelectorAll('.virada .tabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+    }
+    let viradaPlayed = false;
+    function playVirada() {
+      if (viradaPlayed) return; viradaPlayed = true;
+      setVirada('ago');
+      setTimeout(() => setVirada('set'), REDUCED ? 0 : 1100);
+    }
+    document.querySelectorAll('.virada .tabs button').forEach(b => b.addEventListener('click', () => { viradaPlayed = true; setVirada(b.dataset.m) }));
+
+    /* ==================== FUNIL ==================== */
+    const FUN = {
+      geral: { reach: 592195, vis: 11298, seg: 741, spend: 4222.33, desc: 'Soma das duas campanhas do mês: a de seguidores e a de alcance.' },
+      eng: { reach: 353903, vis: 10835, seg: 731, spend: 3681.66, desc: 'Campanha de seguidores: leva as pessoas ao perfil e pede que sigam. Respondeu por 99% dos novos seguidores vindos dos anúncios.' },
+      reco: { reach: 238292, vis: 463, seg: 10, spend: 540.67, desc: 'Campanha de alcance: mostra os conteúdos ao maior número de pessoas pelo menor custo. O objetivo é a presença na cidade, não a conversão em seguidores.' }
+    };
+    const funnel = (function () {
+      const box = document.getElementById('fviz'), cv = box.querySelector('canvas'), ctx = cv.getContext('2d');
+      let W = 0, H = 0, band = 104, neck = 44, dpr = 1;
+      let cur = null, from = null, to = null, tAnim = 1, hi = -1, hiA = [0, 0, 0];
+      let parts = [], glow = 0, running = false, last = 0, key = 'geral';
+      const logW = v => { const f = Math.log10(Math.max(v, 1)) / Math.log10(600000); return W * (0.14 + 0.84 * Math.min(f, 1)) };
+      const target = k => { const d = FUN[k]; return [logW(d.reach), logW(d.vis), logW(d.seg)] };
+      function layout() {
+        const cs = getComputedStyle(box.parentElement);
+        band = parseFloat(cs.getPropertyValue('--band')) || 104; neck = parseFloat(cs.getPropertyValue('--neck')) || 44;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = box.clientWidth; H = 3 * band + 2 * neck;
+        cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        to = target(key); if (!cur || tAnim >= 1) cur = to.slice();
+      }
+      function wAt(y, w) {
+        if (y < band) return w[0];
+        if (y < band + neck) return w[0] + (w[1] - w[0]) * (y - band) / neck;
+        if (y < 2 * band + neck) return w[1];
+        if (y < 2 * band + 2 * neck) return w[1] + (w[2] - w[1]) * (y - 2 * band - neck) / neck;
+        return w[2];
+      }
+      function rates() {
+        const d = FUN[key];
+        return [Math.min(0.5, Math.max(0.02, d.vis / d.reach * 8)), Math.min(0.6, Math.max(0.03, d.seg / d.vis * 4))];
+      }
+      function rrect(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, r) : ctx.rect(x, y, w, h) }
+      function drawShape(dt) {
+        const cx = W / 2, w = cur;
+        for (let i = 0; i < 3; i++) hiA[i] += ((hi === i ? 1 : 0) - hiA[i]) * Math.min(1, dt * 8);
+        ctx.fillStyle = 'rgba(255,255,255,.045)';
+        [[0, band], [1, 2 * band + neck]].forEach(([i, y0]) => {
+          ctx.beginPath();
+          ctx.moveTo(cx - w[i] / 2, y0); ctx.lineTo(cx + w[i] / 2, y0);
+          ctx.lineTo(cx + w[i + 1] / 2, y0 + neck); ctx.lineTo(cx - w[i + 1] / 2, y0 + neck); ctx.closePath(); ctx.fill();
+        });
+        const base = [[167, 123, 224, .34, .12], [167, 123, 224, .42, .16], [56, 170, 85, .55, .22]];
+        for (let i = 0; i < 3; i++) {
+          const y0 = i * (band + neck), gr = ctx.createLinearGradient(0, y0, 0, y0 + band), [r, g, b, a1, a2] = base[i], h = hiA[i];
+          const mix = i < 2 ? h * .6 : 0;
+          const R = r + (56 - r) * mix, G = g + (170 - g) * mix, B = b + (85 - b) * mix;
+          gr.addColorStop(0, `rgba(${R | 0},${G | 0},${B | 0},${a1 + h * .3})`); gr.addColorStop(1, `rgba(${R | 0},${G | 0},${B | 0},${a2 + h * .2})`);
+          ctx.fillStyle = gr; rrect(cx - w[i] / 2, y0, w[i], band, 14); ctx.fill();
+          ctx.strokeStyle = h > .05 ? `rgba(255,255,255,${.2 + h * .6})` : (i === 2 ? `rgba(92,203,124,${.45 + glow * .5})` : 'rgba(255,255,255,.14)');
+          ctx.lineWidth = 1 + h; ctx.stroke();
+        }
+        if (glow > .01) {
+          const y0 = 2 * (band + neck), gr = ctx.createRadialGradient(cx, y0 + band * .75, 2, cx, y0 + band * .75, w[2] * .7);
+          gr.addColorStop(0, `rgba(92,203,124,${.35 * glow})`); gr.addColorStop(1, 'rgba(92,203,124,0)');
+          ctx.fillStyle = gr; ctx.fillRect(cx - w[2], y0, w[2] * 2, band);
+        }
+      }
+      function frame(now) {
+        if (!running) return;
+        const dt = Math.min((now - last) / 1000, .05); last = now;
+        if (tAnim < 1) {
+          tAnim = Math.min(1, tAnim + dt / .8); const e = 1 - Math.pow(1 - tAnim, 3);
+          cur = from.map((v, i) => v + (to[i] - v) * e);
+        }
+        const [p1, p2] = rates();
+        let k = 95 * (cur[0] / W) * dt;
+        while (k > 0) { if (Math.random() < k) parts.push({ u: Math.random() - .5, y: -4, v: 70 + Math.random() * 50, s: 0, a: 1, die: 0 }); k -= 1 }
+        const y1 = band, y2 = 2 * band + neck, yEnd = H - band * .28;
+        for (const p of parts) {
+          p.y += p.v * dt;
+          if (p.die) { p.u += p.die * dt * .55; p.a -= dt * 1.5; continue }
+          if (p.s === 0 && p.y > y1) { p.s = 1; if (Math.random() > p1) p.die = p.u < 0 ? -1 : 1 }
+          else if (p.s === 1 && p.y > y2) { p.s = 2; if (Math.random() > p2) p.die = p.u < 0 ? -1 : 1 }
+          if (p.s === 2) p.u *= (1 - dt * .8);
+          if (p.y > yEnd && p.s === 2 && !p.die) { p.a = 0; glow = Math.min(1, glow + .22) }
+        }
+        parts = parts.filter(p => p.a > 0 && p.y < H + 10);
+        glow *= Math.pow(.25, dt);
+        ctx.clearRect(0, 0, W, H);
+        drawShape(dt);
+        const cx = W / 2;
+        for (const p of parts) {
+          ctx.globalAlpha = Math.max(0, p.a) * (p.s === 2 ? 1 : .75);
+          ctx.fillStyle = p.s === 2 ? '#7BE39A' : '#F1E6FF';
+          ctx.beginPath(); ctx.arc(cx + p.u * wAt(p.y, cur) * .9, p.y, p.s === 2 ? 2.6 : 1.6, 0, 6.283); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(frame);
+      }
+      function staticDraw() { ctx.clearRect(0, 0, W, H); hiA = hiA.map((_, i) => hi === i ? 1 : 0); drawShape(0) }
+      function start() { if (running || REDUCED) return; running = true; last = performance.now(); requestAnimationFrame(frame) }
+      layout(); staticDraw();
+      new IntersectionObserver(es => es.forEach(e => { e.isIntersecting ? start() : (running = false) }), { threshold: 0 }).observe(box);
+      window.addEventListener('resize', () => { layout(); if (!running) staticDraw() });
+      function setHi(i) {
+        if (hi === i) return;
+        hi = i;
+        document.querySelectorAll('.fstage').forEach(s => s.classList.toggle('on', +s.dataset.i === i));
+        if (!running) staticDraw();
+      }
+      box.addEventListener('mousemove', e => {
+        const y = e.clientY - box.getBoundingClientRect().top;
+        setHi(y < band ? 0 : y < band + neck ? -1 : y < 2 * band + neck ? 1 : y < 2 * band + 2 * neck ? -1 : 2);
+      });
+      box.addEventListener('mouseleave', () => setHi(-1));
+      document.querySelectorAll('.fstage').forEach(s => {
+        s.addEventListener('mouseenter', () => setHi(+s.dataset.i));
+        s.addEventListener('mouseleave', () => setHi(-1));
+      });
+      return {
+        set(k) {
+          key = k; from = cur.slice(); to = target(k); tAnim = REDUCED ? 1 : 0;
+          if (REDUCED || !running) { cur = to.slice(); tAnim = 1; staticDraw() }
+        }
+      };
+    })();
+
+    function animNum(el, target, fmt) {
+      const start = parseFloat(el.dataset.v || target), t0 = performance.now();
+      el.dataset.v = target;
+      if (REDUCED) { el.textContent = fmt(target); return }
+      (function tick(now) {
+        const p = Math.min((now - t0) / 700, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(start + (target - start) * e);
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+    function setFunnel(k) {
+      const d = FUN[k], int = v => nf.format(Math.round(v));
+      document.querySelectorAll('#fcard .tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.f === k));
+      animNum(document.getElementById('f-reach'), d.reach, int);
+      animNum(document.getElementById('f-vis'), d.vis, int);
+      animNum(document.getElementById('f-seg'), d.seg, int);
+      document.getElementById('f-r1').textContent = ff(d.vis / d.reach * 100) + '%';
+      document.getElementById('f-r2').textContent = ff(d.seg / d.vis * 100) + '%';
+      document.getElementById('f-each').textContent = nf.format(Math.round(d.reach / d.seg)) + ' pessoas';
+      document.getElementById('f-cost').textContent = money(d.spend / d.seg);
+      document.getElementById('f-cvis').textContent = money(d.spend / d.vis);
+      document.getElementById('fdesc').textContent = d.desc;
+      funnel.set(k);
+    }
+    document.querySelectorAll('#fcard .tabs button').forEach(b => b.addEventListener('click', () => setFunnel(b.dataset.f)));
+    document.querySelector('#fcard .tabs').addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const bs = [...document.querySelectorAll('#fcard .tabs button')], i = bs.findIndex(b => b.getAttribute('aria-selected') === 'true');
+      const n = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length]; n.focus(); setFunnel(n.dataset.f);
+    });
+    [['f-reach', 'reach'], ['f-vis', 'vis'], ['f-seg', 'seg']].forEach(([id, k]) => document.getElementById(id).dataset.v = FUN.geral[k]);
+
+    /* ==================== ABERTURA ==================== */
+    requestAnimationFrame(() => setTimeout(() => document.getElementById('hero').classList.add('go'), 80));
+
+    /* ==================== NAV + PROGRESSO ==================== */
+    (function () {
+      const nav = document.getElementById('nav'), pill = nav.querySelector('.pill'), links = [...nav.querySelectorAll('a')];
+      const bar = document.getElementById('progress');
+      let active = null;
+      function place(a) {
+        if (!a) { pill.style.width = '0'; return }
+        pill.style.width = a.offsetWidth + 'px'; pill.style.transform = `translateX(${a.offsetLeft}px)`;
+      }
+      function setActive(id) {
+        const a = links.find(l => l.getAttribute('href') === '#' + id);
+        if (a === active) return; active = a;
+        links.forEach(l => l.classList.toggle('active', l === a)); place(a);
+        if (a && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: a.offsetLeft - 40, behavior: 'smooth' });
+      }
+      const so = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setActive(e.target.id) }), { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('.chapter[id]').forEach(s => so.observe(s));
+      window.addEventListener('resize', () => place(active));
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`;
+        if (scrollY < innerHeight * .5) { active = null; links.forEach(l => l.classList.remove('active')); place(null) }
+      };
+      addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    })();
+
+    /* ==================== REDE DE SEGURANÇA ==================== */
+    function settleAll() {
+      SETTLED = true;
+      document.documentElement.classList.add('settled');
+      document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+      document.getElementById('hero').classList.add('go');
+      fillBars(document);
+      document.querySelectorAll('[data-count]').forEach(el => el.textContent = fmtCount(el, parseFloat(el.dataset.count)));
+      if (!viradaPlayed) { viradaPlayed = true; setVirada('set') }
+    }
+    if (REDUCED) settleAll();
+    window.addEventListener('beforeprint', settleAll);
+  </script>
+</body>
+
+</html>
