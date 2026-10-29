@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório Mensal · Gerson Pessoa · Outubro 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600;700&family=Martian+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    @property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg }
+    @property --spot { syntax: '*'; inherits: false }
+
+    :root {
+      /* identidade da campanha */
+      --roxo-escuro: #260137;
+      --roxo-medio: #4D0074;
+      --roxo-centro: #5F008E;
+      --verde: #3DB15A;
+      --verde-txt: #5CCB7C;
+      /* séries de gráfico (validadas contra #2E0547) */
+      --s-verde: #38AA55;
+      --s-lilas: #A77BE0;
+      --s-neutro: rgba(255, 255, 255, .26);
+      --ambar: #F2B84B;
+
+      --ink: #FFFFFF;
+      --ink-2: rgba(255, 255, 255, .76);
+      --ink-3: rgba(255, 255, 255, .54);
+      --linha: rgba(255, 255, 255, .12);
+      --linha-2: rgba(255, 255, 255, .06);
+      --card: linear-gradient(180deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .03));
+      --card-solid: rgba(46, 5, 71, .72);
+      --spot-off: linear-gradient(transparent, transparent);
+
+      --f-display: 'Bricolage Grotesque', 'Instrument Sans', system-ui, sans-serif;
+      --f-body: 'Instrument Sans', system-ui, sans-serif;
+      --f-mono: 'Martian Mono', ui-monospace, monospace;
+
+      --r: 22px;
+      --ease: cubic-bezier(.2, .7, .15, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100% }
+
+    body {
+      font-family: var(--f-body);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(1100px 760px at 50% -8%, var(--roxo-centro) 0%, var(--roxo-medio) 40%, var(--roxo-escuro) 80%),
+        var(--roxo-escuro);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .07;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* luzes de fundo que flutuam devagar */
+    .aurora { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden }
+    .aurora i { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; opacity: .55; will-change: transform }
+    .aurora i:nth-child(1) { left: -22vmax; top: 12vh; background: radial-gradient(circle, rgba(61, 177, 90, .20), transparent 62%); animation: drift1 26s ease-in-out infinite alternate }
+    .aurora i:nth-child(2) { right: -24vmax; top: 40vh; background: radial-gradient(circle, rgba(167, 123, 224, .22), transparent 62%); animation: drift2 32s ease-in-out infinite alternate }
+    .aurora i:nth-child(3) { left: 30vw; top: 90vh; background: radial-gradient(circle, rgba(95, 0, 142, .45), transparent 60%); animation: drift1 38s ease-in-out infinite alternate-reverse }
+    @keyframes drift1 { to { transform: translate(14vw, -18vh) scale(1.15) } }
+    @keyframes drift2 { to { transform: translate(-16vw, 20vh) scale(.9) } }
+
+    .wrap { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) }
+
+    img, video { max-width: 100%; display: block }
+    b, strong { font-weight: 600; color: var(--ink) }
+    .g { color: var(--verde-txt); font-weight: 600 }
+    .tnum { font-variant-numeric: tabular-nums }
+
+    .kicker {
+      font-family: var(--f-mono);
+      font-size: 10.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--verde-txt);
+      font-weight: 500;
+    }
+
+    :focus-visible { outline: 2px solid var(--verde-txt); outline-offset: 3px; border-radius: 6px }
+
+    /* ---------- barra de progresso ---------- */
+    .progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+      transform-origin: 0 50%; transform: scaleX(0);
+      background: linear-gradient(90deg, var(--s-lilas), var(--verde));
+      z-index: 60;
+    }
+
+    /* ---------- topo ---------- */
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 0 0 }
+    .top .logo { height: 54px; width: auto }
+    .top .meta { text-align: right; font-size: 12.5px; color: var(--ink-3); line-height: 1.6 }
+    .top .meta b { display: block; font-family: var(--f-display); font-size: 17px; font-weight: 700; color: var(--ink) }
+
+    /* ---------- navegação ---------- */
+    .nav {
+      position: sticky; top: 12px; z-index: 50;
+      margin: 26px auto 0; width: fit-content; max-width: 100%;
+      display: flex; gap: 2px; padding: 5px;
+      border-radius: 999px;
+      background: rgba(38, 1, 55, .72);
+      border: 1px solid var(--linha);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none }
+    .nav a {
+      position: relative; z-index: 1;
+      white-space: nowrap; text-decoration: none; color: var(--ink-2);
+      font-size: 13.5px; font-weight: 600; padding: 8px 15px; border-radius: 999px;
+      transition: color .25s, background .25s;
+    }
+    .nav a:hover { color: var(--ink); background: rgba(255, 255, 255, .07) }
+    .nav a.active { color: #fff; background: transparent }
+    .nav .pill {
+      position: absolute; z-index: 0; top: 5px; bottom: 5px; left: 0; width: 0;
+      border-radius: 999px; background: var(--verde);
+      transition: transform .45s var(--ease), width .45s var(--ease);
+    }
+
+    /* ---------- abertura ---------- */
+    .hero { padding: clamp(48px, 7vw, 84px) 0 clamp(30px, 4vw, 50px); position: relative }
+    .hero h1 {
+      font-family: var(--f-display);
+      font-weight: 800;
+      font-size: clamp(36px, 5.4vw, 64px);
+      line-height: 1.06;
+      letter-spacing: -.03em;
+      margin: 14px 0 6px;
+    }
+    .hero h1 .ln { display: block; overflow: hidden; padding: .04em 0 .1em }
+    .hero h1 .ln > span { display: inline-block }
+    .hero h1 em { font-style: normal; color: var(--verde-txt) }
+    .hero .sub { font-size: 15px; color: var(--ink-3); margin-bottom: 22px }
+    .hero .lede { max-width: 68ch; font-size: clamp(15.5px, 1.4vw, 17.5px); color: var(--ink-2) }
+    .hero .lede b { color: #fff }
+
+    /* anéis decorativos da abertura: o raio de veiculação */
+    .hero-rings { position: absolute; right: -40px; top: 10px; width: 420px; height: 420px; pointer-events: none; opacity: .5 }
+    .hero-rings circle { fill: none; stroke: rgba(255, 255, 255, .14); stroke-width: 1 }
+    .hero-rings .pulse { stroke: var(--verde-txt); stroke-width: 1.4; transform-origin: 210px 210px; animation: ripple 5.5s var(--ease) infinite; opacity: 0 }
+    .hero-rings .pulse:nth-of-type(2) { animation-delay: 1.8s }
+    .hero-rings .pulse:nth-of-type(3) { animation-delay: 3.6s }
+    @keyframes ripple { 0% { transform: scale(.08); opacity: .9 } 100% { transform: scale(1); opacity: 0 } }
+
+    .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 34px; position: relative }
+    .fact { padding: 22px 22px 20px; border-radius: var(--r) }
+    a.fact { display: block; color: inherit; text-decoration: none }
+    .fact .kicker { display: block; margin-bottom: 10px }
+    .fact .go { display: block; margin-top: 14px; font-size: 12.5px; font-weight: 600; color: var(--ink-3); transition: color .3s, transform .3s var(--ease) }
+    .fact:hover .go { color: var(--verde-txt); transform: translateX(4px) }
+    .fact .v { font-family: var(--f-display); font-weight: 750; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.05; letter-spacing: -.025em }
+    .fact .k { margin-top: 8px; font-size: 14.5px; color: var(--ink-2) }
+    .fact .d { margin-top: 12px; display: inline-flex; gap: 6px; align-items: center; font-family: var(--f-mono); font-size: 11px; color: var(--verde-txt); background: rgba(61, 177, 90, .13); padding: 4px 9px; border-radius: 999px }
+    .fact .spark { position: absolute; right: 18px; top: 18px; width: 74px; height: 30px; opacity: .8 }
+    .fact .spark path { fill: none; stroke: var(--verde-txt); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--ease) .6s }
+    .fact.in .spark path, .settled .fact .spark path { stroke-dashoffset: 0 }
+
+    /* ---------- capítulos ---------- */
+    .chapter { padding-top: clamp(64px, 8vw, 100px); scroll-margin-top: 70px }
+    .chap-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 14px 40px; align-items: end; margin-bottom: 32px }
+    .chap-word {
+      font-family: var(--f-display); font-weight: 800;
+      font-size: clamp(32px, 4.4vw, 52px); line-height: 1.08; letter-spacing: -.03em;
+      color: #fff; padding-bottom: .04em;
+    }
+    .chap-word .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .06em }
+    .chap-word .w > span { display: inline-block }
+    .js .chap-word .w > span { transform: translateY(105%); transition: transform .9s var(--ease) calc(var(--i, 0) * .08s + .1s) }
+    .js .chap-head.in .chap-word .w > span { transform: none }
+    .chap-head .kicker { display: block; margin-bottom: 10px }
+    .chap-thesis { font-size: clamp(15px, 1.35vw, 16.5px); color: var(--ink-2); padding-bottom: 6px }
+    .chap-thesis b { color: #fff }
+    .chap-rule { grid-column: 1 / -1; height: 1px; background: linear-gradient(90deg, var(--verde), rgba(255, 255, 255, .1) 45%, transparent); transform-origin: 0 50% }
+
+    .block { margin-top: clamp(40px, 5vw, 60px) }
+    .bhead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; margin-bottom: 16px }
+    .bhead h3 { font-family: var(--f-display); font-weight: 700; font-size: clamp(21px, 2.1vw, 26px); letter-spacing: -.015em; line-height: 1.2 }
+    .bhead .hint { font-size: 13px; color: var(--ink-3) }
+
+    .card { border-radius: var(--r); padding: clamp(20px, 2.6vw, 30px) }
+    .card h4, .h4 { font-family: var(--f-display); font-weight: 700; font-size: 19px; letter-spacing: -.01em; line-height: 1.25 }
+    .note { font-size: 13px; color: var(--ink-3); line-height: 1.6; margin-top: 14px }
+    .note b { color: var(--ink-2) }
+    .read { font-size: 15.5px; color: var(--ink-2); line-height: 1.65 }
+    .read p + p { margin-top: 12px }
+
+    .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px }
+
+    /* ---------- superfícies interativas ---------- */
+    .card, .fact, .cmpc, .pb, .sy, .acao, .vcol, .ins, .ring-item {
+      position: relative;
+      background: var(--spot, var(--spot-off)), var(--card);
+      border: 1px solid var(--linha);
+      transition: transform .45s var(--ease), border-color .35s, box-shadow .45s var(--ease);
+    }
+    .vcard, .mcard, .wa, .kpi { position: relative }
+    .hov:hover {
+      --spot: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .09), transparent 62%);
+      border-color: rgba(92, 203, 124, .42);
+      box-shadow: 0 26px 60px -34px rgba(0, 0, 0, .85), 0 0 0 1px rgba(92, 203, 124, .12);
+    }
+    .lift:hover { transform: translateY(-4px) }
+
+    /* destaque: borda animada em verde/lilás */
+    .key { border-color: transparent !important; box-shadow: 0 0 40px -18px rgba(61, 177, 90, .55) }
+    .key::after {
+      content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 3;
+      background: conic-gradient(from var(--ang), rgba(92, 203, 124, .15) 0deg, var(--verde) 80deg, #D8B9FF 150deg, rgba(92, 203, 124, .15) 230deg, rgba(92, 203, 124, .15) 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      animation: spin 7s linear infinite;
+    }
+    @keyframes spin { to { --ang: 360deg } }
+
+    .dim { opacity: .2 !important; transition: opacity .3s }
+    .legend span[data-s] { cursor: pointer; padding: 2px 6px; margin: -2px -6px; border-radius: 6px; transition: background .2s }
+    .legend span[data-s]:hover { background: rgba(255, 255, 255, .08) }
+
+    /* ---------- KPIs ---------- */
+    .kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--linha); border: 1px solid var(--linha); border-radius: var(--r); overflow: hidden }
+    .kpis.k4 { grid-template-columns: repeat(4, minmax(0, 1fr)) }
+    .kpi { background: var(--spot, var(--spot-off)), var(--card-solid); padding: 22px 22px 20px }
+    .kpi:hover { --spot: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(92, 203, 124, .16), transparent 65%) }
+    .kpi .k { font-size: 13px; color: var(--ink-3); font-weight: 500 }
+    .kpi .v { font-family: var(--f-display); font-weight: 750; font-size: clamp(26px, 2.8vw, 34px); letter-spacing: -.025em; line-height: 1.15; margin-top: 6px; transition: color .3s }
+    .kpi:hover .v { color: var(--verde-txt) }
+    .kpi .d { margin-top: 8px; font-size: 12.5px; color: var(--ink-2) }
+    .kpi .d .up { color: var(--verde-txt); font-weight: 600 }
+    .kpi.hl { background: var(--spot, var(--spot-off)), linear-gradient(160deg, rgba(61, 177, 90, .22), rgba(46, 5, 71, .72) 70%) }
+    .kpi.hl .v { color: var(--verde-txt) }
+    .kpi.key::after { inset: 0; border-radius: 0 }
+
+    /* ---------- legenda ---------- */
+    .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: var(--ink-2) }
+    .legend span { display: inline-flex; align-items: center; gap: 7px }
+    .legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block }
+    .c-verde { background: var(--s-verde) }
+    .c-lilas { background: var(--s-lilas) }
+    .c-neutro { background: var(--s-neutro) }
+    .c-ambar { background: var(--ambar) }
+
+    /* ---------- FUNIL ---------- */
+    .funnel-card { padding: clamp(20px, 3vw, 34px); overflow: hidden }
+    .funnel-card::before {
+      content: ""; position: absolute; right: -120px; bottom: -160px; width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(61, 177, 90, .2), transparent 65%); pointer-events: none;
+    }
+    .tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(0, 0, 0, .22); border: 1px solid var(--linha); flex-wrap: wrap }
+    .tabs button {
+      font: 600 13px var(--f-body); color: var(--ink-2); background: transparent; border: 0;
+      padding: 8px 15px; border-radius: 999px; cursor: pointer; transition: background .3s, color .3s;
+    }
+    .tabs button:hover { color: #fff; background: rgba(255, 255, 255, .08) }
+    .tabs button[aria-selected="true"], .tabs button[aria-pressed="true"] { background: #fff; color: var(--roxo-escuro) }
+    .fdesc { font-size: 13.5px; color: var(--ink-2); margin: 14px 0 22px; min-height: 2.8em; max-width: 62ch }
+    .funnel { --band: 104px; --neck: 44px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0 clamp(16px, 3vw, 44px); position: relative; z-index: 1 }
+    .fviz { position: relative; height: calc(3 * var(--band) + 2 * var(--neck)); cursor: crosshair }
+    .fviz canvas { position: absolute; inset: 0; width: 100%; height: 100% }
+    .fnums { display: grid; grid-template-rows: var(--band) var(--neck) var(--band) var(--neck) var(--band) }
+    .fstage { display: flex; flex-direction: column; justify-content: center; border-radius: 14px; padding: 0 12px; margin: 0 -12px; transition: background .3s; cursor: default }
+    .fstage.on { background: rgba(255, 255, 255, .06) }
+    .fstage .lbl { font-size: 13px; color: var(--ink-3); font-weight: 500 }
+    .fstage .num { font-family: var(--f-display); font-weight: 800; font-size: clamp(26px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -.03em; transition: color .3s }
+    .fstage.on .num, .fstage.last .num { color: var(--verde-txt) }
+    .fneck { display: flex; align-items: center }
+    .fneck span { font-family: var(--f-mono); font-size: 11px; color: var(--ink-2); border: 1px dashed rgba(255, 255, 255, .28); padding: 4px 9px; border-radius: 999px; white-space: nowrap }
+    .fneck span b { color: #fff; font-weight: 500 }
+    .ffoot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 24px; position: relative; z-index: 1 }
+    .ffoot > div { border-top: 1px solid var(--linha); padding-top: 12px }
+    .ffoot .k { font-size: 12.5px; color: var(--ink-3) }
+    .ffoot .v { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -.02em }
+    .fscale { font-family: var(--f-mono); font-size: 10px; color: var(--ink-3); letter-spacing: .04em; margin-top: 8px }
+
+    /* ---------- barras ---------- */
+    .stack { display: flex; gap: 2px; height: 42px; border-radius: 10px; overflow: hidden }
+    .stack i { display: flex; align-items: center; padding: 0 12px; font-style: normal; font-size: 13px; font-weight: 600; color: #fff; min-width: 0; white-space: nowrap; overflow: hidden; transition: flex-basis 1.2s var(--ease), filter .25s, opacity .3s; flex: 0 0 0; cursor: default }
+    .stack i:hover { filter: brightness(1.18) }
+    .stack i.c-neutro { color: var(--ink-2) }
+    .stack i:first-child { border-radius: 10px 4px 4px 10px }
+    .stack i:last-child { border-radius: 4px 10px 10px 4px }
+    .srow + .srow { margin-top: 16px }
+    .srow .sk { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-3); margin-bottom: 7px }
+    .srow .sk b { color: var(--ink-2); font-weight: 600 }
+
+    .pair + .pair { margin-top: 16px }
+    .pair .ph { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; margin-bottom: 7px }
+    .pair .ph span { color: var(--ink-2); font-weight: 600 }
+    .pair .ph .chg { font-family: var(--f-mono); font-size: 11px; color: var(--verde-txt); background: rgba(61, 177, 90, .14); padding: 2px 8px; border-radius: 999px; font-weight: 500 }
+    .pair .pb2 { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--ink-3) }
+    .pair .pb2 + .pb2 { margin-top: 4px }
+    .pair .pb2 i { display: block; height: 12px; width: 0; border-radius: 0 4px 4px 0; transition: width 1.3s var(--ease), opacity .3s }
+    .pair .pb2 b { color: #fff; font-variant-numeric: tabular-nums }
+
+    .ostats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px }
+    .ostats > div { border-top: 1px solid var(--linha); padding-top: 10px }
+    .ostats .v { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -.02em }
+    .ostats .k { font-size: 12.5px; color: var(--ink-3); line-height: 1.4 }
+
+    /* ---------- roscas ---------- */
+    .donuts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px }
+    .donut { display: flex; flex-direction: column; align-items: center; text-align: center }
+    .donut svg { width: 100%; max-width: 190px; height: auto; overflow: visible }
+    .donut .bg { fill: none; stroke: rgba(255, 255, 255, .06) }
+    .donut .seg { fill: none; stroke-linecap: butt; transition: stroke-dashoffset 1.6s var(--ease), opacity .3s, stroke-width .3s; cursor: default }
+    .donut .seg:hover { stroke-width: 22 }
+    .donut .ctr { fill: #fff; font: 800 30px var(--f-display); letter-spacing: -.02em }
+    .donut .ctr2 { fill: var(--ink-3); font: 500 11px var(--f-body) }
+    .donut .t { font-size: 13px; color: var(--ink-2); font-weight: 600; margin-top: 8px }
+    .donut .legend { justify-content: center; margin-top: 8px; font-size: 12px }
+
+    /* ---------- investimento ---------- */
+    .virada .stack { height: 56px; margin: 20px 0 14px }
+    .virada .stack i { font-size: 15px }
+    .vcols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px }
+    .vcol { border-radius: 16px; padding: 18px; background: var(--spot, var(--spot-off)), rgba(0, 0, 0, .14) }
+    .vcol .tag { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: #fff; font-weight: 700; font-family: var(--f-display) }
+    .vcol .tag i { width: 11px; height: 11px; border-radius: 3px }
+    .vcol .desc { font-size: 13.5px; color: var(--ink-2); margin: 6px 0 14px }
+    .vmet { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px }
+    .vmet .k { font-size: 11.5px; color: var(--ink-3) }
+    .vmet .v { font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: -.01em }
+    .vmet .v.g { color: var(--verde-txt) }
+
+    /* ---------- área de veiculação (anéis) ---------- */
+    .area { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: center }
+    .rings { position: relative; max-width: 470px; margin: 0 auto; width: 100% }
+    .rings svg { width: 100%; height: auto; display: block; overflow: visible }
+    .rings .rg { fill: none; stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s var(--ease), stroke-width .3s, opacity .3s }
+    .rings .fillr { transition: opacity .35s }
+    .rings.in .rg, .settled .rings .rg { stroke-dashoffset: 0 }
+    .rings .rg.dash { stroke-dasharray: 4 6; stroke-dashoffset: 0; opacity: 0; transition: opacity 1s 1.4s }
+    .rings.in .rg.dash, .settled .rings .rg.dash { opacity: .55 }
+    .rings .lbl { font: 500 10.5px var(--f-mono); fill: var(--ink-2); letter-spacing: .04em }
+    .rings .ctrl { font: 700 13px var(--f-display); fill: #fff }
+    .rings .sweep { transform-origin: 250px 250px; animation: sweep 7s linear infinite }
+    @keyframes sweep { to { transform: rotate(360deg) } }
+    .rings .rip { fill: none; stroke: var(--verde-txt); stroke-width: 1.2; transform-origin: 250px 250px; animation: ripple 4.8s var(--ease) infinite; opacity: 0 }
+    .rings .rip:nth-of-type(2) { animation-delay: 1.6s }
+    .rings .rip:nth-of-type(3) { animation-delay: 3.2s }
+    .rings .dotp { fill: #fff; opacity: .85 }
+    .rings.focus .rg:not(.on), .rings.focus .fillr:not(.on) { opacity: .2 }
+    .rings .rg.on { stroke-width: 3.5 }
+    .ring-list { display: flex; flex-direction: column; gap: 12px }
+    .ring-item { border-radius: 16px; padding: 16px 18px; cursor: default }
+    .ring-item .top2 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px }
+    .ring-item .km { font-family: var(--f-display); font-weight: 800; font-size: 26px; letter-spacing: -.02em }
+    .ring-item .km small { font-size: 14px; color: var(--ink-3); font-weight: 600 }
+    .ring-item .who { font-size: 13.5px; font-weight: 700; display: flex; align-items: center; gap: 8px }
+    .ring-item .who i { width: 10px; height: 10px; border-radius: 3px }
+    .ring-item .mm { display: flex; gap: 18px; font-size: 12.5px; color: var(--ink-3); margin-top: 6px; flex-wrap: wrap }
+    .ring-item .mm b { color: #fff; font-family: var(--f-display); font-size: 16px; display: block }
+    .ring-item.on { border-color: rgba(92, 203, 124, .5); background: var(--spot, var(--spot-off)), linear-gradient(150deg, rgba(61, 177, 90, .16), rgba(255, 255, 255, .03) 60%) }
+
+    /* ---------- comparativo ---------- */
+    .cmp { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px }
+    .cmpc { border-radius: 18px; padding: 18px }
+    .cmpc .m { font-size: 12.5px; color: var(--ink-3) }
+    .cmpc .now { font-family: var(--f-display); font-weight: 750; font-size: 26px; letter-spacing: -.02em; margin-top: 4px; transition: color .3s }
+    .cmpc:hover .now { color: var(--verde-txt) }
+    .cmpc .then { font-size: 12.5px; color: var(--ink-3) }
+    .cmpc .chg { display: inline-block; margin-top: 10px; font-family: var(--f-mono); font-size: 11px; padding: 3px 8px; border-radius: 999px; background: rgba(61, 177, 90, .15); color: var(--verde-txt) }
+    .cmpc .mbar { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .06); margin-top: 12px; overflow: hidden; display: flex; gap: 2px }
+    .cmpc .mbar i { display: block; height: 100%; width: 0; transition: width 1.3s var(--ease) .2s }
+    .cmpc .mbar i:first-child { background: var(--s-lilas) }
+    .cmpc .mbar i:last-child { background: var(--s-verde) }
+
+    /* ---------- linha do tempo do orgânico ---------- */
+    .tl { position: relative }
+    .tl svg { width: 100%; height: auto; display: block; overflow: visible }
+    .tl .ax { stroke: rgba(255, 255, 255, .08); stroke-width: 1 }
+    .tl .axt { fill: var(--ink-3); font: 10px var(--f-mono) }
+    .tl .bar { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform .9s var(--ease), opacity .25s; cursor: pointer }
+    .tl.in .bar, .settled .tl .bar { transform: scaleY(1) }
+    .tl .bar:hover, .tl .bar.on { filter: brightness(1.25) }
+    .tl.focus .bar:not(.on) { opacity: .3 }
+    .tl .band { fill: rgba(255, 255, 255, .045) }
+    .tl .bandt { fill: var(--ink-2); font: 600 11px var(--f-body) }
+    .tl .ev { stroke: var(--ambar); stroke-width: 1; stroke-dasharray: 3 4; opacity: .7 }
+    .tl .evt { fill: var(--ambar); font: 500 10px var(--f-mono) }
+    .tl .brk { fill: none; stroke: #2E0547; stroke-width: 3 }
+    .tl .big { fill: #fff; font: 700 12px var(--f-display) }
+
+    /* ---------- cards de vídeo ---------- */
+    .vgroup { display: flex; align-items: center; gap: 10px; margin: 26px 0 12px; font-size: 13.5px; color: var(--ink-2); font-weight: 600 }
+    .vgroup i { width: 10px; height: 10px; border-radius: 3px; flex: none }
+    .vgroup small { font-weight: 400; color: var(--ink-3) }
+    .vgroup::after { content: ""; flex: 1; height: 1px; background: var(--linha) }
+    .vgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px }
+    .vgrid.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 50% }
+    .vgrid.g5 { grid-template-columns: repeat(5, minmax(0, 1fr)) }
+    .vcard {
+      border-radius: 20px; overflow: hidden; background: var(--card-solid); border: 1px solid var(--linha);
+      display: flex; flex-direction: column; transition: transform .45s var(--ease), border-color .3s, box-shadow .45s var(--ease);
+    }
+    .vcard:hover { border-color: rgba(92, 203, 124, .45); box-shadow: 0 28px 56px -30px rgba(0, 0, 0, .85) }
+    .vcard.key { overflow: visible }
+    .vcard.key .vmedia { border-radius: 19px 19px 0 0 }
+    .vcard.elei { border-color: rgba(242, 184, 75, .35) }
+    .vmedia { position: relative; aspect-ratio: 9 / 14; background: #1a0026; overflow: hidden }
+    .vmedia video { width: 100%; height: 100%; object-fit: cover }
+    .vmedia .badge {
+      position: absolute; top: 10px; left: 10px; z-index: 2; pointer-events: none;
+      font-size: 11.5px; font-weight: 600; padding: 4px 9px; border-radius: 999px;
+      background: rgba(38, 1, 55, .78); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, .16);
+    }
+    .vcard.elei .badge { background: rgba(242, 184, 75, .92); color: #2a1500; border-color: transparent }
+    .vmedia .rank {
+      position: absolute; top: 8px; right: 10px; z-index: 2; pointer-events: none;
+      font-family: var(--f-display); font-weight: 800; font-size: 30px; line-height: 1.1; letter-spacing: -.03em;
+      color: #fff; text-shadow: 0 2px 16px rgba(0, 0, 0, .6);
+    }
+    .vmedia .prev {
+      position: absolute; right: 10px; bottom: 44px; z-index: 2; pointer-events: none; font-family: var(--f-mono); font-size: 10px;
+      background: rgba(38, 1, 55, .8); padding: 3px 8px; border-radius: 999px; opacity: 0; transition: opacity .3s
+    }
+    .vcard.previewing .prev { opacity: 1 }
+    .vph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--ink-3); font-size: 12px; background: radial-gradient(circle at 50% 40%, rgba(167, 123, 224, .22), transparent 60%), #1a0026 }
+    .vph span { width: 54px; height: 54px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .25); display: grid; place-items: center; font-size: 18px; color: #fff; animation: breathe 2.6s ease-in-out infinite }
+    @keyframes breathe { 50% { transform: scale(1.08); border-color: var(--verde-txt) } }
+    .vbody { padding: 14px 15px 16px; display: flex; flex-direction: column; gap: 10px; flex: 1 }
+    .vname { font-family: var(--f-display); font-weight: 700; font-size: 16px; line-height: 1.25; letter-spacing: -.01em }
+    .vset { font-size: 12px; color: var(--ink-3); margin-top: 2px }
+    .vmets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+    .vmets > div { border-top: 1px solid var(--linha-2); padding-top: 6px }
+    .vmets .k { font-size: 11px; color: var(--ink-3) }
+    .vmets .v { font-family: var(--f-display); font-weight: 700; font-size: 16px }
+    .vmets .star .v { color: var(--verde-txt) }
+    .vwhy { font-size: 13px; color: var(--ink-2); line-height: 1.5 }
+    .elei-note { display: flex; gap: 12px; align-items: flex-start; margin-top: 14px; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(242, 184, 75, .3); background: rgba(242, 184, 75, .07); font-size: 13.5px; color: var(--ink-2) }
+    .elei-note i { flex: none; width: 10px; height: 10px; border-radius: 3px; background: var(--ambar); margin-top: 5px }
+    .elei-note b { color: #fff }
+
+    /* ---------- tabela compacta ---------- */
+    details.tbl { border-radius: var(--r); border: 1px solid var(--linha); background: var(--card); overflow: hidden; transition: border-color .3s }
+    details.tbl:hover { border-color: rgba(92, 203, 124, .4) }
+    details.tbl summary {
+      list-style: none; cursor: pointer; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      font-weight: 600; font-size: 14.5px;
+    }
+    details.tbl summary::-webkit-details-marker { display: none }
+    details.tbl summary .chev { transition: transform .35s var(--ease); font-family: var(--f-mono); color: var(--ink-3) }
+    details.tbl[open] summary .chev { transform: rotate(180deg) }
+    details.tbl summary small { font-weight: 400; color: var(--ink-3); font-size: 12.5px; margin-left: 8px }
+    details.tbl[open] tbody tr { animation: rowin .5s var(--ease) both; animation-delay: calc(var(--r, 0) * 35ms) }
+    @keyframes rowin { from { opacity: 0; transform: translateX(-10px) } }
+    .tscroll { overflow-x: auto; border-top: 1px solid var(--linha) }
+    table.mini { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 640px }
+    table.mini th { text-align: right; font-weight: 500; color: var(--ink-3); padding: 9px 12px; font-size: 11.5px; white-space: nowrap; border-bottom: 1px solid var(--linha) }
+    table.mini th:first-child, table.mini td:first-child { text-align: left }
+    table.mini td { padding: 7px 12px; text-align: right; font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--linha-2); white-space: nowrap; color: var(--ink-2); transition: background .2s }
+    table.mini td:first-child { color: #fff; white-space: normal }
+    table.mini td small { color: var(--ink-3); margin-left: 6px }
+    table.mini tbody tr:not(.grp):hover td { background: rgba(255, 255, 255, .06) }
+    table.mini tbody tr:not(.grp):hover td:first-child { color: var(--verde-txt); box-shadow: inset 3px 0 0 var(--verde) }
+    table.mini tr.grp td { background: rgba(0, 0, 0, .18); font-weight: 600; font-size: 12px; color: var(--ink-2); padding: 8px 12px }
+    table.mini tr.grp td i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 8px }
+    table.mini td.hi { color: var(--verde-txt); font-weight: 600 }
+    table.mini tfoot td { font-weight: 600; color: #fff; border-bottom: 0; background: rgba(0, 0, 0, .14) }
+
+    /* ---------- retenção ---------- */
+    .ret { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 16px }
+    .rb + .rb { margin-top: 18px }
+    .rb .rtop { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 7px }
+    .rb .rtop span:first-child { color: var(--ink-2); font-weight: 600 }
+    .rb .rtrack { height: 12px; background: rgba(255, 255, 255, .05); border-radius: 4px; overflow: hidden }
+    .rb .rtrack + .rtrack { margin-top: 4px }
+    .rb .rtrack i { display: block; height: 100%; width: 0; border-radius: 0 4px 4px 0; transition: width 1.3s var(--ease), opacity .3s }
+    .rb .rvals { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-3); margin-top: 5px }
+    .rb .rvals b { color: #fff; font-weight: 600 }
+
+    .scatter { position: relative }
+    .scatter svg { width: 100%; height: auto; display: block; overflow: visible }
+    .scatter .ax { stroke: rgba(255, 255, 255, .1); stroke-width: 1 }
+    .scatter .axt { fill: var(--ink-3); font: 10.5px var(--f-mono) }
+    .scatter .dot { stroke: #2E0547; stroke-width: 2; cursor: pointer; transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .6s var(--ease), opacity .3s, stroke .2s; fill-opacity: .9 }
+    .scatter.in .dot, .settled .scatter .dot { transform: scale(1) }
+    .scatter .dot.on { stroke: #fff; transform: scale(1.2) }
+    .scatter.focus .dot:not(.on), .scatter.focus .dl { opacity: .25 }
+    .scatter .dl { fill: var(--ink-2); font: 600 11.5px var(--f-body); transition: opacity .3s; pointer-events: none }
+    .scatter .link { stroke: var(--verde-txt); stroke-width: 1.5; stroke-dasharray: 4 5; fill: none; opacity: .8 }
+    .scatter .linkt { fill: var(--verde-txt); font: 500 10.5px var(--f-mono) }
+    .tip {
+      position: absolute; pointer-events: none; z-index: 5; opacity: 0; transform: translate(-50%, -115%);
+      background: #140020; border: 1px solid rgba(255, 255, 255, .2); border-radius: 10px; padding: 8px 10px; font-size: 12px; white-space: nowrap; transition: opacity .15s;
+    }
+    .tip b { display: block; font-size: 12.5px }
+
+    .col ul { list-style: none }
+    .col li { position: relative; padding-left: 18px; font-size: 14px; color: var(--ink-2); line-height: 1.55 }
+    .col li + li { margin-top: 10px }
+    .col li::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 2px; background: var(--s-verde) }
+    .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+    .ins { border-radius: 18px; padding: 18px 20px }
+    .ins .t { font-family: var(--f-display); font-weight: 700; font-size: 16.5px; line-height: 1.25; margin-bottom: 6px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap }
+    .ins .t .n { font-size: 25px; color: var(--verde-txt); letter-spacing: -.02em; flex: none }
+    .ins .d { font-size: 13.5px; color: var(--ink-2) }
+
+    /* ---------- idade ---------- */
+    .ages .arow { display: grid; grid-template-columns: 62px minmax(0, 1fr) 96px; gap: 14px; align-items: center; padding: 9px 10px; margin: 0 -10px; border-bottom: 1px solid var(--linha-2); border-radius: 10px; transition: background .25s }
+    .ages .arow:hover { background: rgba(255, 255, 255, .06) }
+    .ages .arow:last-child { border-bottom: 0 }
+    .ages .an { font-family: var(--f-display); font-weight: 700; font-size: 16px }
+    .ages .abars div { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2) }
+    .ages .abars div + div { margin-top: 4px }
+    .ages .abars i { display: block; height: 10px; border-radius: 0 3px 3px 0; width: 0; transition: width 1.2s var(--ease), opacity .3s }
+    .ages .ac { text-align: right; font-size: 12px; color: var(--ink-3); line-height: 1.3 }
+    .ages .ac b { display: block; font-family: var(--f-display); font-size: 16px; color: #fff }
+    .ages .ac b.g { color: var(--verde-txt) }
+    .ages .arow.best { background: rgba(61, 177, 90, .12); box-shadow: inset 3px 0 0 var(--verde) }
+    .ahead { display: grid; grid-template-columns: 62px minmax(0, 1fr) 96px; gap: 14px; font-size: 11px; color: var(--ink-3); padding-bottom: 6px; border-bottom: 1px solid var(--linha) }
+    .ahead span:last-child { text-align: right }
+
+    /* ---------- orgânico ---------- */
+    .views { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px }
+    .vw .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--linha-2) }
+    .vw .row:last-child { border-bottom: 0 }
+    .vw .row .l { font-size: 14px; color: var(--ink-2) }
+    .vw .row .r { text-align: right; white-space: nowrap }
+    .vw .row .n { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -.02em }
+    .vw .row .c { font-family: var(--f-mono); font-size: 10.5px; margin-left: 8px; color: var(--verde-txt) }
+    .vw .row.hl .n { color: var(--verde-txt) }
+
+    .themes .th { display: grid; grid-template-columns: minmax(150px, 1.1fr) minmax(0, 2fr) 70px 72px; gap: 14px; align-items: center; padding: 10px 10px; margin: 0 -10px; border-bottom: 1px solid var(--linha-2); border-radius: 10px; font-size: 13.5px; transition: background .25s }
+    .themes .th:not(.thh):hover { background: rgba(255, 255, 255, .06) }
+    .themes .th:not(.thh):hover .tbar i { background: var(--s-verde) }
+    .themes .th:last-child { border-bottom: 0 }
+    .themes .th .n { font-weight: 600 }
+    .themes .th .n small { display: block; font-weight: 400; color: var(--ink-3); font-size: 11.5px }
+    .themes .tbar { position: relative; height: 22px }
+    .themes .tbar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 0 4px 4px 0; background: var(--s-lilas); transition: width 1.2s var(--ease), background .3s }
+    .themes .th.elei .tbar i { background: var(--ambar) }
+    .themes .tbar span { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 11.5px; font-weight: 600; white-space: nowrap }
+    .themes .th.elei .tbar span { color: #2a1500 }
+    .themes .th .er, .themes .th .sg { text-align: right; font-variant-numeric: tabular-nums }
+    .themes .th .er.hi, .themes .th .sg.hi { color: var(--verde-txt); font-weight: 700 }
+    .themes .thh { font-size: 11px; color: var(--ink-3); border-bottom: 1px solid var(--linha) }
+    .themes .thh span:nth-child(n+3) { text-align: right }
+
+    .playbook { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+    .pb { border-radius: 18px; padding: 20px }
+    .pb.feature { grid-column: span 2; background: var(--spot, var(--spot-off)), linear-gradient(150deg, rgba(61, 177, 90, .2), rgba(255, 255, 255, .03) 60%) }
+    .pb .t { font-family: var(--f-display); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -.01em; margin-bottom: 8px }
+    .pb .d { font-size: 14px; color: var(--ink-2) }
+
+    /* ---------- e-mail ---------- */
+    .sys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+    .sy { border-radius: 18px; padding: 20px; overflow: hidden }
+    .sy .nm { font-weight: 700; font-size: 15px }
+    .sy .fn { font-size: 12.5px; color: var(--ink-3) }
+    .sy .rate { font-family: var(--f-display); font-weight: 800; font-size: 36px; letter-spacing: -.03em; line-height: 1.1; margin: 14px 0 6px }
+    .sy .rtrack { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .06); overflow: hidden }
+    .sy .rtrack i { display: block; height: 100%; width: 0; background: var(--s-verde); border-radius: 0 4px 4px 0; transition: width 1.3s var(--ease) }
+    .sy.reg .rtrack i { background: var(--s-lilas) }
+    .sy .mm { display: flex; gap: 18px; margin-top: 14px; font-size: 12.5px; color: var(--ink-3) }
+    .sy .mm b { display: block; font-family: var(--f-display); font-size: 17px; color: #fff }
+    .sy .desc { font-size: 13px; color: var(--ink-2); margin-top: 12px; border-top: 1px solid var(--linha-2); padding-top: 10px }
+    .sy .was { position: absolute; top: 18px; right: 18px; font-family: var(--f-mono); font-size: 10.5px; padding: 3px 8px; border-radius: 999px; background: rgba(61, 177, 90, .16); color: var(--verde-txt) }
+
+    .mgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px }
+    .mcard { border-radius: 20px; overflow: hidden; background: var(--card-solid); border: 1px solid var(--linha); display: flex; flex-direction: column; transition: transform .45s var(--ease), border-color .3s, box-shadow .45s var(--ease) }
+    .mcard:hover { border-color: rgba(92, 203, 124, .45); box-shadow: 0 28px 56px -30px rgba(0, 0, 0, .85) }
+    .mcard.key { overflow: visible }
+    .mcard.key .mthumb { border-radius: 19px 19px 0 0 }
+    .mcard.wide { grid-column: span 2 }
+    .mthumb { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #1a0026; display: flex; gap: 2px }
+    .mcard.wide .mthumb { aspect-ratio: 8 / 5 }
+    .mthumb img { flex: 1; min-width: 0; height: 100%; object-fit: cover; object-position: 50% 0%; transition: object-position 3.2s var(--ease), transform 3.2s var(--ease) }
+    .mcard:hover .mthumb img { object-position: 50% 100% }
+    .mthumb.land img { object-position: 50% 50% }
+    .mcard:hover .mthumb.land img { transform: scale(1.08) }
+    .mthumb .tot {
+      position: absolute; left: 10px; bottom: 10px; font-family: var(--f-display); font-weight: 800; font-size: 24px; letter-spacing: -.02em;
+      padding: 2px 10px; border-radius: 10px; background: rgba(38, 1, 55, .85); backdrop-filter: blur(6px)
+    }
+    .mthumb .tot.star { color: var(--verde-txt) }
+    .mthumb .tot.sm { font-size: 17px; padding: 4px 10px }
+    .mthumb .scrollhint { position: absolute; right: 10px; bottom: 12px; font-family: var(--f-mono); font-size: 10px; background: rgba(38, 1, 55, .8); padding: 3px 8px; border-radius: 999px; transition: opacity .3s }
+    .mcard:hover .scrollhint { opacity: 0 }
+    .mbody { padding: 14px 15px 16px }
+    .mname { font-family: var(--f-display); font-weight: 700; font-size: 16px; line-height: 1.25 }
+    .msub { font-size: 12px; color: var(--ink-3); margin-top: 2px }
+    .mlines { margin-top: 12px }
+    .ml { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; font-size: 12px; color: var(--ink-2) }
+    .ml + .ml { margin-top: 8px }
+    .ml b { font-variant-numeric: tabular-nums }
+    .ml .tr { grid-column: 1 / -1; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .06); overflow: hidden }
+    .ml .tr i { display: block; height: 100%; width: 0; border-radius: 0 3px 3px 0; background: var(--s-verde); transition: width 1.2s var(--ease) }
+    .mfoot { font-size: 11.5px; color: var(--ink-3); margin-top: 12px; border-top: 1px solid var(--linha-2); padding-top: 8px }
+
+    .muni .mu { display: grid; grid-template-columns: minmax(130px, 1fr) minmax(0, 2fr) 70px; gap: 16px; align-items: center; padding: 12px 10px; margin: 0 -10px; border-bottom: 1px solid var(--linha-2); border-radius: 12px; transition: background .25s }
+    .muni .mu:hover { background: rgba(255, 255, 255, .06) }
+    .muni .mu:last-child { border-bottom: 0 }
+    .muni .mu .n { font-weight: 700; font-size: 15px }
+    .muni .mu .n small { display: block; font-weight: 400; color: var(--ink-3); font-size: 12px }
+    .muni .mu .bars div { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-2) }
+    .muni .mu .bars div + div { margin-top: 5px }
+    .muni .mu .bars i { display: block; height: 9px; border-radius: 0 3px 3px 0; width: 0; transition: width 1.2s var(--ease), opacity .3s }
+    .muni .mu .rt { text-align: right; font-family: var(--f-display); font-weight: 800; font-size: 21px; letter-spacing: -.02em }
+    .muni .mu .rt small { display: block; font-family: var(--f-body); font-weight: 400; font-size: 11px; color: var(--ink-3); letter-spacing: 0 }
+    .muni .mu.top3 .rt { color: var(--verde-txt) }
+
+    /* ---------- resumo em três partes ---------- */
+    .brief { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: hidden }
+    .brief > div { padding: 22px 24px; border-right: 1px solid var(--linha); transition: background .3s }
+    .brief > div:last-child { border-right: 0 }
+    .brief > div:hover { background: rgba(255, 255, 255, .045) }
+    .brief .kicker { display: block; margin-bottom: 8px }
+    .brief p { font-size: 14.5px; color: var(--ink-2); line-height: 1.6 }
+    .brief p b { color: #fff }
+
+    /* ---------- WhatsApp ---------- */
+    .acoes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px }
+    .acao { border-radius: var(--r); padding: 22px }
+    .acao .when { font-family: var(--f-mono); font-size: 10.5px; color: var(--verde-txt); letter-spacing: .08em; text-transform: uppercase }
+    .acao h4 { margin: 8px 0 10px }
+    .acao .q { font-size: 14px; color: var(--ink-2); border-left: 2px solid var(--verde); padding: 4px 0 4px 14px; font-style: italic }
+    .acao .res { margin-top: 12px; font-size: 13.5px; color: var(--ink-2) }
+
+    .wagrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px }
+    .wa { border-radius: 20px; overflow: hidden; background: var(--card-solid); border: 1px solid var(--linha); display: flex; flex-direction: column; transition: transform .45s var(--ease), border-color .3s, box-shadow .45s var(--ease) }
+    .wa:hover { border-color: rgba(92, 203, 124, .45); box-shadow: 0 28px 56px -30px rgba(0, 0, 0, .85) }
+    .wa .shot { position: relative; height: 380px; overflow: hidden; background: #efe7dc }
+    .wa .shot img { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; transition: transform 2.8s var(--ease) }
+    .wa .shot.short img { bottom: auto; top: 50%; transform: translateY(-50%) }
+    .wa .shot::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46px; background: linear-gradient(rgba(46, 5, 71, .7), transparent); z-index: 1 }
+    .wa .shot .tag { position: absolute; top: 10px; left: 10px; z-index: 2; font-size: 11.5px; font-weight: 600; padding: 4px 9px; border-radius: 999px; background: rgba(38, 1, 55, .85); color: #fff }
+    .wa .shot .up { position: absolute; right: 10px; top: 10px; z-index: 2; font-family: var(--f-mono); font-size: 10px; padding: 3px 8px; border-radius: 999px; background: rgba(38, 1, 55, .85); transition: opacity .3s }
+    .wa:hover .shot .up { opacity: 0 }
+    .wa .shot.short .up { display: none }
+    .wa .cap { padding: 14px 16px 16px }
+    .wa .cap .quote { font-family: var(--f-display); font-weight: 600; font-size: 16px; line-height: 1.35 }
+    .wa .cap .meta { font-size: 12px; color: var(--ink-3); margin-top: 8px }
+
+    .marquee { overflow: hidden; padding: 6px 0; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent) }
+    .mtrack { display: flex; gap: 14px; width: max-content; animation: slide 60s linear infinite }
+    .marquee:hover .mtrack { animation-play-state: paused }
+    .mq { flex: 0 0 auto; max-width: 340px; border-radius: 18px 18px 18px 4px; padding: 14px 16px; background: rgba(255, 255, 255, .92); color: #1b1b1b; font-size: 14px; line-height: 1.45; transition: transform .35s var(--ease), box-shadow .35s }
+    .mq:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .8) }
+    .mq small { display: block; color: #6c5a78; font-size: 11.5px; margin-top: 6px; font-weight: 600 }
+    @keyframes slide { to { transform: translateX(-50%) } }
+    footer { margin: 90px 0 40px; padding-top: 22px; border-top: 1px solid var(--linha); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--ink-3) }
+    footer span:first-child { max-width: 75ch }
+
+    /* ---------- entrada ao rolar ---------- */
+    .js .rv { opacity: 0; transform: translateY(22px); transition: opacity .9s var(--ease) var(--d, 0s), transform .9s var(--ease) var(--d, 0s), border-color .35s, box-shadow .45s var(--ease) }
+    .js .rv.in { opacity: 1; transform: none }
+    .js .rv.in.lift:hover, .js .rv.in.vcard:hover, .js .rv.in.mcard:hover, .js .rv.in.wa:hover { transform: perspective(900px) translateY(-5px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition-delay: 0s }
+    .lift:hover, .vcard:hover, .mcard:hover, .wa:hover { transform: perspective(900px) translateY(-5px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) }
+    .js .chap-rule { transform: scaleX(0); transition: transform 1.4s var(--ease) .15s }
+    .js .chap-head.in .chap-rule { transform: scaleX(1) }
+    .js .hero h1 .ln > span { transform: translateY(110%); transition: transform 1s var(--ease) }
+    .js .hero.go h1 .ln > span { transform: none }
+
+    .settled .rv { opacity: 1 !important; transform: none !important }
+    .settled .chap-rule { transform: none !important }
+    .settled .chap-word .w > span { transform: none !important }
+
+    /* ---------- responsivo ---------- */
+    @media (max-width: 1020px) {
+      .vgrid, .vgrid.g5 { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+      .vgrid.g2 { max-width: 66% }
+      .mgrid { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+      .cmp, .kpis.k4 { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+      .ret, .views, .area { grid-template-columns: 1fr }
+      .playbook, .trio { grid-template-columns: 1fr 1fr }
+      .pb.feature { grid-column: span 2 }
+      .hero-rings { opacity: .28 }
+    }
+    @media (max-width: 760px) {
+      .chap-head { grid-template-columns: 1fr }
+      .facts, .kpis, .sys, .brief { grid-template-columns: 1fr }
+      .brief > div { border-right: 0; border-bottom: 1px solid var(--linha) }
+      .brief > div:last-child { border-bottom: 0 }
+      .grid2, .acoes, .vcols { grid-template-columns: 1fr }
+      .vgrid, .vgrid.g5, .mgrid, .wagrid { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+      .vgrid.g2 { max-width: none }
+      .mcard.wide { grid-column: span 2 }
+      .playbook, .trio { grid-template-columns: 1fr }
+      .pb.feature { grid-column: auto }
+      .funnel { --band: 84px; --neck: 46px; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) }
+      .fneck span { white-space: normal; font-size: 9.5px; line-height: 1.35; padding: 3px 8px; border-radius: 10px }
+      .virada .stack i { font-size: 12.5px; padding: 0 8px }
+      .pair .pb2 i { max-width: 56% }
+      .pair .pb2 b { white-space: nowrap }
+      .ffoot, .ostats { grid-template-columns: 1fr 1fr }
+      .themes .th { grid-template-columns: minmax(0, 1fr) 58px 58px }
+      .themes .tbar { grid-column: 1 / -1; grid-row: 2 }
+      .themes .thh .tb { display: none }
+      .muni .mu { grid-template-columns: minmax(0, 1fr) 64px }
+      .muni .mu .bars { grid-column: 1 / -1; grid-row: 2 }
+      .top .logo { height: 42px }
+      .wa .shot { height: 300px }
+      .hero-rings { display: none }
+    }
+    @media (max-width: 440px) {
+      .vgrid, .vgrid.g5, .mgrid, .wagrid, .kpis.k4 { grid-template-columns: 1fr }
+      .mcard.wide { grid-column: auto }
+      .vmedia { aspect-ratio: 4 / 5 }
+      .donuts { grid-template-columns: 1fr }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto }
+      *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important }
+      .aurora, .hero-rings .pulse, .rings .rip, .rings .sweep { display: none }
+      .mtrack { animation: none; flex-wrap: wrap; width: auto }
+      .marquee { mask-image: none; -webkit-mask-image: none }
+      .mq[aria-hidden] { display: none }
+    }
+
+    @media print {
+      body { background: var(--roxo-escuro); -webkit-print-color-adjust: exact; print-color-adjust: exact }
+      body::before, .progress, .nav, .aurora { display: none }
+      .rv { opacity: 1 !important; transform: none !important }
+      .vcard, .mcard, .wa, .card, .pb, .ins { break-inside: avoid }
+      .mtrack { animation: none; flex-wrap: wrap; width: auto }
+      .marquee { mask-image: none; -webkit-mask-image: none }
+      .mq[aria-hidden] { display: none }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <div class="wrap">
+
+    <!-- TOPO -->
+    <div class="top">
+      <img class="logo" src="Logo Gerson Podemos.svg" alt="Gerson Pessoa" onerror="this.style.display='none'" />
+      <div class="meta">
+        <b>Outubro 2026</b>
+        Tráfego 01–29/10 · Perfil 01–28/10 · E-mail 28/09–28/10<br>Comparativo: setembro 2026
+      </div>
+    </div>
+
+    <nav class="nav" id="nav" aria-label="Seções do relatório">
+      <span class="pill" aria-hidden="true"></span>
+      <a href="#trafego">Tráfego pago</a>
+      <a href="#organico">Orgânico</a>
+      <a href="#email">E-mail</a>
+      <a href="#whatsapp">WhatsApp</a>
+    </nav>
+
+    <!-- ABERTURA -->
+    <header class="hero" id="hero">
+      <svg class="hero-rings" viewBox="0 0 420 420" aria-hidden="true">
+        <circle cx="210" cy="210" r="70" /><circle cx="210" cy="210" r="135" /><circle cx="210" cy="210" r="200" />
+        <circle class="pulse" cx="210" cy="210" r="200" /><circle class="pulse" cx="210" cy="210" r="200" /><circle class="pulse" cx="210" cy="210" r="200" />
+      </svg>
+      <span class="kicker">Relatório mensal · Gerson Pessoa</span>
+      <h1><span class="ln"><span>Resultados de <em>outubro</em></span></span></h1>
+      <p class="sub">Tráfego pago · Conteúdo orgânico · E-mail marketing · WhatsApp</p>
+      <p class="lede">Em outubro, os anúncios <b>ampliaram o alcance na cidade</b>, as publicações do perfil <b>cresceram em
+        visualizações</b> e o e-mail passou a chegar a <b>10 municípios da região</b>.</p>
+
+      <div class="facts">
+        <a class="fact rv hov lift" href="#trafego" style="--d:.3s">
+          <svg class="spark" viewBox="0 0 74 30" aria-hidden="true"><path pathLength="1" d="M2 26 L24 24 L44 16 L72 3" /></svg>
+          <span class="kicker">Tráfego pago</span>
+          <div class="v"><span data-count="1.47" data-dec="2">0</span> mi</div>
+          <div class="k">pessoas alcançadas pelos anúncios</div>
+          <span class="d">↑ 149% vs setembro</span>
+          <span class="go">ver tráfego pago →</span>
+        </a>
+        <a class="fact rv hov lift key" href="#organico" style="--d:.4s">
+          <svg class="spark" viewBox="0 0 74 30" aria-hidden="true"><path pathLength="1" d="M2 26 L20 22 L38 19 L56 12 L72 4" /></svg>
+          <span class="kicker">Conteúdo orgânico</span>
+          <div class="v"><span data-count="6.55" data-dec="2">0</span> mi</div>
+          <div class="k">visualizações das 55 publicações do mês</div>
+          <span class="d">↑ 49,2% vs setembro</span>
+          <span class="go">ver conteúdo orgânico →</span>
+        </a>
+        <a class="fact rv hov lift" href="#email" style="--d:.5s">
+          <span class="kicker">E-mail marketing</span>
+          <div class="v"><span data-count="1.46" data-dec="2">0</span> mi</div>
+          <div class="k">e-mails enviados, em Osasco e 10 municípios</div>
+          <span class="d">↑ 31,5% vs período anterior</span>
+          <span class="go">ver e-mail marketing →</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ==================== TRÁFEGO PAGO ==================== -->
+    <section class="chapter" id="trafego">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 1 · Meta Ads · 01–29 out</span>
+          <h2 class="chap-word">Tráfego pago</h2>
+        </div>
+        <p class="chap-thesis">Anúncios no Facebook e no Instagram da conta Gerson Pessoa: <b>12 anúncios em três
+            campanhas</b>, uma para ganhar seguidores e duas para ampliar o alcance na cidade. Com os anúncios pausados por
+          cerca de duas semanas no período eleitoral, o investimento foi <b>concentrado em posts específicos</b> e o alcance
+          foi ampliado.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="kpis rv">
+        <div class="kpi hl">
+          <div class="k">Pessoas alcançadas</div>
+          <div class="v" data-count="1473983">0</div>
+          <div class="d"><span class="up">↑ 149%</span> · setembro: 592.195</div>
+        </div>
+        <div class="kpi hl key">
+          <div class="k">Custo por seguidor</div>
+          <div class="v" data-count="5.01" data-money="1" data-dec="2">R$ 0</div>
+          <div class="d">campanha de seguidores · setembro: R$ 5,04</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Custo por mil exibições</div>
+          <div class="v" data-count="2.40" data-money="1" data-dec="2">R$ 0</div>
+          <div class="d"><span class="up">↓ 60%</span> · setembro: R$ 6,03</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Exibições</div>
+          <div class="v" data-count="1814379">0</div>
+          <div class="d"><span class="up">↑ 159%</span> · setembro: 700.467</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Visitas ao perfil</div>
+          <div class="v" data-count="6424">0</div>
+          <div class="d"><span class="up">↓ 18%</span> no custo por visita · R$ 0,28</div>
+        </div>
+        <div class="kpi">
+          <div class="k">Investimento</div>
+          <div class="v" data-count="4358.39" data-money="1" data-dec="2">R$ 0</div>
+          <div class="d">setembro: R$ 4.222,33</div>
+        </div>
+      </div>
+      <p class="note rv">Comparativo com a conta Gerson Pessoa em setembro. O alcance é exato por anúncio; o total é a soma dos
+        anúncios, sem desduplicar pessoas que viram mais de um.</p>
+
+      <div class="block">
+      <!-- FUNIL -->
+      <div class="card funnel-card rv hov key" id="fcard">
+        <div class="bhead" style="margin-bottom:14px">
+          <h3>Funil do tráfego pago</h3>
+          <span class="hint" id="fhint">pessoas alcançadas › visitas ao perfil › novos seguidores · 01–29 out</span>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Recorte do funil">
+          <button role="tab" aria-selected="true" data-f="eng">Campanha de seguidores</button>
+          <button role="tab" aria-selected="false" data-f="rec">Campanhas de alcance</button>
+        </div>
+        <p class="fdesc" id="fdesc"></p>
+
+        <div class="funnel">
+          <div class="fviz" id="fviz" role="img" aria-label="Funil das campanhas de tráfego pago">
+            <canvas></canvas>
+          </div>
+          <div class="fnums">
+            <div class="fstage" data-i="0"><span class="lbl" id="f-l0">Pessoas alcançadas</span><span class="num tnum" id="f-a">173.660</span></div>
+            <div class="fneck"><span id="f-n1"></span></div>
+            <div class="fstage" data-i="1"><span class="lbl" id="f-l1">Visitas ao perfil</span><span class="num tnum" id="f-b">6.424</span></div>
+            <div class="fneck"><span id="f-n2"></span></div>
+            <div class="fstage last" data-i="2"><span class="lbl" id="f-l2">Novos seguidores</span><span class="num tnum" id="f-c">356</span></div>
+          </div>
+        </div>
+        <div class="fscale">Largura das faixas em escala logarítmica · passe o mouse nas etapas</div>
+
+        <div class="ffoot">
+          <div><div class="k" id="f-k1"></div><div class="v tnum" id="f-v1"></div></div>
+          <div><div class="k" id="f-k2"></div><div class="v tnum" id="f-v2"></div></div>
+          <div><div class="k" id="f-k3"></div><div class="v tnum" id="f-v3"></div></div>
+        </div>
+      </div>
+
+      </div>
+
+      <!-- INVESTIMENTO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Distribuição do investimento</h3>
+          <span class="hint">participação de cada campanha na verba · setembro × outubro</span>
+        </div>
+        <div class="card virada rv hov" id="virada">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div class="tabs" role="group" aria-label="Mês">
+              <button aria-pressed="false" data-m="set">Setembro</button>
+              <button aria-pressed="true" data-m="out">Outubro</button>
+            </div>
+            <div class="legend">
+              <span data-s="c-lilas"><i class="c-lilas"></i>Campanhas de alcance</span>
+              <span data-s="c-verde"><i class="c-verde"></i>Campanha de seguidores</span>
+            </div>
+          </div>
+          <div class="stack" id="vstack">
+            <i class="c-lilas" id="v-rec">59,1%</i>
+            <i class="c-verde" id="v-eng">40,9%</i>
+          </div>
+
+          <div class="vcols">
+            <div class="vcol hov" data-s="c-verde">
+              <span class="tag"><i class="c-verde"></i>Campanha de seguidores</span>
+              <p class="desc"><b>Objetivo:</b> levar pessoas ao perfil do Gerson e convertê-las em seguidores. 7 anúncios.</p>
+              <div class="vmet">
+                <div><div class="k">Investimento</div><div class="v">R$ 1.783,36</div></div>
+                <div><div class="k">Novos seguidores</div><div class="v g">356</div></div>
+                <div><div class="k">Custo por seguidor</div><div class="v g">R$ 5,01</div></div>
+                <div><div class="k">Visitas ao perfil</div><div class="v">6.424</div></div>
+                <div><div class="k">Pessoas alcançadas</div><div class="v">173.660</div></div>
+                <div><div class="k">Custo por visita</div><div class="v g">R$ 0,28</div></div>
+              </div>
+              <p class="note" style="margin-top:12px">Setembro: R$ 5,04 por seguidor e R$ 0,34 por visita. <b>Custo por seguidor
+                  mantido e custo por visita 18% menor</b>; 3,7% das pessoas alcançadas visitaram o perfil (setembro: 3,1%).</p>
+            </div>
+            <div class="vcol hov" data-s="c-lilas">
+              <span class="tag"><i class="c-lilas"></i>Campanhas de alcance</span>
+              <p class="desc"><b>Objetivo:</b> mostrar os conteúdos para o maior número de pessoas da cidade, ao menor custo.
+                2 campanhas, 5 anúncios.</p>
+              <div class="vmet">
+                <div><div class="k">Investimento</div><div class="v">R$ 2.575,03</div></div>
+                <div><div class="k">Pessoas alcançadas</div><div class="v g">1.300.323</div></div>
+                <div><div class="k">Custo por mil exibições</div><div class="v g">R$ 1,62</div></div>
+                <div><div class="k">Exibições</div><div class="v">1.586.285</div></div>
+                <div><div class="k">Por mil pessoas</div><div class="v">R$ 1,98</div></div>
+                <div><div class="k">Vezes que cada um viu</div><div class="v">1,22</div></div>
+              </div>
+              <p class="note" style="margin-top:12px">Com 59% da verba, respondeu por <b>87% das exibições do mês</b>. Setembro:
+                238.292 pessoas, a R$ 1,92 por mil exibições.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÁREA DE VEICULAÇÃO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Área de veiculação</h3>
+          <span class="hint">raio a partir de Osasco · pessoas alcançadas por campanha · passe o mouse nos anéis</span>
+        </div>
+        <div class="card rv hov">
+          <div class="area">
+            <div class="rings" id="rings">
+              <svg viewBox="0 0 500 500" id="ringsvg" role="img" aria-label="Anéis de 9, 20 e 25 quilômetros a partir de Osasco"></svg>
+            </div>
+            <div class="ring-list" id="ringlist"></div>
+          </div>
+          <p class="note">Raio configurado em cada conjunto de anúncios. Os dois conjuntos da campanha de seguidores criados em 29
+            e 30/09 usaram raio de 17 km (linha tracejada); os de outubro, 25 km.</p>
+        </div>
+      </div>
+
+      <!-- DESTAQUES EM VÍDEO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Anúncios em destaque</h3>
+          <span class="hint">passe o mouse para uma prévia · clique para assistir com som</span>
+        </div>
+        <div class="vgroup rv"><i class="c-verde"></i>Campanha de seguidores <small>· os anúncios que mais trouxeram seguidores e visitas ao perfil</small></div>
+        <div class="vgrid" id="adv-eng"></div>
+        <div class="vgroup rv"><i class="c-lilas"></i>Campanhas de alcance <small>· o maior alcance pelo menor custo</small></div>
+        <div class="vgrid g2" id="adv-rec"></div>
+      </div>
+
+      <!-- TABELA -->
+      <div class="block rv">
+        <details class="tbl">
+          <summary><span>Todos os 12 anúncios<small>clique para abrir · ordenados por investimento</small></span><span class="chev">▾</span></summary>
+          <div class="tscroll">
+            <table class="mini">
+              <thead>
+                <tr>
+                  <th>Anúncio · duração</th>
+                  <th>Investimento</th>
+                  <th>Alcance</th>
+                  <th>Visitas ao perfil</th>
+                  <th>Seguidores</th>
+                  <th>R$ / seguidor</th>
+                  <th>Assistiram até 75%</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+              <tfoot>
+                <tr>
+                  <td>Total · 3 campanhas</td>
+                  <td>R$ 4.358,39</td>
+                  <td>1.473.983</td>
+                  <td>6.424</td>
+                  <td>373</td>
+                  <td>R$ 5,01¹</td>
+                  <td>2,89%¹</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </details>
+        <p class="note">¹ Campanha de seguidores. Visitas ao perfil medidas na campanha de seguidores, onde são o resultado da
+          campanha. Assistiram até 75% = reproduções de 75% do vídeo sobre as exibições. Em verde, os melhores resultados de cada
+          coluna.</p>
+      </div>
+
+      <!-- RETENÇÃO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Retenção dos vídeos</h3>
+          <span class="hint">parcela das exibições que assistiu até cada ponto do vídeo</span>
+        </div>
+        <div class="ret">
+          <div class="card rv hov">
+            <span class="kicker">Total do mês · por campanha</span>
+            <div style="margin-top:18px">
+              <div class="rb">
+                <div class="rtop"><span>Assistiram 3 segundos</span><span class="tnum">191.820 reproduções</span></div>
+                <div class="rtrack"><i class="c-verde" data-w="83.3"></i></div>
+                <div class="rtrack"><i class="c-lilas" data-w="24.3"></i></div>
+                <div class="rvals"><span>seguidores <b>27,75%</b></span><span>alcance <b>8,10%</b></span></div>
+              </div>
+              <div class="rb">
+                <div class="rtop"><span>Assistiram até 25%</span><span class="tnum">52.042 reproduções</span></div>
+                <div class="rtrack"><i class="c-verde" data-w="31.4"></i></div>
+                <div class="rtrack"><i class="c-lilas" data-w="5.3"></i></div>
+                <div class="rvals"><span>seguidores <b>10,46%</b></span><span>alcance <b>1,78%</b></span></div>
+              </div>
+              <div class="rb">
+                <div class="rtop"><span>Assistiram até 50%</span><span class="tnum">23.320 reproduções</span></div>
+                <div class="rtrack"><i class="c-verde" data-w="17.2"></i></div>
+                <div class="rtrack"><i class="c-lilas" data-w="2"></i></div>
+                <div class="rvals"><span>seguidores <b>5,72%</b></span><span>alcance <b>0,65%</b></span></div>
+              </div>
+              <div class="rb">
+                <div class="rtop"><span>Assistiram até 75%</span><span class="tnum">11.982 reproduções</span></div>
+                <div class="rtrack"><i class="c-verde" data-w="8.7"></i></div>
+                <div class="rtrack"><i class="c-lilas" data-w="1"></i></div>
+                <div class="rvals"><span>seguidores <b>2,89%</b></span><span>alcance <b>0,34%</b></span></div>
+              </div>
+            </div>
+            <div class="legend" style="margin-top:16px"><span data-s="c-verde"><i class="c-verde"></i>campanha de seguidores</span><span data-s="c-lilas"><i class="c-lilas"></i>campanhas de alcance</span></div>
+            <p class="note"><b>17.388 pessoas assistiram 15 segundos</b> dos vídeos da campanha de seguidores (7,6% das exibições).
+              Nas campanhas de alcance, o objetivo é a exibição para o maior número de pessoas, por isso a retenção é menor.</p>
+          </div>
+
+          <div class="card rv hov" style="--d:.1s">
+            <span class="kicker">Duração × retenção · campanha de seguidores</span>
+            <div class="scatter" id="scatter" style="margin-top:14px">
+              <svg viewBox="0 0 560 300" id="scsvg" role="img" aria-label="Gráfico de dispersão: duração do vídeo em segundos e porcentagem que assistiu até 75%; tamanho do ponto proporcional aos seguidores"></svg>
+              <div class="tip" id="sctip"></div>
+            </div>
+            <div class="legend" style="margin-top:10px"><span><i class="c-verde"></i>tamanho do ponto = novos seguidores</span><span style="color:var(--ink-3)">passe o mouse nos pontos</span></div>
+            <p class="note">Eixo horizontal: duração do vídeo. Vertical: parcela que assistiu até 75%. Neste mês, <b>a narração pesou
+                mais que a duração</b>: a versão narrada do Hospital Giglio (44s) reteve 75% mais que a versão sem narração (27s) e
+              trouxe 4,3 vezes mais seguidores.</p>
+          </div>
+        </div>
+
+        <div class="trio" style="margin-top:16px">
+          <div class="ins rv hov lift">
+            <div class="t"><span class="n">3,98%</span>Narração do prefeito</div>
+            <div class="d">Hospital Giglio narrado: a maior retenção da campanha e 107 seguidores, contra 25 da versão sem narração.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t"><span class="n">15,7%</span>Começo que prende</div>
+            <div class="d">Moradias no Morro do Sabão: 15,7% das exibições chegaram a um quarto do vídeo, a maior taxa da campanha.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t"><span class="n">R$ 2,85</span>Censo Animal, de novo</div>
+            <div class="d">Pelo segundo mês, o Censo Animal está entre os anúncios que mais trazem seguidores: 105 em outubro, com o
+              menor custo por seguidor da conta.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PÚBLICO -->
+      <div class="block">
+        <div class="bhead rv">
+          <h3>Perfil do público</h3>
+          <span class="hint">quem recebeu os anúncios × quem passou a seguir · campanha de seguidores</span>
+        </div>
+        <div class="grid2" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)">
+          <div class="card ages rv hov">
+            <div class="legend" style="margin-bottom:14px"><span data-s="c-lilas"><i class="c-lilas"></i>% das exibições</span><span data-s="c-verde"><i class="c-verde"></i>% dos novos seguidores</span></div>
+            <div class="ahead"><span>Idade</span><span>distribuição</span><span>custo · seguidores</span></div>
+            <div id="agerows"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="card rv hov" style="--d:.1s">
+              <span class="kicker">Gênero</span>
+              <div class="srow" style="margin-top:14px">
+                <div class="sk"><span>Exibições · campanha de seguidores</span><b>228.094</b></div>
+                <div class="stack" data-stack>
+                  <i class="c-verde" data-b="60.5">61% mulheres</i>
+                  <i class="c-lilas" data-b="39.5">39%</i>
+                </div>
+              </div>
+              <div class="srow">
+                <div class="sk"><span>Novos seguidores</span><b>356</b></div>
+                <div class="stack" data-stack>
+                  <i class="c-verde" data-b="72.8">73% mulheres</i>
+                  <i class="c-lilas" data-b="27.2">27%</i>
+                </div>
+              </div>
+              <div class="srow">
+                <div class="sk"><span>Pessoas alcançadas · campanhas de alcance</span><b>1.300.323</b></div>
+                <div class="stack" data-stack>
+                  <i class="c-verde" data-b="53.9">54% mulheres</i>
+                  <i class="c-lilas" data-b="46.1">46%</i>
+                </div>
+              </div>
+              <div class="legend" style="margin-top:12px"><span data-s="c-verde"><i class="c-verde"></i>feminino</span><span data-s="c-lilas"><i class="c-lilas"></i>masculino e não informado</span></div>
+              <p class="note">Mulheres: <b>259 seguidores a R$ 4,53 cada</b>. Homens: 95 seguidores a R$ 6,38.</p>
+            </div>
+            <div class="card rv hov" style="--d:.2s">
+              <span class="kicker">Análise</span>
+              <p class="read" style="margin-top:10px;font-size:15px">A faixa de <b>35 a 64 anos</b> recebeu 39% das exibições e
+                respondeu por <span class="g">66% dos novos seguidores</span>. O público de 45 a 54 anos teve o menor custo por
+                seguidor do mês (<span class="g">R$ 3,64</span>), como em setembro. Nas campanhas de alcance, 67% das pessoas
+                alcançadas têm entre 18 e 34 anos, o que complementa o público da campanha de seguidores.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ORGÂNICO ==================== -->
+    <section class="chapter" id="organico">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 2 · Perfil @gersonpessoa · 01–28 out</span>
+          <h2 class="chap-word">Conteúdo orgânico</h2>
+        </div>
+        <p class="chap-thesis"><b>55 publicações</b>, com <b>6,55 milhões de visualizações (+49,2%)</b> e <b>4,10 milhões de
+            alcance somado (+54,7%)</b>.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="bhead rv"><h3>Visão geral do perfil</h3><span class="hint">01–28 out · vs. período anterior</span></div>
+      <div class="grid2">
+        <!-- ROSCAS -->
+        <div class="card rv hov" id="donutcard">
+          <span class="kicker">Perfil @gersonpessoa · 01–28 out</span>
+          <h4 style="margin-top:12px">Visualizações do perfil no Instagram</h4>
+          <p class="read" style="margin-top:6px;font-size:14.5px"><b>10,4 milhões</b> de visualizações no período, <span class="g">↑ 46,5%</span> em relação ao período anterior.</p>
+          <div class="donuts">
+            <div class="donut">
+              <svg viewBox="0 0 200 200" id="dn1" role="img" aria-label="Origem das visualizações: 85,4% orgânico, 14,6% anúncios"></svg>
+              <div class="t">Origem</div>
+              <div class="legend"><span data-s="c-verde"><i class="c-verde"></i>orgânico</span><span data-s="c-lilas"><i class="c-lilas"></i>anúncios</span></div>
+            </div>
+            <div class="donut">
+              <svg viewBox="0 0 200 200" id="dn2" role="img" aria-label="Quem viu: 52,8% não seguidores, 47,2% seguidores"></svg>
+              <div class="t">Quem assistiu</div>
+              <div class="legend"><span data-s="c-lilas"><i class="c-lilas"></i>não seguidores</span><span data-s="c-verde"><i class="c-verde"></i>seguidores</span></div>
+            </div>
+          </div>
+          <p class="note">Painel do perfil no Meta Business Suite, comparado ao período anterior de 28 dias.</p>
+        </div>
+
+        <div class="card vw rv hov" style="--d:.1s">
+          <span class="kicker">Números do perfil · vs. período anterior</span>
+          <div class="row hl"><span class="l">Visualizações de origem orgânica</span><span class="r"><span class="n tnum" data-count="8874747">0</span><span class="c">↑ 36%</span></span></div>
+          <div class="row"><span class="l">Visualizações de anúncios</span><span class="r"><span class="n tnum" data-count="1511609">0</span><span class="c">↑ 167,6%</span></span></div>
+          <div class="row hl"><span class="l">Pessoas que assistiram</span><span class="r"><span class="n">2,75 mi</span><span class="c">↑ 243,7%</span></span></div>
+          <div class="row"><span class="l">Visualizações de não seguidores</span><span class="r"><span class="n">5,48 mi</span><span class="c">↑ 95,5%</span></span></div>
+          <div class="row"><span class="l">Interações com o conteúdo</span><span class="r"><span class="n">275,9 mil</span><span class="c">↑ 6%</span></span></div>
+          <p class="read" style="margin-top:14px;font-size:14.5px">O número de pessoas que assistiram ao conteúdo foi <b>3,4 vezes
+              maior</b>, e mais da metade das visualizações veio de quem ainda não segue o perfil.</p>
+        </div>
+      </div>
+      <p class="note rv">A visão geral do perfil soma tudo o que foi visto no período, incluindo stories e publicações de meses
+        anteriores (8,87 milhões de origem orgânica). Os números das publicações consideram só as 55 publicações de outubro
+        (6,55 milhões).</p>
+
+      <!-- PANORAMA -->
+      <div class="block">
+        <div class="bhead rv"><h3>Panorama das publicações</h3><span class="hint">55 publicações · outubro × setembro</span></div>
+        <div class="cmp rv" id="cmp"></div>
+        <p class="note rv">Interações = curtidas, comentários, compartilhamentos e salvamentos.</p>
+      </div>
+
+      <!-- LINHA DO TEMPO -->
+      <div class="block">
+        <div class="bhead rv"><h3>Publicações ao longo do mês</h3><span class="hint">visualizações de cada publicação por data · passe o mouse nas barras</span></div>
+        <div class="card rv hov">
+          <div class="tl" id="tl">
+            <svg viewBox="0 0 1100 330" id="tlsvg" role="img" aria-label="Visualizações de cada uma das 55 publicações de outubro, por data"></svg>
+            <div class="tip" id="tltip"></div>
+          </div>
+          <div class="legend" style="margin-top:12px">
+            <span data-s="c-verde"><i class="c-verde"></i>Top 5 e menções honrosas</span>
+            <span><i class="c-ambar"></i>posts eleitorais</span>
+            <span data-s="c-lilas"><i class="c-lilas"></i>demais publicações</span>
+          </div>
+          <p class="note">A barra do Monitora OZ (2,43 milhões) foi cortada para manter a escala das demais publicações.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Top 5 do mês</h3><span class="hint">ranking por visualizações · passe o mouse para uma prévia</span></div>
+        <div class="vgrid g5" id="topgrid"></div>
+        <div class="elei-note rv"><i></i><span>Os posts <b>2 e 5 são eleitorais</b>, publicados no primeiro e no segundo turno. O
+            resultado deles reflete a mobilização do período e deve ser avaliado à parte dos conteúdos de gestão.</span></div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Menções honrosas</h3><span class="hint">fora do Top 5 · conteúdos de gestão com destaque no mês</span></div>
+        <div class="vgrid g2" id="hongrid"></div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Desempenho por tema</h3><span class="hint">55 publicações em 8 temas</span></div>
+        <div class="card themes rv hov">
+          <div class="th thh"><span>Tema</span><span class="tb">visualizações</span><span>engaj.</span><span>seguid.</span></div>
+          <div id="themerows"></div>
+        </div>
+        <div class="trio" style="margin-top:16px">
+          <div class="ins rv hov lift">
+            <div class="t"><span class="n">2,63 mi</span>Segurança</div>
+            <div class="d">4 posts do Monitora OZ somaram 2,63 milhões de visualizações, 40% de todas as visualizações do mês.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t"><span class="n">742</span>Fé · Caminhada</div>
+            <div class="d">Os 11 posts de fé, com a Caminhada rumo a Aparecida, trouxeram 39% dos seguidores do orgânico, com
+              8,68% de engajamento.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t"><span class="n">5.234</span>Serviços e benefícios</div>
+            <div class="d">IPTU digital, Bom Prato Móvel, Cuidador de Idosos e Carreta de Natal: o tema mais compartilhado do mês.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Tendências</h3><span class="hint">padrões dos conteúdos de melhor resultado</span></div>
+        <div class="playbook">
+          <div class="pb feature rv hov">
+            <div class="t">Tecnologia na segurança gera o maior alcance</div>
+            <div class="d">16 segundos de imagem real das câmeras de uma UBS, sem narração: o reconhecimento facial do Monitora OZ
+              fez o post mais visto do mês, com <b>2,43 milhões de visualizações</b> e 1,6 milhão de pessoas alcançadas. Foram 2.155
+              salvamentos, o maior número do mês, e 259 novos seguidores. O padrão repete setembro, quando o Monitora OZ também teve
+              o post mais visto.</div>
+          </div>
+          <div class="pb rv hov lift" style="--d:.08s">
+            <div class="t">Fé e proximidade aproximam o público</div>
+            <div class="d">Registros curtos da estrada, com uma frase na tela (“Seja forte e corajoso”): os posts de fé tiveram
+              média de 97 mil visualizações e trouxeram 742 novos seguidores.</div>
+          </div>
+          <div class="pb rv hov lift">
+            <div class="t">Mesmo conteúdo, bom resultado nos dois canais</div>
+            <div class="d">Hospital Giglio, Censo Animal, Morro do Sabão e Maternidade Amador Aguiar foram publicados no perfil e
+              estiveram entre os anúncios de melhor resultado.</div>
+          </div>
+          <div class="pb rv hov lift" style="--d:.08s">
+            <div class="t">Serviço com orientação clara gera compartilhamento</div>
+            <div class="d">IPTU 2027 digital, com o prefeito explicando direto para a câmera: 2.569 compartilhamentos e 470
+              salvamentos. A confirmação de consultas pelo WhatsApp teve 1.035 comentários.</div>
+          </div>
+          <div class="pb rv hov lift" style="--d:.16s">
+            <div class="t">Posts eleitorais têm alto engajamento</div>
+            <div class="d">Os 11 posts do período eleitoral tiveram 8,41% de engajamento e 8,9 mil comentários. São resultados do
+              contexto da eleição e devem ser avaliados à parte.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== E-MAIL ==================== -->
+    <section class="chapter" id="email">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 3 · Disparos de 28/09 a 28/10</span>
+          <h2 class="chap-word">E-mail marketing</h2>
+        </div>
+        <p class="chap-thesis"><b>1.460.222 envios (+31,5%)</b> em três sistemas de disparo, com <b>181.252 aberturas</b>, em
+          Osasco e em <b>10 municípios da região</b>.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="card brief rv" style="padding:0">
+        <div>
+          <span class="kicker">Base de Osasco</span>
+          <p>Os Sistemas 1 e 2 somaram <b>701.024 envios</b> e <b>124.682 aberturas</b>. A newsletter Acontece em Osasco
+            concentrou <b>63,7% de todas as aberturas</b> do mês, em 27 disparos.</p>
+        </div>
+        <div>
+          <span class="kicker">Expansão</span>
+          <p>O <b>Sistema 3</b> passou de 3 para <b>10 municípios</b> na divulgação da <b>Cidade da Polícia</b>, com 759.198
+            envios, 52% da operação do mês.</p>
+        </div>
+        <div>
+          <span class="kicker">Evolução</span>
+          <p>O volume de envios cresceu <b>31,5%</b> com a ampliação da base regional. Como bases externas têm taxas de abertura
+            naturalmente menores, a taxa média geral do mês foi de <b>12,4%</b>.</p>
+        </div>
+      </div>
+
+      <div class="kpis rv" style="margin-top:16px">
+        <div class="kpi"><div class="k">E-mails enviados</div><div class="v" data-count="1460222">0</div><div class="d"><span class="up">↑ 31,5%</span> vs período anterior</div></div>
+        <div class="kpi"><div class="k">Aberturas</div><div class="v" data-count="181252">0</div><div class="d">Osasco e 10 municípios da região</div></div>
+        <div class="kpi hl key"><div class="k">Newsletter Acontece em Osasco</div><div class="v" data-count="115436">0</div><div class="d">aberturas · 63,7% de todas as do mês</div></div>
+        <div class="kpi hl"><div class="k">Reforma da UBS Jardim d'Abril</div><div class="v"><span data-count="46.9" data-dec="1">0</span>%</div><div class="d">maior taxa de abertura do mês</div></div>
+        <div class="kpi"><div class="k">Ouvidoria Cidadã · servidores</div><div class="v"><span data-count="38.0" data-dec="1">0</span>%</div><div class="d">taxa de abertura · 15.346 envios</div></div>
+        <div class="kpi"><div class="k">Municípios alcançados</div><div class="v">Osasco + 10</div><div class="d">Sistema 3 · Cidade da Polícia</div></div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Desempenho por sistema</h3><span class="hint">comunicação institucional · newsletter · comunicação regional</span></div>
+        <div class="sys">
+          <div class="sy rv hov lift">
+            <div class="nm">Sistema 1</div><div class="fn">base de Osasco · comunicação institucional</div>
+            <div class="rate">16,9%</div>
+            <div class="rtrack"><i data-w="33.8"></i></div>
+            <div class="mm"><div><b>527.145</b>envios</div><div><b>89.330</b>aberturas</div></div>
+            <p class="desc">Destaques: Reforma da UBS Jardim d'Abril com 46,9% e Ouvidoria Cidadã, para servidores, com 38,0%.</p>
+          </div>
+          <div class="sy rv hov lift" style="--d:.08s">
+            <span class="was">12 edições</span>
+            <div class="nm">Sistema 2</div><div class="fn">base de Osasco · exclusivo da newsletter</div>
+            <div class="rate">20,3%</div>
+            <div class="rtrack"><i data-w="40.6"></i></div>
+            <div class="mm"><div><b>173.879</b>envios</div><div><b>35.352</b>aberturas</div></div>
+            <p class="desc">Dedicado à newsletter Acontece em Osasco, com foco na comunicação editorial recorrente.</p>
+          </div>
+          <div class="sy reg rv hov lift" style="--d:.16s">
+            <span class="was" style="background:rgba(167,123,224,.18);color:#D8B9FF">10 municípios</span>
+            <div class="nm">Sistema 3</div><div class="fn">comunicação regional · Cidade da Polícia</div>
+            <div class="rate">7,5%</div>
+            <div class="rtrack"><i data-w="15"></i></div>
+            <div class="mm"><div><b>759.198</b>envios</div><div><b>56.570</b>aberturas</div></div>
+            <p class="desc">52% dos envios do mês. Trabalha com bases externas, em outras cidades da região.</p>
+          </div>
+        </div>
+
+        <div class="card rv hov" style="margin-top:16px">
+          <span class="kicker">Participação de cada sistema</span>
+          <div class="srow" style="margin-top:14px">
+            <div class="sk"><span>Envios</span><b>1.460.222</b></div>
+            <div class="stack" data-stack>
+              <i class="c-verde" data-b="36.1" title="Sistema 1: 527.145 envios">S1 · 36%</i>
+              <i class="c-neutro" data-b="11.9" title="Sistema 2: 173.879 envios">S2 · 12%</i>
+              <i class="c-lilas" data-b="52.0" title="Sistema 3: 759.198 envios">S3 · 52%</i>
+            </div>
+          </div>
+          <div class="srow">
+            <div class="sk"><span>Aberturas</span><b>181.252</b></div>
+            <div class="stack" data-stack>
+              <i class="c-verde" data-b="49.3" title="Sistema 1: 89.330 aberturas">S1 · 49%</i>
+              <i class="c-neutro" data-b="19.5" title="Sistema 2: 35.352 aberturas">S2 · 20%</i>
+              <i class="c-lilas" data-b="31.2" title="Sistema 3: 56.570 aberturas">S3 · 31%</i>
+            </div>
+          </div>
+          <div class="legend" style="margin-top:12px"><span data-s="c-verde"><i class="c-verde"></i>Sistema 1</span><span data-s="c-neutro"><i class="c-neutro"></i>Sistema 2</span><span data-s="c-lilas"><i class="c-lilas"></i>Sistema 3</span></div>
+          <p class="note">Com 48% dos envios, as bases de Osasco (Sistemas 1 e 2) responderam por <b>69% das aberturas</b>.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Campanhas do mês</h3><span class="hint">passe o mouse para ver o e-mail inteiro</span></div>
+        <div class="mgrid" id="mailgrid"></div>
+        <p class="note rv">O envio de Dia dos Professores teve uma limitação técnica de contabilização na plataforma: o volume segue
+          nos envios totais, sem atribuição de taxa.</p>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Sistema 3 · comunicação regional</h3><span class="hint">Cidade da Polícia · 10 municípios · ordenados por taxa de abertura</span></div>
+        <div class="card muni rv hov">
+          <div class="legend" style="margin-bottom:6px"><span data-s="c-lilas"><i class="c-lilas"></i>envios</span><span data-s="c-verde"><i class="c-verde"></i>taxa de abertura</span></div>
+          <div id="munirows"></div>
+          <p class="note">Somando os dez municípios, foram 759.198 envios e 56.570 aberturas (7,5%). Barueri e Cotia concentraram
+            56% dos envios; Cajamar, Ibiúna e Araçariguama tiveram as maiores taxas, acima de 10%.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Principais pontos do período</h3><span class="hint">análise da equipe de e-mail marketing</span></div>
+        <div class="trio">
+          <div class="ins rv hov lift">
+            <div class="t">Comunicação regional ampliada</div>
+            <div class="d">O Sistema 3 passou de 3 para 10 municípios e respondeu por 52% dos envios, levando a divulgação da
+              Cidade da Polícia à região metropolitana.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t">Newsletter concentra as aberturas</div>
+            <div class="d">Os 27 disparos da Acontece em Osasco somaram 115.436 aberturas, 63,7% do mês, com 17,3% de taxa média
+              consolidada.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t">Envios segmentados têm as maiores taxas</div>
+            <div class="d">Reforma da UBS do Jardim d'Abril (46,9%) e Ouvidoria Cidadã para servidores (38,0%) mostram a força da
+              comunicação para públicos específicos.</div>
+          </div>
+          <div class="ins rv hov lift">
+            <div class="t">Aniversários mantém o padrão</div>
+            <div class="d">O envio diário automático abriu 25,8% (setembro: 25,6%), com 9.431 envios no período.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.08s">
+            <div class="t">Bases menores, abertura maior</div>
+            <div class="d">Cajamar (14,7%), Ibiúna (11,1%) e Araçariguama (10,5%) lideraram as taxas do Sistema 3, com bases de 10
+              a 28 mil endereços.</div>
+          </div>
+          <div class="ins rv hov lift" style="--d:.16s">
+            <div class="t">Taxa real tende a ser maior</div>
+            <div class="d">Endereços inativos ou com caixa cheia seguem no total de envios e reduzem artificialmente o
+              percentual de abertura.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHATSAPP ==================== -->
+    <section class="chapter" id="whatsapp">
+      <div class="chap-head rv">
+        <div>
+          <span class="kicker">Parte 4 · Conversas individuais · outubro</span>
+          <h2 class="chap-word">WhatsApp</h2>
+        </div>
+        <p class="chap-thesis">Mensagens individuais do prefeito para <b>divulgar a reforma da UBS Jardim d'Abril</b> e
+          acompanhar quem recebeu apoio em suas demandas.</p>
+        <div class="chap-rule"></div>
+      </div>
+
+      <div class="card brief rv" style="padding:0">
+        <div>
+          <span class="kicker">Público</span>
+          <p>Mensagens enviadas aos munícipes para divulgar a <b>reforma da UBS Jardim d'Abril</b> e aos <b>cidadãos que
+              receberam apoio</b> em suas demandas.</p>
+        </div>
+        <div>
+          <span class="kicker">Objetivo</span>
+          <p>Informar a população sobre as <b>melhorias na unidade de saúde</b> e fortalecer o relacionamento com os munícipes,
+            demonstrando <b>atenção às suas solicitações</b>.</p>
+        </div>
+        <div>
+          <span class="kicker">Resultado</span>
+          <p>Entre os retornos, foram selecionadas <b>seis mensagens representativas</b>: três reações positivas à divulgação da
+            reforma e três agradecimentos pela atenção, por terem sido ouvidos e pelo apoio recebido.</p>
+        </div>
+      </div>
+
+      <div class="kpis k4 rv" style="margin-top:16px">
+        <div class="kpi"><div class="k">Ações do mês</div><div class="v">2</div><div class="d">Reforma da UBS Jardim d'Abril e retorno às demandas</div></div>
+        <div class="kpi"><div class="k">Formato</div><div class="v">1:1</div><div class="d">mensagem individual, assinada pelo prefeito</div></div>
+        <div class="kpi hl"><div class="k">Retorno</div><div class="v">Positivo</div><div class="d">agradecimentos e aplausos (🙏 👏 ❤️)</div></div>
+        <div class="kpi"><div class="k">Mais citado</div><div class="v" style="font-size:clamp(20px,2vw,24px)">Apoio recebido</div><div class="d">atenção e retorno às solicitações</div></div>
+      </div>
+
+      <div class="block acoes">
+        <div class="acao rv hov lift">
+          <span class="when">Outubro · saúde</span>
+          <h4>Reforma da UBS Jardim d'Abril</h4>
+          <p class="q">“As obras de modernização da UBS do Jardim D’Abril já começaram, e quero reforçar que os atendimentos
+            seguirão normalmente durante todo o período das obras.”</p>
+          <p class="res">Os moradores responderam com aplausos e mensagens de apoio à reforma, e cada resposta recebeu retorno do
+            prefeito.</p>
+        </div>
+        <div class="acao rv hov lift" style="--d:.08s">
+          <span class="when">Outubro · demandas</span>
+          <h4>Retorno às demandas atendidas</h4>
+          <p class="q">“Bom dia! Vou verificar novamente.”</p>
+          <p class="res">Cidadãos que tiveram pedidos encaminhados, como um atendimento no hospital e um protocolo no Portal do
+            Trabalhador, voltaram para agradecer pela atenção.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bhead rv"><h3>Respostas dos moradores</h3><span class="hint">6 conversas reais · telefones e fotos removidos · passe o mouse para ver a conversa inteira</span></div>
+        <div class="wagrid" id="wagrid"></div>
+      </div>
+
+      <div class="block rv">
+        <div class="bhead"><h3>Outras respostas recebidas</h3><span class="hint">trechos das conversas registradas · passe o mouse para pausar</span></div>
+        <div class="marquee" aria-label="Trechos das respostas dos moradores">
+          <div class="mtrack" id="mtrack"></div>
+        </div>
+      </div>
+
+      <div class="card block rv hov">
+        <span class="kicker">Análise das conversas</span>
+        <div class="grid2 col" style="margin-top:14px">
+          <ul>
+            <li><b>Gratidão pelo apoio recebido.</b> “Muito obrigada por tudo que você fez pelo meu filho”, “toda a equipe aqui do
+              hospital maravilhosa”. Os agradecimentos citam o prefeito e as equipes.</li>
+            <li><b>Reforma bem recebida.</b> A divulgação da obra na UBS Jardim d'Abril teve respostas de apoio, como “vai ficar
+              bom” e aplausos, mesmo com o aviso de que a obra muda a rotina da unidade.</li>
+          </ul>
+          <ul>
+            <li><b>Proximidade com o prefeito.</b> As respostas tratam o Gerson pelo nome e recebem retorno direto: “Obrigado pelo
+              carinho! Conte comigo”.</li>
+            <li><b>Canal de acompanhamento.</b> Um munícipe acompanhou pelo WhatsApp o encaminhamento do seu protocolo no Portal do
+              Trabalhador, o que permite à equipe dar retorno até a conclusão.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Fontes: Gerenciador de Anúncios Meta, conta Gerson Pessoa (01–29/10/2026) · Meta Business Suite, visão geral e
+        exportação de publicações @gersonpessoa (01–28/10) · Relatório de Desempenho de E-mail Marketing (28/09 a 28/10) ·
+        registros de conversas WhatsApp (out/2026). Comparativos com o relatório mensal de setembro de 2026.</span>
+      <span>Gerson Pessoa · relatório mensal · outubro 2026</span>
+    </footer>
+  </div>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ==================== DADOS ==================== */
+
+    /* Anúncios — CSV 01–29/10. alcance = soma das faixas idade × gênero (exclusivas) = alcance real do anúncio.
+       c: 'eng' = campanha de seguidores ([ENGAJAMENTO] Seguidores) · 'rec' = campanhas de alcance ([RECONHECIMENTO] 9 km e 20 km)
+       "Bom Prato Móvel" está no Gerenciador com o nome "Escola do Futuro" (nome trocado na criação do anúncio).
+       vis = visitas ao perfil, resultado da campanha de seguidores; as de alcance não exportam essa métrica. */
+    const ADS = [
+      { c: 'eng', raio: '25 km', n: 'Maternidade Amador Aguiar', d: 40, reach: 54351, impr: 78296, spend: 499.34, vis: 1837, seg: 70, p3: 22336, p25: 7798, p75: 2351, tp: 5191 },
+      { c: 'eng', raio: '25 km', n: 'Hospital Giglio · narrado', d: 44, reach: 36592, impr: 44447, spend: 422.48, vis: 1474, seg: 107, p3: 14643, p25: 6082, p75: 1767, tp: 4892 },
+      { c: 'eng', raio: '25 km', n: 'Censo Animal', d: 51, reach: 24599, impr: 35288, spend: 299.77, vis: 967, seg: 105, p3: 8959, p25: 2241, p75: 800, tp: 2003 },
+      { c: 'eng', raio: '25 km', n: 'Hospital Giglio · sem narração', d: 27, reach: 30427, impr: 40455, spend: 283.47, vis: 892, seg: 25, p3: 9010, p25: 3535, p75: 923, tp: 1323 },
+      { c: 'eng', raio: '17 km', n: 'Vagas de emprego', d: 53, reach: 7011, impr: 7456, spend: 99.83, vis: 255, seg: 18, p3: 2240, p25: 1140, p75: 245, tp: 1050 },
+      { c: 'eng', raio: '25 km', n: 'Moradias no Morro do Sabão', d: 56, reach: 15383, impr: 16629, spend: 90.33, vis: 841, seg: 30, p3: 5144, p25: 2618, p75: 385, tp: 2607 },
+      { c: 'eng', raio: '17 km', n: 'Bom Prato Móvel', d: 40, reach: 5297, impr: 5523, spend: 88.14, vis: 158, seg: 1, p3: 956, p25: 447, p75: 122, tp: 322 },
+      { c: 'rec', raio: '20 km', n: 'Hospital Giglio · narrado', d: 44, reach: 455833, impr: 588942, spend: 867.33, vis: 0, seg: 0, p3: 31324, p25: 4304, p75: 650, tp: 2737 },
+      { c: 'rec', raio: '9 km', n: 'Hospital Giglio · sem narração', d: 27, reach: 312609, impr: 442695, spend: 857.75, vis: 0, seg: 3, p3: 41667, p25: 13008, p75: 2217, tp: 4172 },
+      { c: 'rec', raio: '9 km', n: 'Censo Animal', d: 51, reach: 199659, impr: 204908, spend: 315.48, vis: 0, seg: 8, p3: 15423, p25: 1652, p75: 293, tp: 1351 },
+      { c: 'rec', raio: '9 km', n: 'Intervenção viária', d: 40, reach: 173763, impr: 186245, spend: 275.39, vis: 0, seg: 0, p3: 19521, p25: 4679, p75: 1121, tp: 2918 },
+      { c: 'rec', raio: '9 km', n: 'Moradias no Morro do Sabão', d: 56, reach: 158459, impr: 163495, spend: 259.08, vis: 0, seg: 6, p3: 20597, p25: 4538, p75: 1108, tp: 4283 }
+    ];
+
+    const HILITE = [
+      {
+        ad: 'Hospital Giglio · narrado', grp: 'eng', badge: 'Mais seguidores', video: 'assets/media/traf-giglio.webm', poster: 'assets/thumbs/traf-giglio.jpg',
+        m: [['Novos seguidores', '107', 1], ['Custo por seguidor', 'R$ 3,95', 1], ['Assistiram até 75%', '3,98%', 1], ['Investimento', 'R$ 422,48']],
+        why: 'O prefeito apresenta a modernização do Hospital Municipal Antônio Giglio. <b>A maior retenção da campanha</b> e 1.474 visitas ao perfil.'
+      },
+      {
+        ad: 'Censo Animal', grp: 'eng', badge: 'Menor custo por seguidor', key: true, video: 'assets/media/traf-censo.webm', poster: 'assets/thumbs/traf-censo.jpg',
+        m: [['Novos seguidores', '105', 1], ['Custo por seguidor', 'R$ 2,85', 1], ['Visitas ao perfil', '967'], ['Investimento', 'R$ 299,77']],
+        why: 'O convite para cadastrar o pet voltou a converter: <b>10,9% de quem visitou o perfil passou a seguir</b>, o menor custo por seguidor do mês.'
+      },
+      {
+        ad: 'Maternidade Amador Aguiar', grp: 'eng', badge: 'Mais visitas ao perfil', video: 'assets/media/traf-amador.webm', poster: 'assets/thumbs/traf-amador.jpg',
+        m: [['Visitas ao perfil', '1.837', 1], ['Assistiram 3 segundos', '28,5%', 1], ['Novos seguidores', '70'], ['Investimento', 'R$ 499,34']],
+        why: 'Os 24 leitos reformados na Maternidade Amador Aguiar levaram <b>1.837 pessoas ao perfil</b>, o maior número do mês.'
+      },
+      {
+        ad: 'Moradias no Morro do Sabão', grp: 'eng', badge: 'Menor custo por visita', video: 'assets/media/traf-moradias.webm', poster: 'assets/thumbs/traf-moradias.jpg',
+        m: [['Custo por visita', 'R$ 0,11', 1], ['Visitas / mil exibições', '50,6', 1], ['Custo por seguidor', 'R$ 3,01', 1], ['Investimento', 'R$ 90,33']],
+        why: 'Com R$ 90,33, gerou 841 visitas ao perfil e 30 seguidores. <b>15,7% das exibições chegaram a um quarto do vídeo</b>.'
+      },
+      {
+        ad: 'Hospital Giglio · narrado', grp: 'rec', badge: 'Maior alcance do mês', video: 'assets/media/traf-giglio.webm', poster: 'assets/thumbs/traf-giglio.jpg',
+        m: [['Pessoas alcançadas', '455.833', 1], ['Custo por mil exibições', 'R$ 1,47', 1], ['Exibições', '588.942'], ['Investimento', 'R$ 867,33']],
+        why: 'A nova campanha, com raio de 20 km, levou a entrega do Hospital Giglio a <b>455,8 mil pessoas</b>, com o menor custo por exibição do mês.'
+      },
+      {
+        ad: 'Intervenção viária', grp: 'rec', badge: 'Alcance a baixo custo', video: 'assets/media/traf-intervencao.webm', poster: 'assets/thumbs/traf-intervencao.jpg',
+        m: [['Pessoas alcançadas', '173.763', 1], ['Custo por mil exibições', 'R$ 1,48', 1], ['Vezes que cada um viu', '1,07'], ['Investimento', 'R$ 275,39']],
+        why: '<b>173,8 mil pessoas alcançadas com R$ 275,39</b> (R$ 1,58 por mil pessoas) para explicar a obra na Avenida Getúlio Vargas.'
+      }
+    ];
+
+    const AGE = [
+      { nm: '18–24', imp: 21.15, seg: 16, sp: 4.49, cps: 13.64 },
+      { nm: '25–34', imp: 33.36, seg: 65, sp: 18.26, cps: 6.65 },
+      { nm: '35–44', imp: 19.12, seg: 92, sp: 25.84, cps: 3.88 },
+      { nm: '45–54', imp: 11.73, seg: 84, sp: 23.60, cps: 3.64, best: true },
+      { nm: '55–64', imp: 7.96, seg: 59, sp: 16.57, cps: 4.10 },
+      { nm: '65+', imp: 6.67, seg: 38, sp: 10.67, cps: 6.01 }
+    ];
+
+    /* Área de veiculação — raio de cada conjunto (nome do conjunto no Gerenciador) */
+    const RINGS = [
+      { km: 9, cor: 'var(--s-lilas)', nome: 'Campanha de alcance', sub: '4 anúncios · Hospital Giglio, Censo Animal, Intervenção viária e Morro do Sabão', reach: 844490, spend: 1707.70 },
+      { km: 20, cor: '#D8B9FF', nome: 'Campanha de alcance ampliada', sub: 'nova em outubro · Hospital Giglio narrado', reach: 455833, spend: 867.33 },
+      { km: 25, cor: 'var(--s-verde)', nome: 'Campanha de seguidores', sub: '7 anúncios · conjuntos a partir de 13/10', reach: 173660, spend: 1783.36 }
+    ];
+
+    /* Publicações — CSV do Business Suite 01–28/10 (d = dia de publicação) */
+    const POSTS = [
+      { d: 1, v: 111390, t: 'Pessoal · Datas', s: 'São 15 anos de casamento, de parceria, cumplicidade,…' },
+      { d: 1, v: 49284, t: 'Segurança', s: 'Mais um flagrante de descarte irregular em Osasco!' },
+      { d: 1, v: 38043, t: 'Segurança', s: 'Pessoal, Osasco agora conta com uma Delegacia da Mulher…' },
+      { d: 2, v: 2426940, t: 'Segurança', s: 'Procurado pela Justiça é preso após ser identificado pelo…' },
+      { d: 2, v: 37585, t: 'Saúde', s: 'Pessoal, Osasco recebeu três novas ambulâncias zero…' },
+      { d: 3, v: 62806, t: 'Eleições', s: 'Amanhã é dia de 20.200 para deputado estadual! Vamos…' },
+      { d: 3, v: 60807, t: 'Eleições', s: 'Amanhã é dia de eleição!' },
+      { d: 4, v: 282788, t: 'Eleições', s: 'Parabéns, Rogério Lins! Uma grande vitória e o…' },
+      { d: 4, v: 137829, t: 'Eleições', s: 'Hoje é dia de exercer a nossa cidadania e participar das…' },
+      { d: 4, v: 70727, t: 'Eleições', s: 'Hoje é dia de eleição e em Osasco, o transporte público é…' },
+      { d: 4, v: 42407, t: 'Eleições', s: 'O time que vai fazer mais por Osasco!' },
+      { d: 5, v: 82916, t: 'Obras · Zeladoria', s: 'Cinco entregas importantes que faremos até dezembro. São…' },
+      { d: 6, v: 53384, t: 'Obras · Zeladoria', s: 'Pessoal, as obras de recuperação do Parque Glauco Villas…' },
+      { d: 6, v: 20428, t: 'Obras · Zeladoria', s: 'Osasco está avançando em áreas que fazem diferença na…' },
+      { d: 7, v: 236166, t: 'Fé · Caminhada', s: 'Caminhando com fé e amparado por Ele!' },
+      { d: 7, v: 85649, t: 'Fé · Caminhada', s: 'Iniciamos mais uma romaria rumo a Aparecida, com o…' },
+      { d: 8, v: 214402, t: 'Fé · Caminhada', s: 'Iniciando o segundo dia da nossa Caminhada da Fé rumo a…' },
+      { d: 8, v: 66845, t: 'Fé · Caminhada', s: 'Encerrando o segundo dia da caminhada da fé. Foram 33km,…' },
+      { d: 9, v: 72025, t: 'Fé · Caminhada', s: 'Iniciamos o terceiro dia da nossa Caminhada da Fé com uma…' },
+      { d: 9, v: 66873, t: 'Fé · Caminhada', s: 'Já são 100 km de caminhada!' },
+      { d: 9, v: 45382, t: 'Fé · Caminhada', s: 'Seguimos com fé, rumo a Aparecida' },
+      { d: 10, v: 98524, t: 'Fé · Caminhada', s: 'Quarto dia de caminhada rumo a Aparecida!' },
+      { d: 11, v: 83227, t: 'Fé · Caminhada', s: '5º ano de caminhada: 170 km até Aparecida!' },
+      { d: 12, v: 39816, t: 'Fé · Caminhada', s: 'Que Nossa Mãe continue abençoando nossas famílias,…' },
+      { d: 12, v: 23807, t: 'Pessoal · Datas', s: 'Feliz Dia das Crianças! Que a gente nunca perca a…' },
+      { d: 13, v: 71503, t: 'Saúde', s: 'As obras não param, principalmente na saúde!' },
+      { d: 14, v: 105267, t: 'Serviços · Benefícios', s: 'Amanhã, a partir das 16h, tem inauguração do BK na Zona…' },
+      { d: 14, v: 48850, t: 'Obras · Zeladoria', s: 'Pessoal, estamos realizando uma importante intervenção na…' },
+      { d: 15, v: 46147, t: 'Pessoal · Datas', s: 'Neste Dia dos Professores, quero expressar minha gratidão…' },
+      { d: 16, v: 64911, t: 'Causa animal', s: 'Você já cadastrou seu pet no Censo Animal? Faça o…' },
+      { d: 16, v: 32763, t: 'Segurança', s: 'Mais uma sexta-feira de Operação Entardecer Seguro em…' },
+      { d: 16, v: 652, t: 'Causa animal', s: 'Você já cadastrou seu pet no Censo Animal? Faça o…' },
+      { d: 17, v: 58077, t: 'Causa animal', s: 'Hoje é dia de proteger seu pet!' },
+      { d: 18, v: 164868, t: 'Eleições', s: 'Domingo que vem é @flaviobolsonaro 22 e confirma' },
+      { d: 19, v: 53929, t: 'Obras · Zeladoria', s: 'Pessoal, seguimos trabalhando nas obras de urbanização do…' },
+      { d: 19, v: 40428, t: 'Serviços · Benefícios', s: 'Em novembro, vamos receber a Carreta de Natal da…' },
+      { d: 19, v: 24445, t: 'Obras · Zeladoria', s: 'A zeladoria está em ação no bairro Bandeiras, com…' },
+      { d: 20, v: 75167, t: 'Saúde', s: 'Osasco abre credenciamento para ampliar a oferta de…' },
+      { d: 20, v: 53638, t: 'Serviços · Benefícios', s: 'Pessoal, além do Bom Prato fixo no Centro, agora Osasco…' },
+      { d: 21, v: 80266, t: 'Eleições', s: 'Agora é 22 para Osasco seguir avançando, em parceria com…' },
+      { d: 21, v: 79454, t: 'Saúde', s: 'Vem aí a entrega da modernização do Hospital Municipal…' },
+      { d: 21, v: 42165, t: 'Segurança', s: 'Câmeras nas UBSs reforçando a segurança da nossa cidade!…' },
+      { d: 22, v: 44912, t: 'Saúde', s: 'Pessoal, as obras de modernização do Pronto-Socorro do…' },
+      { d: 23, v: 60781, t: 'Serviços · Benefícios', s: 'Pessoal, estão abertas as inscrições para a segunda…' },
+      { d: 23, v: 34245, t: 'Saúde', s: 'Amanhã é dia de entregar a reforma do Hospital Antônio…' },
+      { d: 24, v: 120430, t: 'Saúde', s: 'Mais uma entrega importante para a saúde de Osasco!…' },
+      { d: 24, v: 62758, t: 'Fé · Caminhada', s: 'Que essa oração renove a nossa fé.' },
+      { d: 24, v: 28129, t: 'Saúde', s: 'Conquista importante para a saúde! Vamos seguir…' },
+      { d: 25, v: 124789, t: 'Eleições', s: 'Vamos juntos exercer nossa cidadania!' },
+      { d: 25, v: 71096, t: 'Eleições', s: 'Exercendo a cidadania e fazendo a nossa parte por um…' },
+      { d: 26, v: 109154, t: 'Saúde', s: 'Pessoal, mais uma novidade importante para a saúde de…' },
+      { d: 27, v: 157887, t: 'Serviços · Benefícios', s: 'Pessoal, o IPTU 2027 será digital! Você poderá emitir os…' },
+      { d: 27, v: 108744, t: 'Segurança', s: 'Mais um indivíduo procurado pela Justiça foi preso com o…' },
+      { d: 28, v: 46935, t: 'Pessoal · Datas', s: 'Hoje é dia de agradecer a quem faz Osasco acontecer todos…' },
+      { d: 28, v: 30490, t: 'Eleições', s: 'Independentemente de partido político, nosso compromisso…' }
+    ];
+    const DESTAQUE = ['Procurado pela Justiça', 'Caminhando com fé', 'Iniciando o segundo dia', 'IPTU 2027', 'Mais uma entrega importante para a saúde'];
+
+    const CMP = [
+      ['Visualizações', 6552930, 4392359, '↑ 49,2%'],
+      ['Alcance somado', 4102141, 2651331, '↑ 54,7%'],
+      ['Visualizações por post', 119144, 75730, '↑ 57,3%', 1],
+      ['Alcance por post', 74584, 45713, '↑ 63,2%'],
+      ['Curtidas', 143533, 97653, '↑ 47,0%'],
+      ['Comentários', 29469, 22846, '↑ 29,0%'],
+      ['Salvamentos', 4724, 4020, '↑ 17,5%'],
+      ['Interações', 197178, 168618, '↑ 16,9%']
+    ];
+
+    const TOP = [
+      {
+        rank: 1, nome: 'Monitora OZ: procurado preso em UBS', set: 'segurança · 02 out · 16s', badge: 'Mais visto do mês', key: true,
+        video: 'assets/media/org-monitora.webm', poster: 'assets/thumbs/org-monitora.jpg',
+        m: [['Visualizações', '2,43 mi', 1], ['Pessoas alcançadas', '1,60 mi', 1], ['Salvamentos', '2.155', 1], ['Novos seguidores', '259']],
+        why: 'Imagem real das câmeras da UBS, sem narração, em 16 segundos. <b>37% de todas as visualizações das publicações do mês</b> e 2.155 salvamentos.'
+      },
+      {
+        rank: 2, nome: 'Parabéns, Rogério Lins!', set: 'eleições · 04 out · 21s', badge: 'Post eleitoral', elei: true,
+        video: 'assets/media/org-rogerio.webm', poster: 'assets/thumbs/org-rogerio.jpg',
+        m: [['Visualizações', '282,8 mil', 1], ['Engajamento', '12,71%'], ['Comentários', '2.244'], ['Novos seguidores', '217']],
+        why: 'Comemoração da noite do primeiro turno, com o resultado da eleição para deputado estadual.'
+      },
+      {
+        rank: 3, nome: 'Caminhando com fé', set: 'fé · 07 out · 16s', badge: 'Caminhada da Fé',
+        video: 'assets/media/org-fe-0710.webm', poster: 'assets/thumbs/org-fe-0710.jpg',
+        m: [['Visualizações', '236,2 mil', 1], ['Engajamento', '8,71%'], ['Compartilhamentos', '545'], ['Novos seguidores', '245', 1]],
+        why: 'Abre com uma pergunta na tela (“qual é o poder da fé?”) e mostra o grupo na estrada, no início dos 170 km até Aparecida.'
+      },
+      {
+        rank: 4, nome: 'Caminhada da Fé · 2º dia', set: 'fé · 08 out · 8s', badge: 'Mais seguidores do mês',
+        video: 'assets/media/org-fe-0810.webm', poster: 'assets/thumbs/org-fe-0810.jpg',
+        m: [['Visualizações', '214,4 mil'], ['Engajamento', '9,84%', 1], ['Comentários', '1.006'], ['Novos seguidores', '279', 1]],
+        why: 'Uma frase na tela (“Seja forte e corajoso”) e o grupo em caminhada: <b>279 novos seguidores em 8 segundos</b>, o maior número de um post no mês.'
+      },
+      {
+        rank: 5, nome: 'Apoio no segundo turno', set: 'eleições · 18 out · 24s', badge: 'Post eleitoral', elei: true,
+        video: 'assets/media/org-flavio.webm', poster: 'assets/thumbs/org-flavio.jpg',
+        m: [['Visualizações', '164,9 mil', 1], ['Engajamento', '13,61%'], ['Compartilhamentos', '1.364'], ['Comentários', '2.096']],
+        why: 'Registro do ato com apoiadores e declaração de apoio a Flávio Bolsonaro no segundo turno.'
+      }
+    ];
+    const HON = [
+      {
+        nome: 'IPTU 2027 digital', set: 'serviço · 27 out · 55s', badge: 'Mais compartilhado do mês', key: true,
+        video: 'assets/media/org-iptu.webm', poster: 'assets/thumbs/org-iptu.jpg',
+        m: [['Visualizações', '157,9 mil'], ['Compartilhamentos', '2.569', 1], ['Salvamentos', '470', 1], ['Novos seguidores', '166', 1]],
+        why: 'O prefeito fala direto para a câmera e explica o que muda: o boleto chega por e-mail e o morador atualiza o cadastro. <b>O post mais compartilhado de outubro</b>.'
+      },
+      {
+        nome: 'Entrega do Hospital Giglio', set: 'saúde · 24 out · 44s', badge: 'Orgânico e pago',
+        video: 'assets/media/traf-giglio.webm', poster: 'assets/thumbs/traf-giglio.jpg',
+        m: [['Visualizações', '120,4 mil'], ['Compartilhamentos', '1.087', 1], ['Comentários', '718'], ['Pessoas alcançadas', '73,9 mil']],
+        why: 'A mesma peça foi o anúncio de maior alcance do mês (455,8 mil pessoas) e o que mais trouxe seguidores na campanha de seguidores.'
+      }
+    ];
+
+    const TEMAS = [
+      { nm: 'Segurança', n: 6, v: 2697939, er: 1.04, sg: 293 },
+      { nm: 'Eleições', n: 11, v: 1128873, er: 8.41, sg: 342, elei: true },
+      { nm: 'Fé · Caminhada', n: 11, v: 1071667, er: 8.68, sg: 742 },
+      { nm: 'Saúde', n: 9, v: 600579, er: 6.40, sg: 140 },
+      { nm: 'Serviços · Benefícios', n: 5, v: 418001, er: 7.40, sg: 263 },
+      { nm: 'Obras · Zeladoria', n: 6, v: 283952, er: 5.96, sg: 47 },
+      { nm: 'Pessoal · Datas', n: 4, v: 228279, er: 5.96, sg: 20 },
+      { nm: 'Causa animal', n: 3, v: 123640, er: 7.15, sg: 41 }
+    ];
+
+    const MAIL = [
+      {
+        nome: 'Acontece em Osasco', sub: 'newsletter · 27 disparos nos Sistemas 1 e 2', imgs: ['email-acontece'], wide: true, key: true, env: 668234, ab: 115436,
+        l: [['Sistema 1 · 15 envios', 16.2], ['Sistema 2 · 12 edições', 20.3], ['Consolidado', 17.3]]
+      },
+      { nome: "Reforma da UBS Jardim d'Abril", sub: 'início das obras de modernização', imgs: ['email-ubs-jdabril'], wide: true, land: true, env: 2090, ab: 981, l: [['Sistema 1', 46.9]] },
+      { nome: 'Ouvidoria Cidadã', sub: 'servidores · selo do Tribunal de Contas', imgs: ['email-ouvidoria'], env: 15346, ab: 5829, l: [['Sistema 1', 38.0]] },
+      { nome: 'Aniversários', sub: 'envio diário automático', imgs: ['email-aniversario'], env: 9431, ab: 2436, l: [['Sistema 1', 25.8]] },
+      { nome: 'Cidade da Polícia', sub: 'Sistema 3 · 10 municípios', imgs: ['email-cidadepolicia'], env: 759198, ab: 56570, l: [['Sistema 3 · regional', 7.5]] },
+      { nome: 'Dia dos Professores', sub: 'homenagem · 15/10', imgs: ['email-professores'], env: 5923, ab: null, l: [] }
+    ];
+
+    const MUNI = [
+      { nm: 'Cajamar', env: 24072, ab: 3532, rt: 14.7 },
+      { nm: 'Ibiúna', env: 27590, ab: 3049, rt: 11.1 },
+      { nm: 'Araçariguama', env: 10252, ab: 1074, rt: 10.5 },
+      { nm: 'São Roque', env: 8676, ab: 698, rt: 8.0 },
+      { nm: 'Barueri', env: 224574, ab: 17672, rt: 7.9 },
+      { nm: 'Itapevi', env: 145134, ab: 10412, rt: 7.2 },
+      { nm: 'Cotia', env: 203690, ab: 13433, rt: 6.6 },
+      { nm: 'Jandira', env: 66974, ab: 4056, rt: 6.1 },
+      { nm: 'Pirapora do Bom Jesus', env: 9042, ab: 502, rt: 5.6 },
+      { nm: 'Vargem Grande Paulista', env: 39194, ab: 2142, rt: 5.5 }
+    ];
+
+    const WA = [
+      { img: 'assets/thumbs/wa-1.webp', tag: 'Apoio recebido', quote: '“Muito obrigada por tudo que você fez pelo meu filho. Hoje está fazendo a cirurgia dele.”', meta: 'Mãe de paciente · hospital' },
+      { img: 'assets/thumbs/wa-2.webp', tag: 'Portal do Trabalhador', quote: '“Desde já te agradeço de coração 🙏 Deus abençoe!”', meta: 'Munícipe · protocolo encaminhado' },
+      { img: 'assets/thumbs/wa-3.webp', tag: 'Agradecimento', quote: '“Obrigado, por isso que Osasco está no rumo certo a cada dia.”', meta: 'Munícipe', short: true },
+      { img: 'assets/thumbs/wa-4.webp', tag: "UBS Jardim d'Abril", quote: '“Bom dia, vai ficar bom.”', meta: 'Morador · resposta à divulgação da reforma' },
+      { img: 'assets/thumbs/wa-5.webp', tag: "UBS Jardim d'Abril", quote: '“👏👏👏”', meta: 'Moradora · resposta à divulgação da reforma' },
+      { img: 'assets/thumbs/wa-6.webp', tag: "UBS Jardim d'Abril", quote: '“Que da hora! Parabéns!”', meta: 'Morador · resposta à divulgação da reforma' }
+    ];
+
+    /* ==================== FORMATOS ==================== */
+    const nf = new Intl.NumberFormat('pt-BR');
+    const ff = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+    const money = (v, d = 2) => 'R$ ' + ff(v, d);
+    const abbr = v => v >= 1e6 ? ff(v / 1e6, 2) + ' mi' : v >= 1e3 ? ff(v / 1e3, 1) + ' mil' : nf.format(v);
+
+    /* ==================== TÍTULOS PALAVRA A PALAVRA ==================== */
+    document.querySelectorAll('.chap-word').forEach(h => {
+      h.innerHTML = h.textContent.trim().split(/\s+/).map((w, i) => `<span class="w" style="--i:${i}"><span>${w}</span></span>`).join(' ');
+    });
+
+    /* ==================== RENDER: VÍDEOS ==================== */
+    function vcard(o, rank) {
+      const mets = o.m.map(([k, v, s]) => `<div class="${s ? 'star' : ''}"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+      const media = o.pend
+        ? `<div class="vph"><span>▶</span>vídeo a incluir</div>`
+        : `<video src="${o.video}" poster="${o.poster}" controls preload="none" playsinline controlslist="nodownload"></video>`;
+      return `<article class="vcard rv ${o.key ? 'key' : ''} ${o.elei ? 'elei' : ''}">
+        <div class="vmedia">
+          <span class="badge">${o.badge}</span>
+          ${rank ? `<span class="rank">${rank}</span>` : ''}
+          <span class="prev">prévia sem som</span>
+          ${media}
+        </div>
+        <div class="vbody">
+          <div><div class="vname">${o.nome || o.ad}</div>${o.set ? `<div class="vset">${o.set}</div>` : ''}</div>
+          <div class="vmets">${mets}</div>
+          <div class="vwhy">${o.why}</div>
+        </div>
+      </article>`;
+    }
+    HILITE.forEach(h => {
+      const a = ADS.find(x => x.n === h.ad && x.c === h.grp);
+      h.set = `${h.grp === 'eng' ? 'Campanha de seguidores' : 'Campanha de alcance · ' + a.raio} · ${a.d}s`;
+    });
+    document.getElementById('adv-eng').innerHTML = HILITE.filter(h => h.grp === 'eng').map(h => vcard(h)).join('');
+    document.getElementById('adv-rec').innerHTML = HILITE.filter(h => h.grp === 'rec').map(h => vcard(h)).join('');
+    document.getElementById('topgrid').innerHTML = TOP.map(t => vcard(t, t.rank)).join('');
+    document.getElementById('hongrid').innerHTML = HON.map(t => vcard(t)).join('');
+
+    /* ==================== RENDER: TABELA ==================== */
+    (function () {
+      const bestReach = Math.max(...ADS.map(a => a.reach)), bestVis = Math.max(...ADS.map(a => a.vis));
+      let html = '', r = 0;
+      [['eng', 'Campanha de seguidores', 'c-verde', '7 anúncios · R$ 1.783,36'], ['rec', 'Campanhas de alcance', 'c-lilas', '5 anúncios · R$ 2.575,03 · raios de 9 e 20 km']].forEach(([id, t, c, s]) => {
+        html += `<tr class="grp" style="--r:${r++}"><td colspan="7"><i class="${c}"></i>${t} <span style="color:var(--ink-3);font-weight:400;margin-left:6px">${s}</span></td></tr>`;
+        ADS.filter(a => a.c === id).sort((a, b) => b.spend - a.spend).forEach(a => {
+          const cps = a.seg ? a.spend / a.seg : null, p75 = a.p75 / a.impr;
+          html += `<tr style="--r:${r++}">
+            <td>${a.n}<small>${a.d}s${a.c === 'rec' ? ' · ' + a.raio : ''}</small></td>
+            <td>${money(a.spend)}</td>
+            <td class="${a.reach === bestReach ? 'hi' : ''}">${nf.format(a.reach)}</td>
+            <td class="${a.vis === bestVis ? 'hi' : ''}">${a.vis ? nf.format(a.vis) : '–'}</td>
+            <td class="${a.seg >= 100 ? 'hi' : ''}">${a.seg || '–'}</td>
+            <td class="${a.c === 'eng' && cps && cps < 3.5 ? 'hi' : ''}">${a.c === 'eng' && cps ? money(cps) : '–'}</td>
+            <td class="${p75 > .035 ? 'hi' : ''}">${ff(p75 * 100)}%</td>
+          </tr>`;
+        });
+      });
+      document.getElementById('tbody').innerHTML = html;
+    })();
+
+    /* ==================== RENDER: DISPERSÃO (campanha de seguidores) ==================== */
+    (function () {
+      const svg = document.getElementById('scsvg'), tip = document.getElementById('sctip'), box = document.getElementById('scatter');
+      const W = 560, H = 300, L = 40, R = 14, T = 14, B = 34;
+      const x = s => L + (s - 20) / (60 - 20) * (W - L - R);
+      const y = p => T + (1 - p / 5) * (H - T - B);
+      const PTS = ADS.map((a, i) => ({ a, i })).filter(o => o.a.c === 'eng');
+      let g = '';
+      [0, 1, 2, 3, 4, 5].forEach(p => { g += `<line class="ax" x1="${L}" x2="${W - R}" y1="${y(p)}" y2="${y(p)}"/><text class="axt" x="${L - 8}" y="${y(p) + 4}" text-anchor="end">${p}%</text>`; });
+      [20, 30, 40, 50, 60].forEach(s => { g += `<text class="axt" x="${x(s)}" y="${H - 12}" text-anchor="middle">${s}s</text>`; });
+      /* liga as duas versões do Hospital Giglio */
+      const gn = ADS.find(a => a.c === 'eng' && a.n === 'Hospital Giglio · narrado'), gs = ADS.find(a => a.c === 'eng' && a.n === 'Hospital Giglio · sem narração');
+      const pv = a => a.p75 / a.impr * 100;
+      g += `<path class="link" d="M${x(gs.d)} ${y(pv(gs))} L${x(gn.d)} ${y(pv(gn))}"/><text class="linkt" x="${(x(gs.d) + x(gn.d)) / 2 - 30}" y="${(y(pv(gs)) + y(pv(gn))) / 2 - 12}">+ narração</text>`;
+      const label = { 'Hospital Giglio · narrado': 'Giglio narrado', 'Hospital Giglio · sem narração': 'Giglio sem narração', 'Vagas de emprego': 'Vagas', 'Maternidade Amador Aguiar': 'Amador Aguiar', 'Censo Animal': 'Censo Animal', 'Moradias no Morro do Sabão': 'Morro do Sabão', 'Bom Prato Móvel': 'Bom Prato' };
+      const off = { 'Censo Animal': [-12, 26], 'Bom Prato Móvel': [10, 16], 'Moradias no Morro do Sabão': [-4, -18] };
+      PTS.forEach(({ a, i }, k) => {
+        const rr = 5 + Math.sqrt(a.seg) * 1.35, [dx, dy] = off[a.n] || [rr + 5, 4];
+        g += `<circle class="dot c-verde" cx="${x(a.d)}" cy="${y(pv(a))}" r="${rr.toFixed(1)}" fill="var(--s-verde)" style="transition-delay:${(k * 0.07).toFixed(2)}s" data-i="${i}" tabindex="0"/>`;
+        g += `<text class="dl" x="${x(a.d) + dx}" y="${y(pv(a)) + dy}" text-anchor="${dx < 0 ? 'end' : 'start'}">${label[a.n]}</text>`;
+      });
+      svg.innerHTML = g;
+      const show = el => {
+        const a = ADS[+el.dataset.i], r = box.getBoundingClientRect(), c = el.getBoundingClientRect();
+        tip.innerHTML = `<b>${a.n}</b>${a.d}s · ${ff(pv(a))}% assistiram até 75%<br>${a.seg} seguidores · ${money(a.spend)}`;
+        tip.style.left = (c.left - r.left + c.width / 2) + 'px'; tip.style.top = (c.top - r.top) + 'px'; tip.style.opacity = 1;
+        el.style.transitionDelay = '0s'; el.classList.add('on'); box.classList.add('focus');
+      };
+      const hide = el => { tip.style.opacity = 0; el.classList.remove('on'); box.classList.remove('focus') };
+      svg.querySelectorAll('.dot').forEach(d => {
+        d.addEventListener('mouseenter', () => show(d)); d.addEventListener('focus', () => show(d));
+        d.addEventListener('mouseleave', () => hide(d)); d.addEventListener('blur', () => hide(d));
+      });
+    })();
+
+    /* ==================== RENDER: ÁREA DE VEICULAÇÃO ==================== */
+    (function () {
+      const svg = document.getElementById('ringsvg'), box = document.getElementById('rings'), list = document.getElementById('ringlist');
+      const C = 250, rk = km => km / 25 * 225;
+      let g = `<defs><radialGradient id="rgf" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(92,203,124,.0)"/><stop offset="1" stop-color="rgba(92,203,124,.10)"/></radialGradient>
+        <linearGradient id="swg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(92,203,124,0)"/><stop offset="1" stop-color="rgba(92,203,124,.28)"/></linearGradient></defs>`;
+      [...RINGS].reverse().forEach((r, k) => { g += `<circle class="fillr" data-k="${RINGS.length - 1 - k}" cx="${C}" cy="${C}" r="${rk(r.km)}" fill="url(#rgf)"/>` });
+      g += `<g class="sweep"><path d="M${C} ${C} L${C + rk(25)} ${C} A${rk(25)} ${rk(25)} 0 0 0 ${C + rk(25) * Math.cos(-0.7)} ${C + rk(25) * Math.sin(-0.7)} Z" fill="url(#swg)"/></g>`;
+      g += `<circle class="rg dash" cx="${C}" cy="${C}" r="${rk(17)}" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/>`;
+      g += `<text class="lbl" x="${C}" y="${C - rk(17) + 14}" text-anchor="middle">17 km</text>`;
+      RINGS.forEach((r, k) => {
+        g += `<circle class="rg" data-k="${k}" pathLength="1" cx="${C}" cy="${C}" r="${rk(r.km)}" stroke="${r.cor}" style="transition-delay:${.15 + k * .35}s" transform="rotate(-90 ${C} ${C})"/>`;
+        const ang = [-.35, -.9, -1.35][k], tx = C + Math.cos(ang) * (rk(r.km) + 6), ty = C + Math.sin(ang) * (rk(r.km) + 6);
+        g += `<text class="lbl" x="${tx}" y="${ty}">${r.km} km</text>`;
+      });
+      for (let i = 0; i < 3; i++) g += `<circle class="rip" cx="${C}" cy="${C}" r="${rk(25)}"/>`;
+      /* pontos: amostra visual da densidade de alcance em cada faixa */
+      let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+      RINGS.forEach((r, k) => {
+        const n = Math.round(r.reach / 9000), r0 = k ? rk(RINGS[k - 1].km) : 12, r1 = rk(r.km);
+        for (let i = 0; i < n; i++) { const t = rnd() * 6.283, d = r0 + (r1 - r0) * Math.sqrt(rnd()); g += `<circle class="dotp" cx="${(C + Math.cos(t) * d).toFixed(1)}" cy="${(C + Math.sin(t) * d).toFixed(1)}" r="1.3"/>` }
+      });
+      g += `<circle cx="${C}" cy="${C}" r="6" fill="var(--verde-txt)"/><text class="ctrl" x="${C}" y="${C + 24}" text-anchor="middle">Osasco</text>`;
+      svg.innerHTML = g;
+      list.innerHTML = RINGS.map((r, k) => `
+        <div class="ring-item hov rv" data-k="${k}" style="--d:${k * .1}s">
+          <div class="top2"><span class="who"><i style="background:${r.cor}"></i>${r.nome}</span><span class="km">${r.km}<small> km</small></span></div>
+          <div class="note" style="margin-top:2px">${r.sub}</div>
+          <div class="mm"><div><b>${nf.format(r.reach)}</b>pessoas alcançadas</div><div><b>${money(r.spend)}</b>investimento</div></div>
+        </div>`).join('');
+      const on = k => {
+        box.classList.toggle('focus', k !== null);
+        svg.querySelectorAll('.rg[data-k], .fillr').forEach(c => c.classList.toggle('on', +c.dataset.k === k));
+        list.querySelectorAll('.ring-item').forEach(c => c.classList.toggle('on', +c.dataset.k === k));
+      };
+      list.querySelectorAll('.ring-item').forEach(c => { c.addEventListener('mouseenter', () => on(+c.dataset.k)); c.addEventListener('mouseleave', () => on(null)) });
+      svg.addEventListener('mousemove', e => {
+        const p = svg.getBoundingClientRect(), s = 500 / p.width, dx = (e.clientX - p.left) * s - C, dy = (e.clientY - p.top) * s - C, d = Math.hypot(dx, dy);
+        const k = RINGS.findIndex(r => d <= rk(r.km) + 4);
+        on(k < 0 ? null : k);
+      });
+      svg.addEventListener('mouseleave', () => on(null));
+    })();
+
+    /* ==================== RENDER: ROSCAS ==================== */
+    function donut(id, parts, center, sub) {
+      const svg = document.getElementById(id), R = 78, C = 2 * Math.PI * R;
+      let acc = 0, g = `<circle class="bg" cx="100" cy="100" r="${R}" stroke-width="18"/>`;
+      parts.forEach(([v, cls, col, t], i) => {
+        const len = v / 100 * C;
+        g += `<circle class="seg ${cls}" cx="100" cy="100" r="${R}" stroke="${col}" stroke-width="18" stroke-dasharray="${len - 2} ${C}" stroke-dashoffset="${len}" data-off="${-acc}" transform="rotate(-90 100 100)" style="transition-delay:${.2 + i * .35}s"><title>${t}</title></circle>`;
+        acc += len;
+      });
+      g += `<text class="ctr" x="100" y="104" text-anchor="middle">${center}</text><text class="ctr2" x="100" y="124" text-anchor="middle">${sub}</text>`;
+      svg.innerHTML = g;
+    }
+    donut('dn1', [[85.4, 'c-verde', 'var(--s-verde)', 'Orgânico: 8.874.747 visualizações (85,4%)'], [14.6, 'c-lilas', 'var(--s-lilas)', 'Anúncios: 1.511.609 visualizações (14,6%)']], '85%', 'orgânico');
+    donut('dn2', [[52.8, 'c-lilas', 'var(--s-lilas)', 'Não seguidores: 5.482.643 visualizações (52,8%)'], [47.2, 'c-verde', 'var(--s-verde)', 'Seguidores: 4.903.713 visualizações (47,2%)']], '53%', 'não seguidores');
+    function fillDonuts(root) { root.querySelectorAll('.donut .seg').forEach(s => s.style.strokeDashoffset = s.dataset.off) }
+
+    /* ==================== RENDER: LINHA DO TEMPO ==================== */
+    (function () {
+      const svg = document.getElementById('tlsvg'), tip = document.getElementById('tltip'), box = document.getElementById('tl');
+      const W = 1100, H = 330, L = 46, R = 8, T = 34, B = 30, MAX = 300000, days = 28, slot = (W - L - R) / days;
+      const y = v => T + (1 - Math.min(v, MAX) / MAX) * (H - T - B);
+      const xd = d => L + (d - 1) * slot;
+      let g = '';
+      /* faixa da Caminhada da Fé e dias de eleição */
+      g += `<rect class="band" x="${xd(7)}" y="${T - 20}" width="${slot * 6}" height="${H - T - B + 20}" rx="6"/><text class="bandt" x="${xd(7) + 8}" y="${T - 6}">Caminhada da Fé · 07 a 12/10</text>`;
+      [0, 100000, 200000, 300000].forEach(v => { g += `<line class="ax" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text class="axt" x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v ? v / 1000 + ' mil' : '0'}</text>` });
+      [[4, '1º turno'], [25, '2º turno']].forEach(([d, t]) => { const xx = xd(d) + slot / 2; g += `<line class="ev" x1="${xx}" x2="${xx}" y1="${T - 18}" y2="${H - B}"/><text class="evt" x="${xx + 5}" y="${T - 22}">${t}</text>` });
+      for (let d = 1; d <= days; d += 3) g += `<text class="axt" x="${xd(d) + slot / 2}" y="${H - 10}" text-anchor="middle">${String(d).padStart(2, '0')}/10</text>`;
+      const byDay = {};
+      POSTS.forEach((p, i) => (byDay[p.d] = byDay[p.d] || []).push(i));
+      Object.entries(byDay).forEach(([d, ids]) => {
+        const n = ids.length, bw = Math.min(14, (slot - 6) / n), x0 = xd(+d) + (slot - bw * n - (n - 1) * 2) / 2;
+        ids.forEach((i, k) => {
+          const p = POSTS[i], hl = DESTAQUE.some(s => p.s.startsWith(s)), el = p.t === 'Eleições';
+          const col = el ? 'var(--ambar)' : hl ? 'var(--s-verde)' : 'var(--s-lilas)', cls = el ? 'c-ambar' : hl ? 'c-verde' : 'c-lilas';
+          const xx = x0 + k * (bw + 2), yy = y(p.v);
+          g += `<rect class="bar ${cls}" data-i="${i}" x="${xx.toFixed(1)}" y="${yy.toFixed(1)}" width="${bw.toFixed(1)}" height="${(H - B - yy).toFixed(1)}" rx="2" fill="${col}" style="transition-delay:${(+d * .025).toFixed(2)}s"/>`;
+          if (p.v > MAX) g += `<path class="brk" d="M${xx - 2} ${yy + 22} l${bw / 2 + 2} -5 l${bw / 2 + 2} 5"/><text class="big" x="${xx + bw + 6}" y="${yy + 10}">2,43 mi · Monitora OZ</text>`;
+        });
+      });
+      svg.innerHTML = g;
+      svg.querySelectorAll('.bar').forEach(b => {
+        const show = () => {
+          const p = POSTS[+b.dataset.i], r = box.getBoundingClientRect(), c = b.getBoundingClientRect();
+          tip.innerHTML = `<b>${String(p.d).padStart(2, '0')}/10 · ${nf.format(p.v)} visualizações</b>${p.t}<br><span style="color:var(--ink-3)">${p.s}</span>`;
+          tip.style.left = Math.min(Math.max(c.left - r.left + c.width / 2, 130), r.width - 130) + 'px'; tip.style.top = Math.max(c.top - r.top, 40) + 'px'; tip.style.opacity = 1;
+          b.style.transitionDelay = '0s'; b.classList.add('on'); box.classList.add('focus');
+        };
+        const hide = () => { tip.style.opacity = 0; b.classList.remove('on'); box.classList.remove('focus') };
+        b.addEventListener('mouseenter', show); b.addEventListener('mouseleave', hide);
+      });
+    })();
+
+    /* ==================== RENDER: PANORAMA ==================== */
+    document.getElementById('cmp').innerHTML = CMP.map(([m, now, then, chg, key]) => `
+      <div class="cmpc hov lift ${key ? 'key' : ''}"><div class="m">${m}</div><div class="now" data-count="${now}">0</div><div class="then">setembro: ${nf.format(then)}</div><span class="chg">${chg}</span>
+        <div class="mbar"><i data-w="${then / now * 50}"></i><i data-w="50"></i></div></div>`).join('');
+
+    /* ==================== RENDER: IDADE ==================== */
+    document.getElementById('agerows').innerHTML = AGE.map(a => `
+      <div class="arow ${a.best ? 'best' : ''}" title="${a.best ? 'Menor custo por seguidor do mês' : ''}">
+        <span class="an">${a.nm}</span>
+        <div class="abars">
+          <div><i class="c-lilas" data-w="${a.imp / 34 * 88}"></i>${ff(a.imp, 1)}%</div>
+          <div><i class="c-verde" data-w="${a.sp / 34 * 88}"></i>${ff(a.sp, 1)}%</div>
+        </div>
+        <div class="ac"><b class="${a.cps < 4.5 ? 'g' : ''}">${money(a.cps)}</b>${a.seg} seguidores</div>
+      </div>`).join('');
+
+    /* ==================== RENDER: TEMAS ==================== */
+    (function () {
+      const MAX = Math.max(...TEMAS.map(t => t.v)), TOT = TEMAS.reduce((s, t) => s + t.v, 0);
+      document.getElementById('themerows').innerHTML = TEMAS.map(t => `
+        <div class="th ${t.elei ? 'elei' : ''}">
+          <span class="n">${t.nm}<small>${t.n} posts · ${nf.format(Math.round(t.v / t.n / 100) * 100)} por post${t.elei ? ' · posts eleitorais' : ''}</small></span>
+          <div class="tbar"><i data-w="${t.v / MAX * 100}"></i><span>${nf.format(t.v)} · ${ff(t.v / TOT * 100, 1)}%</span></div>
+          <span class="er ${t.er >= 7.5 ? 'hi' : ''}">${ff(t.er)}%</span>
+          <span class="sg ${t.sg >= 250 ? 'hi' : ''}">${nf.format(t.sg)}</span>
+        </div>`).join('');
+    })();
+
+    /* ==================== RENDER: E-MAIL ==================== */
+    document.getElementById('mailgrid').innerHTML = MAIL.map(m => {
+      const tot = m.ab ? m.ab / m.env * 100 : null;
+      const lines = m.l.map(([k, v]) => `<div class="ml"><span>${k}</span><b>${ff(v, 1)}%</b><span class="tr"><i data-w="${v / 50 * 100}"></i></span></div>`).join('');
+      return `<article class="mcard rv ${m.wide ? 'wide' : ''} ${m.key ? 'key' : ''}">
+        <div class="mthumb ${m.land ? 'land' : ''}">${m.imgs.map(i => `<img src="assets/thumbs/${i}.webp" alt="Criativo ${m.nome}" loading="lazy" onerror="this.remove()"/>`).join('')}
+          ${tot ? `<span class="tot ${tot >= 35 ? 'star' : ''}">${ff(tot, 1)}%</span>` : `<span class="tot sm">${nf.format(m.env)} envios</span>`}${m.land ? '' : '<span class="scrollhint">↕ e-mail inteiro</span>'}</div>
+        <div class="mbody">
+          <div class="mname">${m.nome}</div><div class="msub">${m.sub}</div>
+          ${lines ? `<div class="mlines">${lines}</div>` : ''}
+          <div class="mfoot">${m.ab ? `${nf.format(m.env)} envios · ${nf.format(m.ab)} aberturas` : 'aberturas não contabilizadas pela plataforma'}</div>
+        </div>
+      </article>`;
+    }).join('');
+
+    (function () {
+      const MAXE = Math.max(...MUNI.map(u => u.env));
+      document.getElementById('munirows').innerHTML = MUNI.map((u, i) => `
+        <div class="mu ${i < 3 ? 'top3' : ''}">
+          <span class="n">${u.nm}<small>${nf.format(u.env)} envios · ${nf.format(u.ab)} aberturas</small></span>
+          <div class="bars">
+            <div><i class="c-lilas" data-w="${u.env / MAXE * 85}"></i>${ff(u.env / 759198 * 100, 1)}% dos envios</div>
+            <div><i class="c-verde" data-w="${u.rt / 15 * 85}"></i>${ff(u.rt, 1)}% de abertura</div>
+          </div>
+          <span class="rt">${ff(u.rt, 1)}%<small>abertura</small></span>
+        </div>`).join('');
+    })();
+
+    /* ==================== RENDER: WHATSAPP ==================== */
+    document.getElementById('wagrid').innerHTML = WA.map(w => `
+      <article class="wa rv">
+        <div class="shot ${w.short ? 'short' : ''}"><span class="tag">${w.tag}</span><span class="up">↑ conversa</span><img src="${w.img}" alt="Conversa de WhatsApp: ${w.tag}" loading="lazy"/></div>
+        <div class="cap"><div class="quote">${w.quote}</div><div class="meta">${w.meta}</div></div>
+      </article>`).join('');
+    document.querySelectorAll('.wa').forEach(w => {
+      const img = w.querySelector('img'), shot = w.querySelector('.shot');
+      if (shot.classList.contains('short')) return;
+      w.addEventListener('mouseenter', () => { const d = img.offsetHeight - shot.offsetHeight; if (d > 0) img.style.transform = `translateY(${d}px)` });
+      w.addEventListener('mouseleave', () => img.style.transform = '');
+    });
+
+    const QUOTES = [
+      ['Vim agradecer. Muito obrigada por tudo que você fez pelo meu filho 🙏', 'mãe de paciente · hospital'],
+      ['Toda a equipe aqui do hospital maravilhosa, muito obrigada por tudo.', 'mãe de paciente · hospital'],
+      ['Que Deus abençoe você e sua equipe inteira.', 'mãe de paciente · hospital'],
+      ['Obrigado, Gerson 🙏', 'munícipe · Portal do Trabalhador'],
+      ['Desde já te agradeço de coração. Deus abençoe!!', 'munícipe · Portal do Trabalhador'],
+      ['Bom dia, vai ficar bom.', "morador · UBS Jardim d'Abril"],
+      ['👏👏👏', "moradora · UBS Jardim d'Abril"],
+      ['Que da hora! Parabéns!', "morador · UBS Jardim d'Abril"],
+      ['Osasco está no rumo certo a cada dia.', 'munícipe']
+    ];
+    (function () {
+      const q = QUOTES.map(([t, s]) => `<div class="mq">“${t}”<small>${s}</small></div>`).join('');
+      document.getElementById('mtrack').innerHTML = q + q.replace(/<div class="mq">/g, '<div class="mq" aria-hidden="true">');
+    })();
+
+    /* atraso escalonado nos grids */
+    document.querySelectorAll('.vgrid, .mgrid, .wagrid, .cmp').forEach(g => {
+      [...g.children].forEach((c, i) => c.style.setProperty('--d', (i % 5) * 0.07 + 's'));
+    });
+
+    /* ==================== LUZ QUE SEGUE O MOUSE + INCLINAÇÃO ==================== */
+    const TILT = !REDUCED && window.matchMedia('(hover: hover)').matches;
+    document.addEventListener('pointermove', e => {
+      const el = e.target.closest && e.target.closest('.hov, .kpi, .vcard, .mcard, .wa');
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      if (TILT && (el.matches('.lift, .vcard, .mcard, .wa'))) {
+        el.style.setProperty('--ry', (((e.clientX - r.left) / r.width - .5) * 6).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', ((.5 - (e.clientY - r.top) / r.height) * 6).toFixed(2) + 'deg');
+      }
+    }, { passive: true });
+
+    /* ==================== LEGENDA DESTACA A SÉRIE ==================== */
+    const SERIES = ['c-verde', 'c-lilas', 'c-neutro'];
+    const seriesSel = s => `.stack i.${s}, .abars i.${s}, .rtrack i.${s}, .pb2 i.${s}, .bars i.${s}, .dot.${s}, .seg.${s}, .bar.${s}, .vcol[data-s="${s}"]`;
+    document.querySelectorAll('.legend span[data-s]').forEach(sp => {
+      const box = sp.closest('.card') || sp.parentElement;
+      sp.addEventListener('mouseenter', () => SERIES.concat('c-ambar').filter(s => s !== sp.dataset.s).forEach(s => box.querySelectorAll(seriesSel(s)).forEach(el => el.classList.add('dim'))));
+      sp.addEventListener('mouseleave', () => box.querySelectorAll('.dim').forEach(el => el.classList.remove('dim')));
+    });
+    /* coluna da campanha destaca a própria cor na barra de investimento */
+    document.querySelectorAll('.vcol[data-s]').forEach(c => {
+      const other = c.dataset.s === 'c-verde' ? 'c-lilas' : 'c-verde';
+      c.addEventListener('mouseenter', () => document.querySelectorAll('#vstack i.' + other).forEach(i => i.classList.add('dim')));
+      c.addEventListener('mouseleave', () => document.querySelectorAll('#vstack .dim').forEach(i => i.classList.remove('dim')));
+    });
+
+    /* ==================== PRÉVIA DOS VÍDEOS NO HOVER ==================== */
+    if (!REDUCED && window.matchMedia('(hover: hover)').matches) {
+      document.querySelectorAll('.vcard').forEach(card => {
+        const v = card.querySelector('video');
+        if (!v) return;
+        let timer = null, byUser = false;
+        v.addEventListener('volumechange', () => { if (!v.muted) { byUser = true; card.classList.remove('previewing') } });
+        v.addEventListener('click', () => { byUser = true; card.classList.remove('previewing') });
+        card.addEventListener('mouseenter', () => {
+          if (!v.paused) return;
+          timer = setTimeout(() => {
+            v.muted = true; byUser = false;
+            v.play().then(() => card.classList.add('previewing')).catch(() => { });
+          }, 350);
+        });
+        card.addEventListener('mouseleave', () => {
+          clearTimeout(timer);
+          if (!byUser && !v.paused) { v.pause(); card.classList.remove('previewing') }
+        });
+      });
+    }
+    /* só um vídeo com som por vez */
+    document.addEventListener('play', e => {
+      document.querySelectorAll('video').forEach(v => { if (v !== e.target && !v.muted) v.pause() });
+    }, true);
+
+    /* ==================== CONTADORES ==================== */
+    let SETTLED = false;
+    function fmtCount(el, v) {
+      const dec = el.dataset.dec ? parseInt(el.dataset.dec) : 0;
+      const s = dec ? ff(v, dec) : nf.format(Math.round(v));
+      return el.dataset.money ? 'R$ ' + s : s;
+    }
+    function countUp(el) {
+      const target = parseFloat(el.dataset.count), dur = 1400, t0 = performance.now();
+      if (REDUCED) { el.textContent = fmtCount(el, target); return }
+      (function tick(now) {
+        if (SETTLED) return;
+        const p = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmtCount(el, target * e);
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+
+    /* ==================== ENTRADA AO ROLAR ==================== */
+    function fillBars(root) {
+      root.querySelectorAll('i[data-w]').forEach(i => i.style.width = Math.min(parseFloat(i.dataset.w), 100) + '%');
+      root.querySelectorAll('[data-stack] i[data-b]').forEach(i => i.style.flexBasis = i.dataset.b + '%');
+      fillDonuts(root);
+    }
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        el.classList.add('in');
+        el.querySelectorAll('[data-count]').forEach(countUp);
+        fillBars(el);
+        if (el.id === 'virada') playVirada();
+        io.unobserve(el);
+      });
+    }, { threshold: .16, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.rv, .scatter, .rings, .tl').forEach(el => io.observe(el));
+
+    /* ==================== INVESTIMENTO: SETEMBRO → OUTUBRO ==================== */
+    const VIR = { set: { rec: 12.8, eng: 87.2 }, out: { rec: 59.1, eng: 40.9 } };
+    function setVirada(m) {
+      const d = VIR[m], r = document.getElementById('v-rec'), g = document.getElementById('v-eng');
+      r.style.flexBasis = d.rec + '%'; g.style.flexBasis = d.eng + '%';
+      r.textContent = ff(d.rec, 1) + '%'; g.textContent = ff(d.eng, 1) + '%';
+      r.title = 'Campanhas de alcance: ' + ff(d.rec, 1) + '%'; g.title = 'Campanha de seguidores: ' + ff(d.eng, 1) + '%';
+      document.querySelectorAll('.virada .tabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+    }
+    let viradaPlayed = false;
+    function playVirada() {
+      if (viradaPlayed) return; viradaPlayed = true;
+      setVirada('set');
+      setTimeout(() => setVirada('out'), REDUCED ? 0 : 1100);
+    }
+    document.querySelectorAll('.virada .tabs button').forEach(b => b.addEventListener('click', () => { viradaPlayed = true; setVirada(b.dataset.m) }));
+
+    /* ==================== FUNIL ==================== */
+    const FUN = {
+      eng: {
+        a: 173660, b: 6424, c: 356, spend: 1783.36,
+        l: ['Pessoas alcançadas', 'Visitas ao perfil', 'Novos seguidores'],
+        n1: r => `<b>${r}</b> visitaram o perfil`, n2: r => `<b>${r}</b> das visitas viraram seguidor`,
+        hint: 'pessoas alcançadas › visitas ao perfil › novos seguidores · 01–29 out',
+        foot: d => [['1 novo seguidor a cada', nf.format(Math.round(d.a / d.c)) + ' pessoas'], ['Custo por seguidor', money(d.spend / d.c)], ['Custo por visita ao perfil', money(d.spend / d.b)]],
+        desc: 'Campanha de seguidores: leva as pessoas ao perfil e pede que sigam. Respondeu por 95% dos novos seguidores vindos dos anúncios.'
+      },
+      rec: {
+        a: 1300323, b: 128532, c: 15461, spend: 2575.03,
+        l: ['Pessoas alcançadas', 'Assistiram 3 segundos', 'Assistiram 15 segundos'],
+        n1: r => `<b>${r}</b> em relação ao alcance`, n2: r => `<b>${r}</b> seguiram até os 15 segundos`,
+        hint: 'pessoas alcançadas › reproduções de 3 segundos › reproduções de 15 segundos · 01–29 out',
+        foot: () => [['Custo por mil pessoas alcançadas', 'R$ 1,98'], ['Custo por mil exibições', 'R$ 1,62'], ['Vezes que cada um viu', '1,22']],
+        desc: 'Campanhas de alcance (raios de 9 e 20 km): mostram os conteúdos ao maior número de pessoas pelo menor custo. O objetivo é a presença na cidade, não a conversão em seguidores.'
+      }
+    };
+    const funnel = (function () {
+      const box = document.getElementById('fviz'), cv = box.querySelector('canvas'), ctx = cv.getContext('2d');
+      let W = 0, H = 0, band = 104, neck = 44, dpr = 1;
+      let cur = null, from = null, to = null, tAnim = 1, hi = -1, hiA = [0, 0, 0];
+      let parts = [], glow = 0, running = false, last = 0, key = 'eng';
+      const logW = v => { const f = Math.log10(Math.max(v, 1)) / Math.log10(1400000); return W * (0.14 + 0.84 * Math.min(f, 1)) };
+      const target = k => { const d = FUN[k]; return [logW(d.a), logW(d.b), logW(d.c)] };
+      function layout() {
+        const cs = getComputedStyle(box.parentElement);
+        band = parseFloat(cs.getPropertyValue('--band')) || 104; neck = parseFloat(cs.getPropertyValue('--neck')) || 44;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = box.clientWidth; H = 3 * band + 2 * neck;
+        cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        to = target(key); if (!cur || tAnim >= 1) cur = to.slice();
+      }
+      function wAt(y, w) {
+        if (y < band) return w[0];
+        if (y < band + neck) return w[0] + (w[1] - w[0]) * (y - band) / neck;
+        if (y < 2 * band + neck) return w[1];
+        if (y < 2 * band + 2 * neck) return w[1] + (w[2] - w[1]) * (y - 2 * band - neck) / neck;
+        return w[2];
+      }
+      function rates() {
+        const d = FUN[key];
+        return [Math.min(0.5, Math.max(0.02, d.b / d.a * 8)), Math.min(0.6, Math.max(0.03, d.c / d.b * 4))];
+      }
+      function rrect(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, r) : ctx.rect(x, y, w, h) }
+      function drawShape(dt) {
+        const cx = W / 2, w = cur;
+        for (let i = 0; i < 3; i++) hiA[i] += ((hi === i ? 1 : 0) - hiA[i]) * Math.min(1, dt * 8);
+        ctx.fillStyle = 'rgba(255,255,255,.045)';
+        [[0, band], [1, 2 * band + neck]].forEach(([i, y0]) => {
+          ctx.beginPath();
+          ctx.moveTo(cx - w[i] / 2, y0); ctx.lineTo(cx + w[i] / 2, y0);
+          ctx.lineTo(cx + w[i + 1] / 2, y0 + neck); ctx.lineTo(cx - w[i + 1] / 2, y0 + neck); ctx.closePath(); ctx.fill();
+        });
+        const base = [[167, 123, 224, .34, .12], [167, 123, 224, .42, .16], [56, 170, 85, .55, .22]];
+        for (let i = 0; i < 3; i++) {
+          const y0 = i * (band + neck), gr = ctx.createLinearGradient(0, y0, 0, y0 + band), [r, g, b, a1, a2] = base[i], h = hiA[i];
+          const mix = i < 2 ? h * .6 : 0;
+          const R = r + (56 - r) * mix, G = g + (170 - g) * mix, B = b + (85 - b) * mix;
+          gr.addColorStop(0, `rgba(${R | 0},${G | 0},${B | 0},${a1 + h * .3})`); gr.addColorStop(1, `rgba(${R | 0},${G | 0},${B | 0},${a2 + h * .2})`);
+          ctx.fillStyle = gr; rrect(cx - w[i] / 2, y0, w[i], band, 14); ctx.fill();
+          ctx.strokeStyle = h > .05 ? `rgba(255,255,255,${.2 + h * .6})` : (i === 2 ? `rgba(92,203,124,${.45 + glow * .5})` : 'rgba(255,255,255,.14)');
+          ctx.lineWidth = 1 + h; ctx.stroke();
+        }
+        if (glow > .01) {
+          const y0 = 2 * (band + neck), gr = ctx.createRadialGradient(cx, y0 + band * .75, 2, cx, y0 + band * .75, w[2] * .7);
+          gr.addColorStop(0, `rgba(92,203,124,${.35 * glow})`); gr.addColorStop(1, 'rgba(92,203,124,0)');
+          ctx.fillStyle = gr; ctx.fillRect(cx - w[2], y0, w[2] * 2, band);
+        }
+      }
+      function frame(now) {
+        if (!running) return;
+        const dt = Math.min((now - last) / 1000, .05); last = now;
+        if (tAnim < 1) {
+          tAnim = Math.min(1, tAnim + dt / .8); const e = 1 - Math.pow(1 - tAnim, 3);
+          cur = from.map((v, i) => v + (to[i] - v) * e);
+        }
+        const [p1, p2] = rates();
+        let k = 95 * (cur[0] / W) * dt;
+        while (k > 0) { if (Math.random() < k) parts.push({ u: Math.random() - .5, y: -4, v: 70 + Math.random() * 50, s: 0, a: 1, die: 0 }); k -= 1 }
+        const y1 = band, y2 = 2 * band + neck, yEnd = H - band * .28;
+        for (const p of parts) {
+          p.y += p.v * dt;
+          if (p.die) { p.u += p.die * dt * .55; p.a -= dt * 1.5; continue }
+          if (p.s === 0 && p.y > y1) { p.s = 1; if (Math.random() > p1) p.die = p.u < 0 ? -1 : 1 }
+          else if (p.s === 1 && p.y > y2) { p.s = 2; if (Math.random() > p2) p.die = p.u < 0 ? -1 : 1 }
+          if (p.s === 2) p.u *= (1 - dt * .8);
+          if (p.y > yEnd && p.s === 2 && !p.die) { p.a = 0; glow = Math.min(1, glow + .22) }
+        }
+        parts = parts.filter(p => p.a > 0 && p.y < H + 10);
+        glow *= Math.pow(.25, dt);
+        ctx.clearRect(0, 0, W, H);
+        drawShape(dt);
+        const cx = W / 2;
+        for (const p of parts) {
+          ctx.globalAlpha = Math.max(0, p.a) * (p.s === 2 ? 1 : .75);
+          ctx.fillStyle = p.s === 2 ? '#7BE39A' : '#F1E6FF';
+          ctx.beginPath(); ctx.arc(cx + p.u * wAt(p.y, cur) * .9, p.y, p.s === 2 ? 2.6 : 1.6, 0, 6.283); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(frame);
+      }
+      function staticDraw() { ctx.clearRect(0, 0, W, H); hiA = hiA.map((_, i) => hi === i ? 1 : 0); drawShape(0) }
+      function start() { if (running || REDUCED) return; running = true; last = performance.now(); requestAnimationFrame(frame) }
+      layout(); staticDraw();
+      new IntersectionObserver(es => es.forEach(e => { e.isIntersecting ? start() : (running = false) }), { threshold: 0 }).observe(box);
+      window.addEventListener('resize', () => { layout(); if (!running) staticDraw() });
+      function setHi(i) {
+        if (hi === i) return;
+        hi = i;
+        document.querySelectorAll('.fstage').forEach(s => s.classList.toggle('on', +s.dataset.i === i));
+        if (!running) staticDraw();
+      }
+      box.addEventListener('mousemove', e => {
+        const y = e.clientY - box.getBoundingClientRect().top;
+        setHi(y < band ? 0 : y < band + neck ? -1 : y < 2 * band + neck ? 1 : y < 2 * band + 2 * neck ? -1 : 2);
+      });
+      box.addEventListener('mouseleave', () => setHi(-1));
+      document.querySelectorAll('.fstage').forEach(s => {
+        s.addEventListener('mouseenter', () => setHi(+s.dataset.i));
+        s.addEventListener('mouseleave', () => setHi(-1));
+      });
+      return {
+        set(k) {
+          key = k; from = cur.slice(); to = target(k); tAnim = REDUCED ? 1 : 0;
+          if (REDUCED || !running) { cur = to.slice(); tAnim = 1; staticDraw() }
+        }
+      };
+    })();
+
+    function animNum(el, target, fmt) {
+      const start = parseFloat(el.dataset.v || target), t0 = performance.now();
+      el.dataset.v = target;
+      if (REDUCED) { el.textContent = fmt(target); return }
+      (function tick(now) {
+        const p = Math.min((now - t0) / 700, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(start + (target - start) * e);
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+    function setFunnel(k) {
+      const d = FUN[k], int = v => nf.format(Math.round(v)), $ = id => document.getElementById(id);
+      document.querySelectorAll('#fcard .tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.f === k));
+      animNum($('f-a'), d.a, int); animNum($('f-b'), d.b, int); animNum($('f-c'), d.c, int);
+      d.l.forEach((t, i) => $('f-l' + i).textContent = t);
+      $('f-n1').innerHTML = d.n1(ff(d.b / d.a * 100) + '%');
+      $('f-n2').innerHTML = d.n2(ff(d.c / d.b * 100) + '%');
+      d.foot(d).forEach(([kk, vv], i) => { $('f-k' + (i + 1)).textContent = kk; $('f-v' + (i + 1)).textContent = vv });
+      $('fdesc').textContent = d.desc; $('fhint').textContent = d.hint;
+      funnel.set(k);
+    }
+    document.querySelectorAll('#fcard .tabs button').forEach(b => b.addEventListener('click', () => setFunnel(b.dataset.f)));
+    document.querySelector('#fcard .tabs').addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const bs = [...document.querySelectorAll('#fcard .tabs button')], i = bs.findIndex(b => b.getAttribute('aria-selected') === 'true');
+      const n = bs[(i + (e.key === 'ArrowRight' ? 1 : bs.length - 1)) % bs.length]; n.focus(); setFunnel(n.dataset.f);
+    });
+    [['f-a', 'a'], ['f-b', 'b'], ['f-c', 'c']].forEach(([id, k]) => document.getElementById(id).dataset.v = FUN.eng[k]);
+    setFunnel('eng');
+
+    /* ==================== ABERTURA ==================== */
+    requestAnimationFrame(() => setTimeout(() => document.getElementById('hero').classList.add('go'), 80));
+
+    /* ==================== NAV + PROGRESSO + PARALLAX ==================== */
+    (function () {
+      const nav = document.getElementById('nav'), pill = nav.querySelector('.pill'), links = [...nav.querySelectorAll('a')];
+      const bar = document.getElementById('progress'), aur = [...document.querySelectorAll('.aurora i')];
+      let active = null;
+      function place(a) {
+        if (!a) { pill.style.width = '0'; return }
+        pill.style.width = a.offsetWidth + 'px'; pill.style.transform = `translateX(${a.offsetLeft}px)`;
+      }
+      function setActive(id) {
+        const a = links.find(l => l.getAttribute('href') === '#' + id);
+        if (a === active) return; active = a;
+        links.forEach(l => l.classList.toggle('active', l === a)); place(a);
+        if (a && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: a.offsetLeft - 40, behavior: 'smooth' });
+      }
+      const so = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setActive(e.target.id) }), { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('.chapter[id]').forEach(s => so.observe(s));
+      window.addEventListener('resize', () => place(active));
+      const onScroll = () => {
+        const h = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`;
+        if (!REDUCED) aur.forEach((a, i) => a.style.translate = `0 ${-(scrollY * (.04 + i * .03)).toFixed(1)}px`);
+        if (scrollY < innerHeight * .5) { active = null; links.forEach(l => l.classList.remove('active')); place(null) }
+      };
+      addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    })();
+
+    /* ==================== REDE DE SEGURANÇA ==================== */
+    function settleAll() {
+      SETTLED = true;
+      document.documentElement.classList.add('settled');
+      document.querySelectorAll('.rv, .scatter, .rings, .tl').forEach(el => el.classList.add('in'));
+      document.getElementById('hero').classList.add('go');
+      fillBars(document);
+      document.querySelectorAll('[data-count]').forEach(el => el.textContent = fmtCount(el, parseFloat(el.dataset.count)));
+      if (!viradaPlayed) { viradaPlayed = true; setVirada('out') }
+    }
+    if (REDUCED) settleAll();
+    window.addEventListener('beforeprint', settleAll);
+  </script>
+</body>
+
+</html>
